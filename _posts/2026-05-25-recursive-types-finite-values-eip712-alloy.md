@@ -7,9 +7,9 @@ image: /assets/og/recursive-types-finite-values-eip712-alloy.png
 excerpt: "EIP-712 explicitly supports recursive struct types — but alloy refused to canonicalize one. The fix turned on a distinction the spec makes and the code didn't: a type definition can be recursive even though every concrete value of it must be a finite tree."
 ---
 
-EIP-712 is the standard behind almost every "sign this" prompt your wallet shows you — it takes a structured message, hashes it deterministically, and lets a contract verify the signature on-chain. The deterministic part hinges on *canonicalization*: turning a type like `Mail(address from,address to,string contents)` into exactly one agreed-upon string, so the signer and the verifier hash the same bytes.
+EIP-712 says, in so many words, that it supports recursive struct types. [alloy](https://github.com/alloy-rs/core) — the Ethereum Rust library under Foundry and Reth — refused to canonicalize one. Neither side was being careless: the spec is explicit, and a library that rejects cyclic types is doing exactly what it should. The bug lived in the inch between those two facts.
 
-Here's a type that is perfectly legal under EIP-712, and that [alloy](https://github.com/alloy-rs/core) — the Ethereum Rust library underneath Foundry and Reth — refused to canonicalize:
+EIP-712 is the standard behind almost every "sign this" prompt your wallet shows you: it takes a structured message, hashes it deterministically, and lets a contract verify the signature on-chain. The deterministic part hinges on *canonicalization* — turning a type like `Mail(address from,address to,string contents)` into exactly one agreed-upon string, so the signer and the verifier hash the same bytes. Here's a type that is perfectly legal under EIP-712, and that alloy rejected anyway:
 
 ```rust
 #[test]
@@ -111,7 +111,7 @@ A second regression test covers the case that also has a real dependency — `Tr
 
 ## Why I care about a missing primary component
 
-This is a small diff. But it's the kind of bug I go looking for: it lived in the gap between two rules that are each correct on their own — *"reject cyclic types"* and *"the spec allows recursion"* — where neither side's author was wrong, and the seam between them was never tested. Signature and verification bugs almost always hide in [exactly that kind of seam](/blog/the-model-reads-not-it-just-cant-use-it/) — the join between two halves that are each correct alone.
+This is a small diff. But it's the kind of bug I go looking for. Two rules, each correct alone — *"reject cyclic types"* and *"the spec allows recursion"* — and no test ever stood in the gap where they disagree. That gap is where signature and verification bugs almost always live: [not in either rule, but in the join nobody wrote down](/blog/the-model-reads-not-it-just-cant-use-it/).
 
 And EIP-712 canonicalization isn't a backwater. It's on the path of every typed-data signature that flows through the Rust Ethereum stack — every Foundry script that signs a permit, every tool built on alloy that verifies one. A type the spec says is valid should not be un-signable because of how the library happened to find its primary component.
 

@@ -56,7 +56,7 @@ Three honest options, all expensive in their own way:
 - **Verify the lattice signature directly** — ML-DSA-65 in Solidity/Yul. Heavy (the signature alone is ~3.3 KB), but no classical assumption in the trust path.
 - **Add a native precompile** on a chain you control, so the heavy verification runs at the protocol layer instead of in EVM bytecode.
 
-For [the bridge I built](/blog/auditing-my-own-bridge/), the home chain is a DAG L1 I control, so I put a **native ML-DSA-65 precompile** on it and verify the operator's signature directly — no SNARK in the trust path at all. EVM destination chains, where on-chain lattice verification is prohibitive, fall back to ECDSA and inherit PQ integrity transitively through the home chain's consensus rather than pretending to check it locally. And the optimistic ZK path is **labeled non-post-quantum**, because it verifies a BN254 proof and I'm not going to call that something it isn't.
+For [the bridge I built](/blog/auditing-my-own-bridge/), the home chain is a DAG L1 I control, so I put a **native ML-DSA-65 precompile** on it and verify the operator's signature directly — no SNARK in the trust path at all. EVM destination chains, where on-chain lattice verification is prohibitive, fall back to ECDSA and inherit PQ integrity transitively through the home chain's consensus rather than pretending to check it locally. And the optimistic ZK path is **labeled non-post-quantum**, because it verifies a BN254 proof and I'm not going to call that something it isn't. (The pluggable-verifier split — ECDSA on EVM destinations, swappable for a lattice verifier on the home chain — is runnable in [lock-mint-bridge-lab](https://github.com/0xSoftBoi/lock-mint-bridge-lab).)
 
 ## Why I'd rather under-claim
 

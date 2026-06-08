@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% seo %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
 </head>
@@ -13,12 +14,12 @@
   <a class="skip" href="#main">skip to content</a>
   <header class="site-header">
     <nav class="nav">
-      <a class="brand" href="{{ '/' | relative_url }}">0x<span class="accent">SoftBoi</span></a>
+      <a class="brand" href="{{ '/' | relative_url }}">0xSoftBoi</a>
       <div class="nav-links">
-        <a href="{{ '/' | relative_url }}">/cv</a>
-        <a href="{{ '/blog/' | relative_url }}">/blog</a>
+        <a href="{{ '/' | relative_url }}">writing</a>
+        <a href="{{ '/about/' | relative_url }}">about</a>
         <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a>
-        <a href="https://twitter.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">twitter</a>
+        <a href="https://twitter.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">x</a>
       </div>
     </nav>
   </header>
@@ -29,7 +30,7 @@
 
   <footer class="site-footer">
     <span>© {{ site.time | date: "%Y" }} 0xSoftBoi</span>
-    <span class="dim">built with jekyll · <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot</a></span>
+    <span><a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot</a></span>
   </footer>
 </body>
 </html>

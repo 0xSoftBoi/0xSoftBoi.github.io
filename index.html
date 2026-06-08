@@ -1,114 +1,35 @@
 ---
 layout: default
-title: "0xSoftBoi — AI Agents × cross-chain DeFi"
+title: "0xSoftBoi — security & systems"
 ---
 
-<section class="hero">
-  <div class="prompt">~ $ whoami</div>
-  <h1>0x<span class="accent">SoftBoi</span></h1>
-  <p class="role">Engineer · AI agents × cross-chain DeFi · founder of <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">Suwappu</a></p>
-  <p>I build autonomous AI-agent systems and the cross-chain infrastructure they trade on — from local-first agent stacks and security tooling to post-quantum bridge protocols and consensus research. Solidity, TypeScript, Python.</p>
-  <div class="meta">
-    <span>📍 Washington, DC</span>
-    <span>⛓ EVM · cross-chain · L2</span>
-    <span>🤖 LLM agents · MCP · A2A</span>
-  </div>
-  <div class="cta">
-    <a class="btn" href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github →</a>
-    <a class="btn ghost" href="{{ '/blog/' | relative_url }}">read the blog</a>
-    <a class="btn ghost" href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot</a>
-  </div>
+<section class="intro">
+  <p class="lede">I'm <strong>0xSoftBoi</strong>. I work on cross-chain infrastructure, smart-contract security, and the machine learning pointed at both — and I'm partial to the one accounting bug that lets a bridge print money.</p>
 </section>
 
-<section id="projects">
-  <h2>selected work</h2>
-  <div class="grid">
-
-    <a class="card" href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">
-      <div class="top"><h3>Suwappu</h3><span class="tag">founder</span></div>
-      <p>Cross-chain DEX with a native AI-agent SDK — plug in LangChain, CrewAI, MCP, or A2A and let agents trade autonomously across chains.</p>
-      <div class="stack">TypeScript · Solidity · agent SDKs</div>
-    </a>
-
-    <a class="card" href="https://github.com/0xSoftBoi/hermes-agents" target="_blank" rel="noopener noreferrer">
-      <div class="top"><h3>hermes-agents</h3><span class="tag">AI systems</span></div>
-      <p>Local-first AI agent stack for 8&nbsp;GB hardware — 4 LLM backends, MCP routing, LoRA fine-tuning, persistent memory, and OpenTelemetry observability. $0/month after free-tier keys.</p>
-      <div class="stack">Python · MCP · Ollama/MLX · OTel</div>
-    </a>
-
-    <a class="card" href="https://github.com/0xSoftBoi/smart-contract-auditor" target="_blank" rel="noopener noreferrer">
-      <div class="top"><h3>smart-contract-auditor</h3><span class="tag">security</span></div>
-      <p>Solidity security CLI — wraps Slither and falls back to built-in static pattern matching for reentrancy, unchecked calls, and access-control flaws.</p>
-      <div class="stack">Python · Slither · static analysis</div>
-    </a>
-
-    <a class="card" href="https://github.com/0xSoftBoi/consensus-benchmarking-suite" target="_blank" rel="noopener noreferrer">
-      <div class="top"><h3>consensus-benchmarking-suite</h3><span class="tag">distributed systems</span></div>
-      <p>Simulation toolkit comparing PBFT, Proof-of-Stake, and Proof-of-Work across throughput, latency, and finality — with interactive comparison charts.</p>
-      <div class="stack">Python · BFT · consensus</div>
-    </a>
-
-    <a class="card" href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">
-      <div class="top"><h3>AI security research</h3><span class="tag">research</span></div>
-      <p>Multi-turn LLM reasoning for smart-contract vulnerability detection, plus mechanistic-interpretability experiments on factual recall and negation.</p>
-      <div class="stack">Python · TransformerLens · LLM eval</div>
-    </a>
-
-    <a class="card" href="https://github.com/0xSoftBoi/monadbft-research-aggregator" target="_blank" rel="noopener noreferrer">
-      <div class="top"><h3>monadbft-research-aggregator</h3><span class="tag">research</span></div>
-      <p>Research + simulation toolkit for MonadBFT consensus — Byzantine fault-tolerance analysis for cross-chain settlement systems.</p>
-      <div class="stack">Python · BFT · settlement</div>
-    </a>
-
-  </div>
-  <p class="note" style="margin-top:14px">// more on <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github.com/0xSoftBoi</a></p>
+<section class="writing">
+  <h2>Writing</h2>
+  <ul class="posts">
+    {% for post in site.posts %}
+    <li>
+      <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <div class="post-meta">{{ post.date | date: "%b %Y" }}{% if post.tags %} · {{ post.tags | join: ", " }}{% endif %}</div>
+      {% if post.excerpt %}<p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 220 }}</p>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
 </section>
 
-<section id="skills">
-  <h2>stack</h2>
-  <div class="skills">
-    <span class="chip">Solidity</span>
-    <span class="chip">TypeScript</span>
-    <span class="chip">Python</span>
-    <span class="chip">Rust</span>
-    <span class="chip">EVM / L2</span>
-    <span class="chip">Foundry</span>
-    <span class="chip">cross-chain bridges</span>
-    <span class="chip">smart-contract security</span>
-    <span class="chip">LLM agents</span>
-    <span class="chip">MCP / A2A</span>
-    <span class="chip">LangChain / CrewAI</span>
-    <span class="chip">consensus / BFT</span>
-    <span class="chip">post-quantum crypto</span>
-    <span class="chip">fine-tuning (LoRA)</span>
-  </div>
-</section>
-
-<section id="experience">
-  <h2>experience</h2>
-  <!-- TODO(you): fill in real roles. I left placeholders + one entry I can speak to. -->
-  <div class="entry">
-    <div class="when">2025 — present</div>
-    <h3>Founder &amp; Lead Engineer · Suwappu</h3>
-    <ul>
-      <li>Building an agent-native cross-chain DEX: settlement contracts, the bridge/custody layer, and an AI-agent SDK (LangChain / CrewAI / MCP / A2A).</li>
-      <li>Designed and implemented a post-quantum cross-chain bridge (ML-DSA-65 / ML-KEM-768) with an on-chain attestation-gated mint/refund model.</li>
-      <li>Ran a full invariant-driven security audit of the custody layer — Foundry stateful invariants, Slither, Halmos — and shipped fixes with revert-fails regression proofs.</li>
-    </ul>
-  </div>
-  <div class="entry">
-    <div class="when">YYYY — YYYY</div>
-    <h3>Role · Company</h3>
-    <ul><li>// TODO: add your prior roles here</li></ul>
-  </div>
-</section>
-
-<section id="education">
-  <h2>education &amp; more</h2>
-  <!-- TODO(you): fill in -->
-  <div class="entry">
-    <div class="when">YYYY</div>
-    <h3>// Degree / Program · Institution</h3>
-  </div>
-  <p class="note">find me: <a href="https://twitter.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">@0xSoftBoi</a> · <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a> · <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot</a></p>
+<section class="work">
+  <h2>Selected work</h2>
+  <ul class="work-list">
+    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">alloy</a><span class="tag">merged</span> — fixed EIP-712 canonicalization to allow self-referential struct types in <code>dyn-abi</code>. alloy is the Ethereum Rust library behind Foundry and Reth.</li>
+    <li><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">uutils/coreutils</a><span class="tag">merged</span> — corrected <code>date</code> timezone re-zoning in the Rust rewrite of GNU coreutils.</li>
+    <li><a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">Suwappu</a> — an agent-native cross-chain DEX with a post-quantum bridge (ML-DSA-65). I designed the custody layer and audited it end-to-end with Foundry invariants, Slither and Halmos.</li>
+    <li><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">BRIDGE-bench</a><span class="tag">research</span> — measuring LLM reasoning against real DeFi exploits: static analysis scores ~0% F1 on compositional bridge hacks; a static-pre-filtered LLM reaches ~40%. Also a TransformerLens mech-interp replication suite.</li>
+    <li><a href="https://github.com/0xSoftBoi/gnome-materials" target="_blank" rel="noopener noreferrer">gnome-materials</a> — GNoME-style active learning for materials discovery on a pretrained CHGNet potential: 95% top-100 recall on a 20% labeling budget.</li>
+    <li><a href="https://github.com/0xSoftBoi/sensorforge" target="_blank" rel="noopener noreferrer">sensorforge</a> — a robotics monorepo: iPhone/ARKit sensor capture, a Jetson Orin voice assistant, and an active-inference engine.</li>
+    <li><a href="https://github.com/0xSoftBoi/quantgroup" target="_blank" rel="noopener noreferrer">quantgroup</a> — a constant-product AMM annotated for auditors: attack simulations and stateful invariant tests.</li>
+  </ul>
+  <p class="more">More open-source work — candle, polars, mlx-lm — and projects on <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a>. Background on the <a href="{{ '/about/' | relative_url }}">about</a> page.</p>
 </section>

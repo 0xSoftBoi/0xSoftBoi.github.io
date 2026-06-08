@@ -3,12 +3,16 @@ layout: post
 title: "The model reads \"not\" — it just can't use it"
 date: 2026-04-22
 tags: [interpretability, llms, ai]
+image: /assets/og/the-model-reads-not-it-just-cant-use-it.png
 excerpt: "Ask GPT-2 to complete \"Paris is not the capital of\" and it still says France. The interesting part isn't that it fails — it's that the model clearly attends to the word \"not\" and then can't make that signal change its answer. Here's where, inside the network, the gating breaks."
 ---
 
 Language models are famously bad at negation. Ask GPT-2 small to finish *"Paris is the capital of"* and it says France; ask it to finish *"Paris is **not** the capital of"* and it says France again, barely flinching. This is old news behaviorally — [Ettinger (2020)](https://arxiv.org/abs/1907.13528) showed BERT predicts "bird" for both *"A robin is a \_\_\_"* and *"A robin is not a \_\_\_"*, and [Truong et al. (2023)](https://arxiv.org/abs/2306.08189) confirmed it systematically across model families. I went looking for the *mechanism*: where in the forward pass does the "not" get lost?
 
 The answer turned out to be more specific, and weirder, than "the model ignores negation."
+
+* TOC
+{:toc}
 
 ## Weirder than ignoring it
 

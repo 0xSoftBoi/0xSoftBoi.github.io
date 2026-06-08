@@ -18,10 +18,20 @@ markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  auto_ids: true          # heading IDs for in-page TOC anchors
+  toc_levels: 2..3
 permalink: /blog/:title/
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Default social-share image; posts override with their own per-post card.
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/og/default.png
 
 # Pagination not needed yet; keep it simple
 exclude:
@@ -29,3 +39,4 @@ exclude:
   - Gemfile.lock
   - README.md
   - vendor
+  - _charts

@@ -3,6 +3,7 @@ layout: post
 title: "Recursive types, finite values: an EIP-712 bug in alloy"
 date: 2026-05-25
 tags: [rust, ethereum, eip-712]
+image: /assets/og/recursive-types-finite-values-eip712-alloy.png
 excerpt: "EIP-712 explicitly supports recursive struct types — but alloy refused to canonicalize one. The fix turned on a distinction the spec makes and the code didn't: a type definition can be recursive even though every concrete value of it must be a finite tree."
 ---
 

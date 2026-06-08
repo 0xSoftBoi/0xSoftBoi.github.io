@@ -2,7 +2,8 @@
 layout: post
 title: "The post-quantum proof that Shor breaks anyway"
 date: 2026-06-04
-tags: [post-quantum, zk, cryptography]
+tags: [post-quantum, zk, cryptography, security, bridges]
+image: /assets/og/post-quantum-proof-shor-breaks-anyway.png
 excerpt: "A bridge verifies a lattice signature inside a zero-knowledge proof and calls itself post-quantum. The signature is post-quantum. The proof isn't — and a quantum adversary attacks the proof, not the signature. Here's where the claim snaps."
 ---
 

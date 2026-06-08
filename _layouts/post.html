@@ -4,8 +4,23 @@ layout: default
 <article class="post">
   <a class="back" href="{{ '/' | relative_url }}">← writing</a>
   <h1 class="post-title">{{ page.title }}</h1>
-  <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }}{% if page.tags %} · {{ page.tags | join: " · " }}{% endif %}</p>
+  <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }} · {{ content | strip_html | number_of_words | divided_by: 200.0 | ceil }} min{% if page.tags %} · {% for tag in page.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}{% endif %}</p>
   <div class="post-body">
     {{ content }}
   </div>
+
+  {% capture related_items %}{% assign shown = 0 %}{% assign tagcount = page.tags | size %}{% if tagcount > 0 %}{% for n in (1..tagcount) reversed %}{% for post in site.posts %}{% if post.url != page.url and shown < 3 %}{% assign shared = 0 %}{% for t in post.tags %}{% if page.tags contains t %}{% assign shared = shared | plus: 1 %}{% endif %}{% endfor %}{% if shared == n %}<li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>{% assign shown = shown | plus: 1 %}{% endif %}{% endif %}{% endfor %}{% endfor %}{% endif %}{% endcapture %}
+  {% if related_items contains "<li>" %}
+  <aside class="related">
+    <p class="related-title">Related</p>
+    <ul>{{ related_items }}</ul>
+  </aside>
+  {% endif %}
+
+  {% if page.previous or page.next %}
+  <nav class="post-nav">
+    {% if page.previous %}<a class="pn-older" href="{{ page.previous.url | relative_url }}">← {{ page.previous.title | truncatewords: 6 }}</a>{% endif %}
+    {% if page.next %}<a class="pn-newer" href="{{ page.next.url | relative_url }}">{{ page.next.title | truncatewords: 6 }} →</a>{% endif %}
+  </nav>
+  {% endif %}
 </article>

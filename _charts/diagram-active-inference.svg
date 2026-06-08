@@ -1,0 +1,34 @@
+<figure class="chart">
+<svg viewBox="0 0 680 320" role="img" aria-labelledby="ai-t">
+<title id="ai-t">The active-inference loop: predict, observe, measure the precision-weighted error, then either update beliefs or ask the world and remember the answer</title>
+<defs>
+<marker id="c-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+<marker id="c-arrowhead-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker>
+</defs>
+<text class="c-title" x="20" y="26">Minimize surprise — by changing your mind, or changing the world</text>
+<rect class="c-box" x="24" y="70" width="120" height="56" rx="6"/>
+<text class="c-val" x="84" y="94" text-anchor="middle">predict</text>
+<text class="c-label-sm" x="84" y="112" text-anchor="middle">top-down guess</text>
+<line class="c-arrow" x1="146" y1="98" x2="226" y2="98"/>
+<rect class="c-box" x="228" y="70" width="120" height="56" rx="6"/>
+<text class="c-val" x="288" y="94" text-anchor="middle">observe</text>
+<text class="c-label-sm" x="288" y="112" text-anchor="middle">webcam feed</text>
+<line class="c-arrow" x1="350" y1="98" x2="430" y2="98"/>
+<rect class="c-box-accent c-fill-soft" x="432" y="70" width="224" height="56" rx="6"/>
+<text class="c-val" x="544" y="94" text-anchor="middle">prediction error</text>
+<text class="c-label-sm" x="544" y="112" text-anchor="middle">residual, weighted by precision (confidence)</text>
+<line class="c-arrow" x1="544" y1="128" x2="544" y2="166"/>
+<text class="c-label-sm" x="560" y="152">explained away?</text>
+<rect class="c-box" x="404" y="168" width="252" height="48" rx="6"/>
+<text class="c-val" x="530" y="190" text-anchor="middle">yes → update belief</text>
+<text class="c-label-sm" x="530" y="208" text-anchor="middle">change your mind, loop again</text>
+<rect class="c-box-accent c-fill-soft" x="404" y="232" width="252" height="64" rx="6"/>
+<text class="c-val" x="530" y="256" text-anchor="middle">no → ask the world</text>
+<text class="c-label-sm" x="530" y="276" text-anchor="middle">write a question; the answer becomes</text>
+<text class="c-label-sm" x="530" y="290" text-anchor="middle">Lore — memory that reshapes next prediction</text>
+<path class="c-arrow-muted" d="M404,192 C150,192 84,168 84,128"/>
+<path class="c-arrow" d="M404,264 C40,300 20,180 28,128"/>
+<text class="c-label-sm" x="150" y="252" text-anchor="middle">curiosity aimed only at what it can’t yet predict</text>
+</svg>
+<figcaption>When a layer can’t explain its surprise by updating, it acts: it asks a question, stores the answer as Lore, and won’t be surprised the same way twice. State what you expect; chase the residual when reality disagrees.</figcaption>
+</figure>

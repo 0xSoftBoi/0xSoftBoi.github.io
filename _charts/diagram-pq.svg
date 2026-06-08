@@ -1,0 +1,22 @@
+<figure class="chart">
+<svg viewBox="0 0 680 290" role="img" aria-labelledby="pq-t">
+<title id="pq-t">A post-quantum signature wrapped in a classical BN254 proof; a quantum adversary attacks the outer proof, not the inner signature</title>
+<defs>
+<marker id="c-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+</defs>
+<text class="c-title" x="20" y="26">Where the “post-quantum” claim snaps</text>
+<rect class="c-box-accent c-fill-soft" x="170" y="58" width="430" height="150" rx="8"/>
+<text class="c-label" x="186" y="80">Groth16 proof over BN254</text>
+<text class="c-label-sm" x="186" y="98">soundness = elliptic-curve discrete log · classical</text>
+<rect class="c-box" x="250" y="116" width="270" height="74" rx="6"/>
+<text class="c-val" x="385" y="146" text-anchor="middle">ML-DSA-65 signature</text>
+<text class="c-label-sm" x="385" y="166" text-anchor="middle">post-quantum · secure</text>
+<line class="c-arrow" x1="34" y1="120" x2="166" y2="120"/>
+<text class="c-val" x="34" y="106">Shor</text>
+<text class="c-label-sm" x="34" y="140">breaks BN254,</text>
+<text class="c-label-sm" x="34" y="156">forges the proof</text>
+<text class="c-label-sm" x="385" y="234" text-anchor="middle">The adversary never touches the inner signature — it forges the outer attestation,</text>
+<text class="c-label-sm" x="385" y="250" text-anchor="middle">and the secure post-quantum signature ends up attesting to nothing.</text>
+</svg>
+<figcaption>The signature is post-quantum; the proof that wraps it is not. Shor breaks the outer BN254 proof — the boundary that actually touches the chain.</figcaption>
+</figure>

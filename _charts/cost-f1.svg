@@ -1,0 +1,26 @@
+<figure class="chart">
+<svg viewBox="0 0 680 330" role="img" aria-labelledby="cf-t">
+<title id="cf-t">Accuracy vs cost per contract</title>
+<text class="c-title" x="18" y="22">Accuracy vs cost per contract</text>
+<line class="c-grid" x1="54" y1="278.0" x2="656" y2="278.0"/>
+<text class="c-label-sm" x="46" y="282.0" text-anchor="end">0%</text>
+<line class="c-grid" x1="54" y1="162.0" x2="656" y2="162.0"/>
+<text class="c-label-sm" x="46" y="166.0" text-anchor="end">25%</text>
+<line class="c-grid" x1="54" y1="46.0" x2="656" y2="46.0"/>
+<text class="c-label-sm" x="46" y="50.0" text-anchor="end">50%</text>
+<polyline class="c-line" points="54.0,275.7 66.0,185.2 150.3,92.4 583.8,69.2"/>
+<circle class="c-dot" cx="54.0" cy="275.7" r="5"/>
+<text class="c-label" x="66.0" y="279.7" text-anchor="start">static ~0%</text>
+<circle class="c-dot" cx="66.0" cy="185.2" r="5"/>
+<text class="c-label" x="78.0" y="189.2" text-anchor="start">+light LLM</text>
+<circle class="c-dot-hi" cx="150.3" cy="92.4" r="7"/>
+<text class="c-val" x="162.3" y="96.4" text-anchor="start">hybrid — $0.08, ~40%</text>
+<circle class="c-dot" cx="583.8" cy="69.2" r="5"/>
+<text class="c-label" x="571.8" y="73.2" text-anchor="end">full frontier</text>
+<line class="c-axis" x1="54" y1="278.0" x2="656" y2="278.0"/>
+<line class="c-axis" x1="54" y1="46.0" x2="54" y2="278.0"/>
+<text class="c-label-sm" x="355.0" y="320.0" text-anchor="middle">cost per contract (USD)  —  $0  →  $0.44</text>
+<text class="c-label-sm" x="14.0" y="162.0" text-anchor="middle" transform="rotate(-90 14.0 162.0)">F1</text>
+</svg>
+<figcaption>The cost/accuracy frontier. The hybrid point buys ~40% F1 at $0.08 — nearly all the accuracy of full frontier reasoning at a fraction of the cost.</figcaption>
+</figure>

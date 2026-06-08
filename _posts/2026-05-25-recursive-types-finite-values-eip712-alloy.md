@@ -43,6 +43,41 @@ Read those together and the whole bug falls out. A *recursive type definition* i
 
 Canonicalization operates on the *type definition*. So it has to accept self-reference. The code conflated the two: anything that pointed at itself was treated as a cycle, and cycles were rejected wholesale. To find the "primary" type to canonicalize, the resolver leaned on its cycle/dependency machinery — and a self-referential type registers as depending on itself, so the lookup came back empty and bailed with `MissingType("primary component")` before it ever produced a string.
 
+<figure class="chart">
+<svg viewBox="0 0 680 300" role="img" aria-labelledby="ei-t">
+<title id="ei-t">An EIP-712 type definition may reference itself, but every concrete value of it must be a finite tree</title>
+<defs>
+<marker id="c-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+<marker id="c-arrowhead-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker>
+</defs>
+<text class="c-title" x="20" y="26">Recursive type, finite value</text>
+<line class="c-grid" x1="340" y1="50" x2="340" y2="280"/>
+<text class="c-val" x="20" y="64">type definition</text>
+<text class="c-label-sm" x="20" y="82">canonicalize · type-level · permissive</text>
+<path class="c-arrow" d="M120,106 C120,90 250,90 250,106"/>
+<rect class="c-box-accent c-fill-soft" x="36" y="110" width="276" height="50" rx="6"/>
+<text class="c-val" x="174" y="140" text-anchor="middle">Node(uint256 value, Node[] children)</text>
+<text class="c-label" x="36" y="196">self-reference ✓ allowed</text>
+<text class="c-label-sm" x="36" y="216">it describes a possibly-self-referencing shape</text>
+<text class="c-val" x="360" y="64">concrete value</text>
+<text class="c-label-sm" x="360" y="82">resolve · builds a value · strict</text>
+<circle class="c-dot-hi" cx="470" cy="116" r="8"/>
+<line class="c-line" x1="470" y1="124" x2="430" y2="150"/>
+<line class="c-line" x1="470" y1="124" x2="510" y2="150"/>
+<circle class="c-dot" cx="430" cy="158" r="7"/>
+<circle class="c-dot" cx="510" cy="158" r="7"/>
+<line class="c-line" x1="430" y1="165" x2="430" y2="186"/>
+<line class="c-line" x1="510" y1="165" x2="510" y2="186"/>
+<circle class="c-dot" cx="430" cy="192" r="5"/>
+<circle class="c-dot" cx="510" cy="192" r="5"/>
+<text class="c-label" x="558" y="120">finite tree ✓</text>
+<text class="c-label-sm" x="558" y="138">bottoms out</text>
+<text class="c-label" x="360" y="244">a value that loops back on itself ✗</text>
+<text class="c-label-sm" x="360" y="264">undefined — the strict check still rejects a true cycle (A→B→A)</text>
+</svg>
+<figcaption>The bug lived in the seam between two correct rules — “reject cyclic types” and “the spec allows recursion.” The fix splits one cycle check into a permissive (type-level) and a strict (value-level) pass.</figcaption>
+</figure>
+
 ## The fix: two cycle checks, not one
 
 The resolver already had one cycle detector. The fix splits it in two, keyed on *what the caller is going to build*:
@@ -75,7 +110,7 @@ A second regression test covers the case that also has a real dependency — `Tr
 
 ## Why I care about a missing primary component
 
-This is a small diff. But it's the kind of bug I go looking for: it lived in the gap between two rules that are each correct on their own — *"reject cyclic types"* and *"the spec allows recursion"* — where neither side's author was wrong, and the seam between them was never tested. Signature and verification bugs almost always hide in exactly that kind of seam.
+This is a small diff. But it's the kind of bug I go looking for: it lived in the gap between two rules that are each correct on their own — *"reject cyclic types"* and *"the spec allows recursion"* — where neither side's author was wrong, and the seam between them was never tested. Signature and verification bugs almost always hide in [exactly that kind of seam](/blog/the-model-reads-not-it-just-cant-use-it/) — the join between two halves that are each correct alone.
 
 And EIP-712 canonicalization isn't a backwater. It's on the path of every typed-data signature that flows through the Rust Ethereum stack — every Foundry script that signs a permit, every tool built on alloy that verifies one. A type the spec says is valid should not be un-signable because of how the library happened to find its primary component.
 

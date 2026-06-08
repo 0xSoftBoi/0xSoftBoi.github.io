@@ -115,3 +115,29 @@ p{margin:0 0 16px}
 
 /* nav between posts */
 .nav-links.post-nav{margin-top:40px;font-size:.82rem}
+
+/* ---- charts (inline themed SVG; re-themes via CSS vars) ---- */
+figure.chart{margin:28px 0;padding:0;max-width:100%}
+figure.chart svg{display:block;width:100%;height:auto;font-family:var(--sans);overflow:visible}
+figure.chart figcaption{
+  font-family:var(--mono);font-size:.74rem;color:var(--muted);
+  margin-top:10px;text-align:center;letter-spacing:.01em;line-height:1.5
+}
+/* SVG element roles — referenced by class inside each <svg> */
+.c-axis{stroke:var(--rule);stroke-width:1;fill:none}
+.c-grid{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 4;opacity:.7}
+.c-bar{fill:var(--accent)}
+.c-bar-muted{fill:var(--muted);opacity:.55}
+.c-dot{fill:var(--muted)}
+.c-dot-hi{fill:var(--accent)}
+.c-line{stroke:var(--rule);stroke-width:1.5;fill:none}
+.c-label{fill:var(--muted);font-size:13px}
+.c-label-sm{fill:var(--muted);font-size:11px}
+.c-val{fill:var(--text);font-size:13px;font-weight:600}
+.c-title{fill:var(--text);font-size:14px;font-weight:600;font-family:var(--serif)}
+.c-box{fill:none;stroke:var(--rule);stroke-width:1.5}
+.c-box-accent{fill:none;stroke:var(--accent);stroke-width:1.5}
+.c-fill-soft{fill:var(--accent);opacity:.08}
+.c-ink{fill:var(--text)}
+.c-arrow{stroke:var(--accent);stroke-width:1.5;fill:none;marker-end:url(#c-arrowhead)}
+.c-arrow-muted{stroke:var(--muted);stroke-width:1.5;fill:none;marker-end:url(#c-arrowhead-muted)}

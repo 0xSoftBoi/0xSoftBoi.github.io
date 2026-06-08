@@ -1,0 +1,29 @@
+<figure class="chart">
+<svg viewBox="0 0 680 300" role="img" aria-labelledby="br-t">
+<title id="br-t">The fix: an attestation gate that binds every value-moving call to an operator signature</title>
+<defs>
+<marker id="c-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+<marker id="c-arrowhead-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker>
+</defs>
+<text class="c-title" x="20" y="26">One invariant, one gate</text>
+<text class="c-label-sm" x="20" y="46">supply minted on destination  ≤  collateral locked on source</text>
+<rect class="c-box" x="20" y="92" width="120" height="56" rx="6"/>
+<text class="c-val" x="80" y="116" text-anchor="middle">relayer</text>
+<text class="c-label-sm" x="80" y="134" text-anchor="middle">untrusted</text>
+<line class="c-arrow" x1="142" y1="120" x2="246" y2="120"/>
+<rect class="c-box-accent c-fill-soft" x="248" y="80" width="200" height="80" rx="8"/>
+<text class="c-val" x="348" y="106" text-anchor="middle">attestation gate</text>
+<text class="c-label-sm" x="348" y="126" text-anchor="middle">verify(digest, signature)</text>
+<text class="c-label-sm" x="348" y="142" text-anchor="middle">binds commitId · recipient ·</text>
+<text class="c-label-sm" x="348" y="156" text-anchor="middle">amount · chainId · address</text>
+<line class="c-arrow" x1="450" y1="120" x2="554" y2="120"/>
+<rect class="c-box" x="556" y="92" width="110" height="56" rx="6"/>
+<text class="c-val" x="611" y="116" text-anchor="middle">mint · unlock</text>
+<text class="c-label-sm" x="611" y="134" text-anchor="middle">finalize</text>
+<path class="c-arrow-muted" d="M80,150 C80,212 611,212 611,152" stroke-dasharray="5 4"/>
+<text class="c-label-sm" x="348" y="206" text-anchor="middle">the old path — relayer trusted directly, no on-chain proof — is removed</text>
+<text class="c-label-sm" x="348" y="252" text-anchor="middle">Without the gate the invariant breaks in one call: mint(arbitraryCommitId, attacker, 1e30).</text>
+<text class="c-label-sm" x="348" y="268" text-anchor="middle">The digest binds the parameters an operator signed, so a forged request no longer verifies.</text>
+</svg>
+<figcaption>Every critical reduced to one root cause — no on-chain binding between lock state, mint state, and a verified operator. The gate supplies it.</figcaption>
+</figure>

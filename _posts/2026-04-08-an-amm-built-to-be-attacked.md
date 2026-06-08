@@ -8,6 +8,44 @@ excerpt: "Most AMM code is written to look safe. I wrote one to be a teaching sp
 
 When you're learning to audit AMMs, the hard part isn't reading the swap math. It's developing the judgment to look at a successful attack and know which kind it is — a *bug* you must fix, an *economic reality* you can only warn about, or a *known weakness* you've deliberately decided to accept. Those three look identical from the outside: in all of them, someone walks away with money they didn't deposit.
 
+<figure class="chart">
+<svg viewBox="0 0 680 300" role="img" aria-labelledby="am-t">
+<title id="am-t">Three categories of AMM attack: contract bugs to fix, economic realities to warn about, and accepted weaknesses to document</title>
+<text class="c-title" x="20" y="26">Someone walks away with money they didn’t deposit. Which kind is it?</text>
+<rect class="c-box-accent c-fill-soft" x="20" y="56" width="204" height="210" rx="8"/>
+<text class="c-val" x="36" y="82">contract bug</text>
+<text class="c-label-sm" x="36" y="100">→ fix it</text>
+<line class="c-grid" x1="36" y1="112" x2="208" y2="112"/>
+<text class="c-label" x="36" y="138">x·y &lt; k after a swap</text>
+<text class="c-label-sm" x="36" y="158">reserves shrink — the pool</text>
+<text class="c-label-sm" x="36" y="174">is leaking value</text>
+<text class="c-label-sm" x="36" y="240">caught by the invariant:</text>
+<text class="c-label-sm" x="36" y="256">x·y ≥ k, always</text>
+<rect class="c-box" x="238" y="56" width="204" height="210" rx="8"/>
+<text class="c-val" x="254" y="82">economic reality</text>
+<text class="c-label-sm" x="254" y="100">→ warn, can’t patch</text>
+<line class="c-grid" x1="254" y1="112" x2="426" y2="112"/>
+<text class="c-label" x="254" y="138">sandwich / MEV</text>
+<text class="c-label-sm" x="254" y="158">x·y ≥ k holds — defense is</text>
+<text class="c-label-sm" x="254" y="174">the caller’s slippage guard</text>
+<text class="c-label" x="254" y="212">first-depositor donation</text>
+<text class="c-label-sm" x="254" y="232">economics, not a leak —</text>
+<text class="c-label-sm" x="254" y="248">a √-bootstrap makes it</text>
+<text class="c-label-sm" x="254" y="264">cost N² to inflate N</text>
+<rect class="c-box" x="456" y="56" width="204" height="210" rx="8"/>
+<text class="c-val" x="472" y="82">accepted weakness</text>
+<text class="c-label-sm" x="472" y="100">→ document the decision</text>
+<line class="c-grid" x1="472" y1="112" x2="644" y2="112"/>
+<text class="c-label" x="472" y="138">no TWAP oracle</text>
+<text class="c-label-sm" x="472" y="156">spot price manipulable</text>
+<text class="c-label" x="472" y="190">integer math rounds down</text>
+<text class="c-label-sm" x="472" y="208">dust accrues to the pool</text>
+<text class="c-label" x="472" y="242">no flash loans</text>
+<text class="c-label-sm" x="472" y="260">a scope choice, not safety</text>
+</svg>
+<figcaption>All three look identical from outside — money leaves the pool. The skill is filing each correctly: bug, economics, or accepted limitation. A pool that’s merely safe hides that distinction.</figcaption>
+</figure>
+
 So I built [QuantDEX](https://github.com/0xSoftBoi/quantgroup): a constant-product (`x·y=k`) AMM with a 0.3% fee, written not to be production-safe but to be *annotated* — a reference where the invariants are proven, the attacks are reproduced as tests, and every "this is fine" is justified in a comment with an SWC or CWE reference. It's marked `@custom:audit-status unaudited — educational only`, because the point isn't a safe pool. The point is a precise map.
 
 ## What must always be true
@@ -38,4 +76,4 @@ The most useful comments in the contract are the ones admitting what it *doesn't
 
 ## Why a specimen beats a fortress
 
-The bridge I audited recently taught me from one direction: write the invariant that must never break, fuzz until something breaks it, fix the bug. This AMM teaches from the other — start from the invariants that *do* hold, then walk the catalogue of things that can still go wrong *on top of* a correct contract, and force yourself to file each one correctly: bug, economics, or accepted limitation. A pool that's merely safe hides all of that. A pool built to be attacked, with the exploits sitting in `test/Attacks.t.sol` next to the invariants in `test/InvariantTest.t.sol`, makes the taxonomy impossible to look away from — which is exactly what you want when the skill you're building is telling the three apart.
+[The bridge I audited recently](/blog/auditing-my-own-bridge/) taught me from one direction: write the invariant that must never break, fuzz until something breaks it, fix the bug. This AMM teaches from the other — start from the invariants that *do* hold, then walk the catalogue of things that can still go wrong *on top of* a correct contract, and force yourself to file each one correctly: bug, economics, or accepted limitation. A pool that's merely safe hides all of that. A pool built to be attacked, with the exploits sitting in `test/Attacks.t.sol` next to the invariants in `test/InvariantTest.t.sol`, makes the taxonomy impossible to look away from — which is exactly what you want when the skill you're building is telling the three apart.

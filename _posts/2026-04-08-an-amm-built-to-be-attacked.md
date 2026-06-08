@@ -30,9 +30,9 @@ The hard part of auditing an AMM isn't the swap math. It's judgment. An attack s
 <text class="c-label-sm" x="254" y="158">x·y ≥ k holds — defense is</text>
 <text class="c-label-sm" x="254" y="174">the caller’s slippage guard</text>
 <text class="c-label" x="254" y="212">first-depositor donation</text>
-<text class="c-label-sm" x="254" y="232">economics, not a leak —</text>
-<text class="c-label-sm" x="254" y="248">a √-bootstrap makes it</text>
-<text class="c-label-sm" x="254" y="264">cost N² to inflate N</text>
+<text class="c-label-sm" x="254" y="232">neutralized by internal</text>
+<text class="c-label-sm" x="254" y="248">reserve accounting — a</text>
+<text class="c-label-sm" x="254" y="264">donation can’t move price</text>
 <rect class="c-box" x="456" y="56" width="204" height="210" rx="8"/>
 <text class="c-val" x="472" y="82">accepted weakness</text>
 <text class="c-label-sm" x="472" y="100">→ document the decision</text>

@@ -9,7 +9,7 @@ excerpt: "EIP-712 explicitly supports recursive struct types — but alloy refus
 
 EIP-712 says, in so many words, that it supports recursive struct types. [alloy](https://github.com/alloy-rs/core) — the Ethereum Rust library under Foundry and Reth — refused to canonicalize one. Neither side was being careless: the spec is explicit, and a library that rejects cyclic types is doing exactly what it should. The bug lived in the inch between those two facts.
 
-EIP-712 is the standard behind almost every "sign this" prompt your wallet shows you: it takes a structured message, hashes it deterministically, and lets a contract verify the signature on-chain. The deterministic part hinges on *canonicalization* — turning a type like `Mail(address from,address to,string contents)` into exactly one agreed-upon string, so the signer and the verifier hash the same bytes. Here's a type that is perfectly legal under EIP-712, and that alloy rejected anyway:
+EIP-712 is the standard behind almost every "sign this" prompt your wallet shows you: it takes a structured message, hashes it deterministically, and lets a contract verify the signature on-chain. The deterministic part hinges on *canonicalization* — turning a type like `Mail(address from,address to,string contents)` into exactly one agreed-upon string, so the signer and the verifier hash the same bytes. (What makes it *canonical*: when a struct references other structs, those referenced types are collected, sorted by name, and appended — exactly one legal ordering, so exactly one string per type.) Here's a type that is perfectly legal under EIP-712, and that alloy rejected anyway:
 
 ```rust
 #[test]

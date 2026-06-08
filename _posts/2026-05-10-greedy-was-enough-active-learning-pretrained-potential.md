@@ -53,6 +53,8 @@ The tie isn't a null result; it's a measurement of the surrogate. UCB only beats
 
 In other words: the better your prior, the less your uncertainty estimate buys you. You'd expect UCB to pull ahead in the regime where CHGNet is weak — a chemically unusual pool, far from its training distribution, where mean predictions are shaky and the model's "I'm not sure" actually means something. On a pool this well-covered by the pretrained backbone, greedy is enough, and paying for Monte-Carlo-Dropout uncertainty estimates is paying for exploration you don't need.
 
+There's a humbler reading I can't fully rule out, and it's the honest caveat on the result: MC-Dropout is a cheap way to estimate uncertainty and a famously miscalibrated one. Part of the tie might be that UCB never got a fair trial — its "I'm not sure" was noise rather than signal, so the exploration term had nothing real to act on. Distinguishing "uncertainty bought nothing because the mean is already good" from "uncertainty bought nothing because our σ is junk" needs a better-calibrated estimator — a deep ensemble — and that's the experiment I'd run next.
+
 ## The takeaway I keep
 
 This is the same lesson [the rest of my work keeps teaching](/blog/static-analysis-scores-zero-on-real-exploits/) from the other direction: know what your tool's confidence is actually worth before you build on it. A clever acquisition function on top of a strong pretrained model can quietly reduce to "trust the model," and the honest experiment is the one that measures whether the cleverness paid for itself. Here it didn't — and knowing *that*, and why, is more useful than a win would have been.

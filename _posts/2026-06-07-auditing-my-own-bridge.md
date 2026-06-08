@@ -23,7 +23,7 @@ It went red in under a second. The fuzzer found a one-call counterexample: the r
 
 ## The bug class
 
-Every critical reduced to the same root cause: **no on-chain binding between source-lock state, destination-mint state, and a verified operator.** Mint, unlock, and finalize all trusted a relayer set with no on-chain proof that the event they claimed had actually happened. That's the Ronin / Wormhole family — the most expensive bug class in the space.
+Every critical reduced to the same root cause: **no on-chain binding between source-lock state, destination-mint state, and a verified operator.** Mint, unlock, and finalize all trusted a relayer set with no *sound* on-chain proof that the event they claimed had actually happened. That's the Ronin / Wormhole family — externally-verified bridges, the most expensive bug class in the space — whether the operator set is stolen outright (Ronin) or its signature check is bypassed by a bug (Wormhole), the contract mints on a say-so it never really verified.
 
 A second invariant caught the cross-domain twin: a user could get their wrapped tokens minted *and* claim a refund of the original collateral, because the source vault's refund path had no idea the destination mint occurred.
 
@@ -73,7 +73,7 @@ I made the verifier pluggable. On the home chain — a DAG L1 I control — it c
 
 ## What the invariants taught me
 
-The discipline that mattered most was **revert-fails**: every fix has a test that goes green when the fix lands *and red again when you revert the fix*. A passing test proves nothing if it never had the chance to fail.
+The discipline that mattered most was **revert-fails**: every fix has a test that goes green when the fix lands *and red again when you revert the fix*. A passing test proves nothing if it never had the chance to fail. (The formal name is mutation testing: revert the fix to inject the "mutant," and a test that stays green has just told you it tests nothing.)
 
 By the end: all four criticals closed, the supply and double-spend invariants green over 400 runs × depth 80, each backed by a revert-fails proof. The adversarial pass surfaced a few more — a token admin that was a parallel unconstrained minter, an unbounded release path — all closed the same way.
 

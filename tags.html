@@ -1,0 +1,32 @@
+---
+layout: default
+title: "Tags — 0xSoftBoi"
+permalink: /tags/
+---
+
+<section class="tags-index">
+  <h1>Tags</h1>
+
+  {% assign sorted_tags = site.tags | sort %}
+  <ul class="tags-cloud">
+    {% for tag in sorted_tags %}
+    <li><a href="#{{ tag[0] | slugify }}">{{ tag[0] }}</a></li>
+    {% endfor %}
+  </ul>
+
+  {% for tag in sorted_tags %}
+  {% assign n = tag[1] | size %}
+  <div class="tag-group">
+    <h2 id="{{ tag[0] | slugify }}">{{ tag[0] }}<span class="count">{{ n }} post{% if n != 1 %}s{% endif %}</span></h2>
+    <ul>
+      {% assign tagged = tag[1] | sort: "date" | reverse %}
+      {% for post in tagged %}
+      <li>
+        <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <div class="post-meta">{{ post.date | date: "%b %Y" }}</div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</section>

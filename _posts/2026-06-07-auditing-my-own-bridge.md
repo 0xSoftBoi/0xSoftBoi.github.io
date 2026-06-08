@@ -77,6 +77,8 @@ The discipline that mattered most was **revert-fails**: every fix has a test tha
 
 By the end: all four criticals closed, the supply and double-spend invariants green over 400 runs × depth 80, each backed by a revert-fails proof. The adversarial pass surfaced a few more — a token admin that was a parallel unconstrained minter, an unbounded release path — all closed the same way.
 
-The honest caveat I kept throughout: the cross-domain "minted XOR refunded" guarantee is now an *operator-coordination* property the gates make enforceable — not eliminated. And no internal audit, however thorough, clears funds-holding code on its own. That's what independent audits and bug bounties are for.
+Two honest caveats I kept throughout. The cross-domain "minted XOR refunded" guarantee is now an *operator-coordination* property the gates make *enforceable* — not eliminated. And no internal audit, however thorough, clears funds-holding code on its own; that's what independent audits and bug bounties are for.
+
+The invariant that went red in a second is green now over 400 runs. That tells me the gate holds. It tells me nothing about whether the bug I should fear lives behind an invariant I never thought to write — which is the one I'd hire someone else to find.
 
 *More on the architecture in [Suwappu](https://suwappu.bot).*

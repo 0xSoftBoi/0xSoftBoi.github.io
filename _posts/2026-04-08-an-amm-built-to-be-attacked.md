@@ -7,7 +7,7 @@ image: /assets/og/an-amm-built-to-be-attacked.png
 excerpt: "Most AMM code is written to look safe. I wrote one to be a teaching specimen — where the exploits are tests in the repo, some of them passing, and the real lesson is which 'attacks' are contract bugs, which are economic facts of life, and which are mitigated and why."
 ---
 
-When you're learning to audit AMMs, the hard part isn't reading the swap math. It's developing the judgment to look at a successful attack and know which kind it is — a *bug* you must fix, an *economic reality* you can only warn about, or a *known weakness* you've deliberately decided to accept. Those three look identical from the outside: in all of them, someone walks away with money they didn't deposit.
+The hard part of auditing an AMM isn't the swap math. It's judgment. An attack succeeds, and you have to say which of three things just happened: a *bug* you must fix, an *economic reality* you can only warn about, or a *weakness* you accepted on purpose. From the outside, all three look the same.
 
 <figure class="chart">
 <svg viewBox="0 0 680 300" role="img" aria-labelledby="am-t">
@@ -47,7 +47,7 @@ When you're learning to audit AMMs, the hard part isn't reading the swap math. I
 <figcaption>All three look identical from outside — money leaves the pool. The skill is filing each correctly: bug, economics, or accepted limitation. A pool that’s merely safe hides that distinction.</figcaption>
 </figure>
 
-So I built [QuantDEX](https://github.com/0xSoftBoi/quantgroup): a constant-product (`x·y=k`) AMM with a 0.3% fee, written not to be production-safe but to be *annotated* — a reference where the invariants are proven, the attacks are reproduced as tests, and every "this is fine" is justified in a comment with an SWC or CWE reference. It's marked `@custom:audit-status unaudited — educational only`, because the point isn't a safe pool. The point is a precise map.
+So I built [QuantDEX](https://github.com/0xSoftBoi/quantgroup): a constant-product (`x·y=k`) AMM with a 0.3% fee, written not to be production-safe but to be *annotated*. The invariants are proven. The attacks are reproduced as tests. Every "this is fine" is justified in a comment with an SWC or CWE reference. It's marked `@custom:audit-status unaudited — educational only`, because a safe pool was never the point. A precise map was.
 
 ## What must always be true
 
@@ -77,4 +77,6 @@ The most useful comments in the contract are the ones admitting what it *doesn't
 
 ## Why a specimen beats a fortress
 
-[The bridge I audited recently](/blog/auditing-my-own-bridge/) taught me from one direction: write the invariant that must never break, fuzz until something breaks it, fix the bug. This AMM teaches from the other — start from the invariants that *do* hold, then walk the catalogue of things that can still go wrong *on top of* a correct contract, and force yourself to file each one correctly: bug, economics, or accepted limitation. A pool that's merely safe hides all of that. A pool built to be attacked, with the exploits sitting in `test/Attacks.t.sol` next to the invariants in `test/InvariantTest.t.sol`, makes the taxonomy impossible to look away from — which is exactly what you want when the skill you're building is telling the three apart.
+[The bridge I audited recently](/blog/auditing-my-own-bridge/) taught me from one direction: write the invariant that must never break, fuzz until something breaks it, fix the bug. This AMM teaches from the other. Start from the invariants that *do* hold, then walk the catalogue of things that can still go wrong *on top of* a correct contract — and file each one: bug, economics, or accepted limitation.
+
+A pool that's merely safe hides all of that. A pool built to be attacked puts it on the table — the exploits in `test/Attacks.t.sol`, right beside the invariants in `test/InvariantTest.t.sol`. You can't look away from the taxonomy. That's the point, because telling the three apart is the whole skill.

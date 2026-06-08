@@ -7,7 +7,7 @@ image: /assets/og/greedy-was-enough-active-learning-pretrained-potential.png
 excerpt: "I built a GNoME-style active-learning loop to find stable crystals on a labeling budget. The uncertainty-aware strategy I expected to win basically tied the greedy one — and that tie is the actual result."
 ---
 
-DeepMind's [GNoME](https://www.nature.com/articles/s41586-023-06735-9) found a couple of hundred thousand stable inorganic materials by combining graph neural networks with active learning: instead of running an expensive simulation on every candidate, you train a cheap surrogate, use it to pick which candidates are worth the expensive label, and repeat. The choice of *which to pick* is the whole game. I wanted to see how much that choice actually matters when your surrogate is already very good.
+DeepMind's [GNoME](https://www.nature.com/articles/s41586-023-06735-9) found a couple hundred thousand stable inorganic materials by pairing graph neural networks with active learning — a simple loop: train a cheap surrogate, let it pick which candidates are worth an expensive simulation, label those, repeat. The choice of *which to pick* is the whole game, and I wanted to know how much it matters when the surrogate is already very good.
 
 So I built a small version: a pool of 2,000 candidate structures from the Materials Project, a pretrained [CHGNet](https://github.com/CederGroupHub/chgnet) potential as the surrogate, and a labeling budget of 400 — 20% of the pool. The question: with that budget, how many of the 100 most stable structures can you actually find, and does a clever acquisition strategy beat a dumb one?
 

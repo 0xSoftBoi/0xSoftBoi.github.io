@@ -7,9 +7,9 @@ image: /assets/og/when-it-cant-explain-what-it-sees-it-asks.png
 excerpt: "I built a predictive-coding engine that runs a hierarchy of beliefs on a laptop GPU, minimizing prediction error layer by layer. The part I like most: when a layer can't explain away its own surprise, it doesn't just shrug and update — it asks the world a question, and the answer becomes knowledge that reshapes what it expects next."
 ---
 
-There's an old idea in neuroscience — Friston's free energy principle, predictive coding before it — that a brain isn't a camera passively receiving the world. It's a prediction machine. Every layer is constantly guessing what the layer below it is about to report, and all that ever flows upward is the *error*: the part of the signal the prediction didn't already account for. Perception, on this account, is just the process of making that error small.
+**Qualia** is a small program that watches a webcam and tries not to be surprised. When it can't explain what it's seeing — when its prediction stays wrong no matter how it adjusts its beliefs — it does the thing most perception code never does: it asks a question, takes the answer, and remembers it. Next time, it isn't surprised.
 
-I wanted to feel what that's actually like to build, so I wrote one. **Qualia** is a small predictive-coding engine — a hierarchy of belief layers running on a laptop GPU, eating a webcam feed, trying to be unsurprised.
+That behavior falls out of an old idea from neuroscience. Friston's free energy principle — predictive coding before it — holds that a brain isn't a camera passively receiving the world; it's a prediction machine. Every layer guesses what the layer below is about to report, and all that flows upward is the *error*: the part of the signal the guess didn't already cover. Perception, on this account, is just the work of making that error small. I wanted to feel what that's like to build, so I wrote one — a hierarchy of belief layers on a laptop GPU, eating a webcam feed, trying to be unsurprised.
 
 * TOC
 {:toc}

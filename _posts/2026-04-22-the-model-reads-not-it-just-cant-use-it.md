@@ -16,7 +16,7 @@ The answer turned out to be more specific, and weirder, than "the model ignores 
 
 ## Weirder than ignoring it
 
-First, the behavior, measured as the logit of the target token with and without "not":
+First, the behavior — the logit of the target token with and without "not," for four of the six prompts I ran on GPT-2 small:
 
 | Prompt | Target | affirm | negated | change |
 |---|---|--:|--:|--:|
@@ -64,7 +64,7 @@ First, the behavior, measured as the logit of the target token with and without 
 <figcaption>Adding “not” barely moves the target logit — and on three of four prompts it raises it. The negation is read, but it doesn’t suppress the answer.</figcaption>
 </figure>
 
-In four of six cases on GPT-2 small, inserting "not" doesn't just fail to suppress the answer — it *raises* its probability. "Dogs are not animals" makes the model **more** confident in "animals." Whatever is happening, it isn't simple insensitivity; the negation is doing something, and the something points the wrong way.
+Three of those four go the wrong way; across all six prompts, four do. Inserting "not" doesn't just fail to suppress the answer — it *raises* the target's probability. "Dogs are not animals" makes the model **more** confident in "animals." This isn't simple insensitivity. The negation is doing something, and the something points the wrong way.
 
 ## The model does read "not"
 

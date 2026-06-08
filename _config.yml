@@ -1,0 +1,28 @@
+title: 0xSoftBoi
+tagline: AI Agents × cross-chain DeFi
+description: >-
+  Engineer building at the intersection of autonomous AI agents and cross-chain
+  DeFi. Creator of Suwappu — the agent-native cross-chain DEX.
+author: 0xSoftBoi
+email: ""
+url: "https://0xsoftboi.github.io"
+location: Washington, DC
+
+# Social / links
+twitter: 0xSoftBoi
+github: 0xSoftBoi
+website: https://suwappu.bot
+
+# Build
+markdown: kramdown
+permalink: /blog/:title/
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Pagination not needed yet; keep it simple
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

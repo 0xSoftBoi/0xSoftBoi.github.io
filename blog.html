@@ -1,0 +1,26 @@
+---
+layout: default
+title: "Blog — 0xSoftBoi"
+permalink: /blog/
+---
+
+<section class="hero" style="padding-bottom:18px">
+  <div class="prompt">~ $ cat blog/*</div>
+  <h1 style="font-size:1.8rem">/<span class="accent">blog</span></h1>
+  <p>Notes on AI agents, smart-contract security, and cross-chain infrastructure.</p>
+</section>
+
+<section>
+  <ul class="post-list">
+    {% for post in site.posts %}
+    <li>
+      <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      {% if post.excerpt %}<span class="excerpt">{{ post.excerpt | strip_html | truncate: 160 }}</span>{% endif %}
+    </li>
+    {% endfor %}
+    {% if site.posts.size == 0 %}
+    <li><span class="excerpt dim">// no posts yet</span></li>
+    {% endif %}
+  </ul>
+</section>

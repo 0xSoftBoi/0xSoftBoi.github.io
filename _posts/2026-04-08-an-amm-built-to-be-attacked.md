@@ -73,6 +73,7 @@ The most useful comments in the contract are the ones admitting what it *doesn't
 
 - **No TWAP oracle** → the spot price is manipulable within a single transaction, classically via a flash loan. There's no SWC entry for oracle manipulation; the reference an auditor reaches for is samczsun's [*So you want to use a price oracle*](https://samczsun.com/so-you-want-to-use-a-price-oracle/). Documented, because anything reading this pool's price as an oracle is the real vulnerability, not the pool.
 - **Integer math rounds down** → tiny amounts of dust accrue to the pool on each operation. Safe — it always rounds in the pool's favor — but an auditor should see it and confirm the direction, so it's noted.
+- **Standard ERC20s only** → reserves are credited by the *requested* amount, so a fee-on-transfer or rebasing token would over-credit and slowly break solvency. Documented as an unsupported-token decision. (The transfers themselves go through OpenZeppelin's `SafeERC20`, so a token that returns `false` or no value — USDT — reverts instead of silently failing.)
 - **No flash loans, single deployer** → smaller attack surface than a fully trustless v2, and called out as a *scope* choice, not a safety claim.
 
 ## Why a specimen beats a fortress

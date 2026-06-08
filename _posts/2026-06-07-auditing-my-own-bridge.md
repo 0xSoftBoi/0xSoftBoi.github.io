@@ -75,10 +75,10 @@ I made the verifier pluggable. On the home chain — a DAG L1 I control — it c
 
 The discipline that mattered most was **revert-fails**: every fix has a test that goes green when the fix lands *and red again when you revert the fix*. A passing test proves nothing if it never had the chance to fail. (The formal name is mutation testing: revert the fix to inject the "mutant," and a test that stays green has just told you it tests nothing.)
 
-By the end: all four criticals closed, the supply and double-spend invariants green over 400 runs × depth 80, each backed by a revert-fails proof. The adversarial pass surfaced a few more — a token admin that was a parallel unconstrained minter, an unbounded release path — all closed the same way.
+By the end: all four criticals closed, the supply and double-spend invariants green over 512 runs × depth 100, each backed by a revert-fails proof. The adversarial pass surfaced a few more — a token admin that was a parallel unconstrained minter, an unbounded release path — all closed the same way.
 
 Two honest caveats I kept throughout. The cross-domain "minted XOR refunded" guarantee is now an *operator-coordination* property the gates make *enforceable* — not eliminated. And no internal audit, however thorough, clears funds-holding code on its own; that's what independent audits and bug bounties are for.
 
 The invariant that went red in a second is green now over 400 runs. That tells me the gate holds. It tells me nothing about whether the bug I should fear lives behind an invariant I never thought to write — which is the one I'd hire someone else to find.
 
-*More on the architecture in [Suwappu](https://suwappu.bot).*
+*A minimal, runnable version of the invariant suite and the attestation-gate pattern — the supply≤collateral fuzz test, the gate, and Ronin/Wormhole/Nomad reproductions — is public at [lock-mint-bridge-lab](https://github.com/0xSoftBoi/lock-mint-bridge-lab). More on the production architecture in [Suwappu](https://suwappu.bot).*

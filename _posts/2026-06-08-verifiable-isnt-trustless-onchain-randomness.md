@@ -2,6 +2,7 @@
 layout: post
 title: "Verifiable isn't trustless: a coin flip on Sui"
 date: 2026-06-08
+series: "On-chain randomness & verifiability"
 tags: [randomness, sui, move, security, cryptography]
 image: /assets/og/verifiable-isnt-trustless-onchain-randomness.png
 excerpt: "A house-signed coin flip lets anyone verify the result — and still lets the house win. The signature is honest; the choice of which games to settle isn't. Here's the gap, and the trustless fix that has its own sharp edge."

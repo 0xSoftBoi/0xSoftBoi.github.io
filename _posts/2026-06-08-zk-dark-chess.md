@@ -2,6 +2,7 @@
 layout: post
 title: "Building ZK dark chess: real fog of war on a public chain"
 date: 2026-06-08
+series: "On-chain randomness & verifiability"
 tags: [zk, circom, chess, cryptography, solidity]
 image: /assets/og/zk-dark-chess.png
 excerpt: "My on-chain chess engine has a fog-of-war mode that hides nothing — the board is plaintext. So I built the real version: the board lives off-chain behind a Poseidon commitment, and every move ships a zk-SNARK that it was legal without revealing the rest of your pieces. A real proof, verified on-chain. And an honest wall where the cryptography stops."

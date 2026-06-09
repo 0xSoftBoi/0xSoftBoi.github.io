@@ -2,6 +2,7 @@
 layout: post
 title: "An AMM built to be attacked"
 date: 2026-04-08
+series: "Bridge & DeFi security"
 tags: [security, defi, foundry]
 image: /assets/og/an-amm-built-to-be-attacked.png
 excerpt: "Most AMM code is written to look safe. I wrote one to be a teaching specimen — where the exploits are tests in the repo, some of them passing, and the real lesson is which 'attacks' are contract bugs, which are economic facts of life, and which are mitigated and why."

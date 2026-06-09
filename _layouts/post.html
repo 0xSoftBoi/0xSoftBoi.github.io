@@ -1,6 +1,21 @@
 ---
 layout: default
 ---
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page.title | jsonify }},
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "url": "{{ page.url | absolute_url }}",
+  "mainEntityOfPage": "{{ page.url | absolute_url }}",
+  "author": {
+    "@type": "Person",
+    "name": "0xSoftBoi",
+    "url": "https://0xsoftboi.github.io"
+  }
+}
+</script>
 <article class="post">
   <a class="back" href="{{ '/' | relative_url }}">← writing</a>
   <h1 class="post-title">{{ page.title }}</h1>
@@ -15,6 +30,16 @@ layout: default
     <p class="related-title">Related</p>
     <ul>{{ related_items }}</ul>
   </aside>
+  {% endif %}
+
+  {% if page.series %}
+  {% capture series_items %}{% for post in site.posts %}{% if post.series == page.series and post.url != page.url %}<li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>{% endif %}{% endfor %}{% endcapture %}
+  {% if series_items contains "<li>" %}
+  <aside class="related">
+    <p class="related-title">More in “{{ page.series | escape }}”</p>
+    <ul>{{ series_items }}</ul>
+  </aside>
+  {% endif %}
   {% endif %}
 
   {% if page.previous or page.next %}

@@ -2,6 +2,7 @@
 layout: post
 title: "What a ZK proof proves (and what it doesn't)"
 date: 2026-06-08
+series: "On-chain randomness & verifiability"
 tags: [zk, risc-zero, security, cryptography, solidity]
 image: /assets/og/what-a-zk-proof-proves.png
 excerpt: "My on-chain chess engine had a zk settlement path you could forge to steal any in-progress game — not by breaking the proof, but by proving the wrong thing. That bug, and a fog-of-war variant that hides nothing, are the two halves of ZK: soundness is binding the proof to the right statement; privacy is proving without revealing."

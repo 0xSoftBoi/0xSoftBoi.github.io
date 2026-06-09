@@ -12,6 +12,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "0xSoftBoi",
+    "url": "https://0xsoftboi.github.io",
+    "jobTitle": "Security & Systems Engineer",
+    "sameAs": [
+      "https://github.com/0xSoftBoi",
+      "https://twitter.com/0xSoftBoi"
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">skip to content</a>
@@ -22,6 +35,8 @@
         <a href="{{ '/' | relative_url }}">writing</a>
         <a href="{{ '/tags/' | relative_url }}">tags</a>
         <a href="{{ '/about/' | relative_url }}">about</a>
+        <a href="{{ '/security/' | relative_url }}">security</a>
+        <a href="{{ '/research/' | relative_url }}">research</a>
         <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a>
         <a href="https://twitter.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">x</a>
       </div>
@@ -34,6 +49,7 @@
 
   <footer class="site-footer">
     <span>© {{ site.time | date: "%Y" }} 0xSoftBoi</span>
+    <span><a href="{{ '/feed.xml' | relative_url }}">rss</a></span>
     <span><a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot</a></span>
   </footer>
 </body>

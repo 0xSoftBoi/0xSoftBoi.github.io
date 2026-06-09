@@ -2,6 +2,7 @@
 layout: post
 title: "The model reads \"not\" — it just can't use it"
 date: 2026-04-22
+series: "Applied ML"
 tags: [interpretability, llms, ai]
 image: /assets/og/the-model-reads-not-it-just-cant-use-it.png
 excerpt: "Ask GPT-2 to complete \"Paris is not the capital of\" and it still says France. The interesting part isn't that it fails — it's that the model clearly attends to the word \"not\" and then can't make that signal change its answer. Here's where, inside the network, the gating breaks."

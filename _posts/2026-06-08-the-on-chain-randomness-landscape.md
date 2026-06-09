@@ -2,6 +2,7 @@
 layout: post
 title: "The on-chain randomness landscape, or: how to pick a chess position fairly"
 date: 2026-06-08
+series: "On-chain randomness & verifiability"
 tags: [randomness, vrf, cryptography, solidity, security]
 image: /assets/og/the-on-chain-randomness-landscape.png
 excerpt: "Fischer-random chess needs one of 960 starting positions, drawn so neither player can rig or foresee it. On a deterministic chain that's surprisingly hard — and the way you solve it is the whole map of on-chain randomness: commit-reveal, VRFs, beacons, native RNG, and the one footgun they all share."

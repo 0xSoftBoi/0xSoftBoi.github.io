@@ -2,6 +2,7 @@
 layout: post
 title: "How CoW Protocol settles a trade (and what my TWAP router got wrong)"
 date: 2026-06-08
+series: "Bridge & DeFi security"
 tags: [cow-protocol, defi, solidity, mev, intents]
 image: /assets/og/how-cow-protocol-settles.png
 excerpt: "My TWAP router for CoW Protocol compiled, passed its tests, and called two functions that don't exist on mainnet. Fixing it meant actually learning how CoW settles: intents not swaps, why you approve the relayer and not the settlement contract, and why a smart contract presigns its orders instead of settling them."

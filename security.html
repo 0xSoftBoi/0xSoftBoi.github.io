@@ -1,0 +1,58 @@
+---
+layout: default
+title: "Security — 0xSoftBoi"
+permalink: /security/
+---
+
+<section class="about">
+  <img class="hero" src="{{ '/assets/art/security-hero.png' | relative_url }}" alt="">
+  <h1>Security</h1>
+  <p>For security teams and recruiters: the short version of what I find, how I prove it, and the upstream code I've shipped. I work on cross-chain infrastructure and smart-contract security — Rust and EVM — and I'm partial to the one accounting bug that lets a bridge print money.</p>
+
+  <h2>Merged upstream</h2>
+  <ul class="work-list">
+    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">alloy-rs/core #1105</a><span class="tag">merged</span> — EIP-712 self-referential struct canonicalization in <code>dyn-abi</code>. alloy is the Ethereum Rust library under Foundry and Reth.</li>
+    <li><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">uutils/coreutils #12327</a><span class="tag">merged</span> — <code>date</code> timezone re-zoning in the Rust rewrite of GNU coreutils.</li>
+  </ul>
+
+  <h2>Bridge audit — lock-mint-bridge-lab</h2>
+  <p>A lock-and-mint bridge I built and audited end-to-end, written up in auditor format. Each finding lists the severity, the invariant it broke, the impact, the proof-of-concept, the fix, and the revert-fails regression that turns the test red again if the fix is removed. Full suite and write-ups: <a href="https://github.com/0xSoftBoi/lock-mint-bridge-lab" target="_blank" rel="noopener noreferrer">github.com/0xSoftBoi/lock-mint-bridge-lab</a>.</p>
+  <ul class="work-list">
+    <li class="finding">
+      <p class="f-title"><strong>supply &le; collateral</strong><span class="tag">critical</span></p>
+      <p><strong>Invariant broken</strong> — total minted supply on the remote chain could exceed locked collateral on the home chain.</p>
+      <p><strong>Impact</strong> — unbacked mint: the bridge prints money and drains backing.</p>
+      <p><strong>PoC</strong> — stateful invariant handler in the <a href="https://github.com/0xSoftBoi/lock-mint-bridge-lab" target="_blank" rel="noopener noreferrer">suite</a> that drives lock / mint / burn / release sequences until the accounting identity fails.</p>
+      <p><strong>Fix</strong> — enforce <code>mintedSupply &le; lockedCollateral</code> at the mint boundary.</p>
+      <p><strong>Regression</strong> — a revert-fails test that re-applies the exploit sequence and asserts the invariant now holds; delete the guard and it goes red.</p>
+    </li>
+    <li class="finding">
+      <p class="f-title"><strong>attestation gate</strong><span class="tag">high</span></p>
+      <p><strong>Invariant broken</strong> — a mint could be authorized without a valid, unconsumed attestation from the home chain.</p>
+      <p><strong>Impact</strong> — unauthorized and replayed mints: double-spend of a single lock.</p>
+      <p><strong>PoC</strong> — handler attempts mint with absent, malformed, and already-consumed attestations.</p>
+      <p><strong>Fix</strong> — gate every mint on a verified attestation and mark it consumed (one lock, one mint).</p>
+      <p><strong>Regression</strong> — revert-fails tests for the no-attestation and replay paths that fail closed once the gate is removed.</p>
+    </li>
+  </ul>
+  <p class="quiet">Exploit reproductions in the same suite — replays of <strong>Ronin</strong>, <strong>Wormhole</strong>, and <strong>Nomad</strong> — run as standing regressions the bridge must survive, not as findings against my own code.</p>
+
+  <h2>Tooling &amp; method</h2>
+  <ul class="work-list">
+    <li><strong>Foundry stateful invariants</strong> — the core harness, run 512&times;100 (runs &times; depth) to push the accounting and attestation invariants under long randomized call sequences.</li>
+    <li><strong>Slither</strong> — static analysis pass over the contract set.</li>
+    <li><strong>Halmos</strong> — symbolic checks on the invariants that benefit from exhaustive reasoning over a bounded input space.</li>
+    <li><strong>Wake</strong> — fuzzing, used on the CoW TWAP router work below.</li>
+    <li><strong>SWC / CWE mapping</strong> — findings tagged to the standard weakness taxonomies so they read in a recruiter's and an auditor's vocabulary.</li>
+  </ul>
+
+  <h2>Related repos</h2>
+  <ul class="work-list">
+    <li><a href="https://github.com/0xSoftBoi/quantgroup" target="_blank" rel="noopener noreferrer">quantgroup</a> — constant-product AMM annotated for auditors: attack simulations, stateful invariants, SWC/CWE mapping.</li>
+    <li><a href="https://github.com/0xSoftBoi/cowswaprouter" target="_blank" rel="noopener noreferrer">cowswaprouter</a> — CoW TWAP router with Wake fuzzing.</li>
+    <li><a href="https://github.com/0xSoftBoi/zk-dark-chess" target="_blank" rel="noopener noreferrer">zk-dark-chess</a> — zero-knowledge dark chess (Circom + Groth16).</li>
+    <li><a href="https://github.com/0xSoftBoi/fhe-dark-chess" target="_blank" rel="noopener noreferrer">fhe-dark-chess</a> — fully-homomorphic dark chess (Zama tfhe-rs).</li>
+  </ul>
+
+  <p class="more">Background on the <a href="{{ '/about/' | relative_url }}">about</a> page; research on the <a href="{{ '/research/' | relative_url }}">research</a> page.</p>
+</section>

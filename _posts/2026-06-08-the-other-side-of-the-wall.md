@@ -2,6 +2,7 @@
 layout: post
 title: "The other side of the wall: FHE where ZK stops"
 date: 2026-06-08
+series: "On-chain randomness & verifiability"
 tags: [fhe, zama, cryptography, chess, mev]
 image: /assets/og/the-other-side-of-the-wall.png
 excerpt: "My ZK fog-of-war chess hit a wall: it could prove a move legal against your own board, but not the things that depend on the opponent's hidden pieces — captures, blocked sliders, check. Those are joint predicates over two secret boards. So I crossed the wall with FHE: real homomorphic computation that decides 'is my king in check?' over an encrypted enemy board in 7.6 seconds — and an honest line between what that proves and what it doesn't."

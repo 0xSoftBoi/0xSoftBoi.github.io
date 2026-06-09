@@ -2,6 +2,7 @@
 layout: post
 title: "Anatomy of a fake dice game"
 date: 2026-06-09
+series: "On-chain randomness & verifiability"
 tags: [solidity, randomness, security, gambling]
 image: /assets/og/anatomy-of-a-fake-dice-game.png
 excerpt: "I dug up a dice-game contract from 2018. It's 48 lines, and it's two bugs in a trenchcoat: its randomness is always zero, and it never uses the roll anyway — every bet just loses half. Here's the autopsy, and the provably-fair version it was pretending to be."

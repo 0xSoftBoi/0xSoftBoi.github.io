@@ -2,6 +2,7 @@
 layout: post
 title: "When it can't explain what it sees, it asks"
 date: 2026-04-15
+series: "Applied ML"
 tags: [active-inference, rust, edge-ml]
 image: /assets/og/when-it-cant-explain-what-it-sees-it-asks.png
 excerpt: "I built a predictive-coding engine that runs a hierarchy of beliefs on a laptop GPU, minimizing prediction error layer by layer. The part I like most: when a layer can't explain away its own surprise, it doesn't just shrug and update — it asks the world a question, and the answer becomes knowledge that reshapes what it expects next."

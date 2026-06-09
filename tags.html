@@ -8,11 +8,13 @@ permalink: /tags/
   <h1>Tags</h1>
 
   {% assign sorted_tags = site.tags | sort %}
-  <ul class="tags-cloud">
-    {% for tag in sorted_tags %}
-    <li><a href="#{{ tag[0] | slugify }}">{{ tag[0] }}</a></li>
-    {% endfor %}
-  </ul>
+  <nav aria-label="Jump to tag">
+    <ul class="tags-cloud">
+      {% for tag in sorted_tags %}
+      <li><a href="#{{ tag[0] | slugify }}">{{ tag[0] }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
 
   {% for tag in sorted_tags %}
   {% assign n = tag[1] | size %}

@@ -2,6 +2,7 @@
 layout: post
 title: "Greedy was enough: active learning on top of a pretrained potential"
 date: 2026-05-10
+series: "Applied ML"
 tags: [ml, materials, active-learning, ai]
 image: /assets/og/greedy-was-enough-active-learning-pretrained-potential.png
 excerpt: "I built a GNoME-style active-learning loop to find stable crystals on a labeling budget. The uncertainty-aware strategy I expected to win basically tied the greedy one — and that tie held from a 2,000-structure demo up to the full 256K-structure benchmark. The tie is the actual result."

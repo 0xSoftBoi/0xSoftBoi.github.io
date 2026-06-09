@@ -2,6 +2,7 @@
 layout: post
 title: "The index fund that held the wrong asset"
 date: 2026-06-09
+series: "Bridge & DeFi security"
 tags: [sui, move, defi, oracle, security]
 image: /assets/og/the-index-fund-that-held-the-wrong-asset.png
 excerpt: "A Sui Move 'crypto index fund' lets you deposit SUI for exposure to a BTC/ETH/XRP/ADA/MATIC basket. The problem: it never buys any of them. It holds SUI and pays out basket gains it doesn't have — insolvent by construction, a bank run waiting for a green candle."

@@ -2,6 +2,7 @@
 layout: post
 title: "Auditing my own bridge: from “mints money from nothing” to all-criticals-closed"
 date: 2026-06-07
+series: "Bridge & DeFi security"
 tags: [security, bridges, solidity]
 image: /assets/og/auditing-my-own-bridge.png
 excerpt: "A lock-and-mint bridge is one giant accounting invariant. Here's how I turned that invariant into a fuzz test that found every way the contracts could create unbacked supply — and the on-chain fix pattern that closed it."

@@ -38,7 +38,7 @@ layout: default
   {% capture series_items %}{% for post in site.posts %}{% if post.series == page.series and post.url != page.url %}<li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>{% endif %}{% endfor %}{% endcapture %}
   {% if series_items contains "<li>" %}
   <aside class="related">
-    <p class="related-title">More in “{{ page.series | escape }}”</p>
+    <p class="related-title">More in <a href="{{ '/series/' | relative_url }}#{{ page.series | slugify }}">“{{ page.series | escape }}”</a></p>
     <ul>{{ series_items }}</ul>
   </aside>
   {% endif %}

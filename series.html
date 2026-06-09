@@ -1,0 +1,33 @@
+---
+layout: default
+title: "Series — 0xSoftBoi"
+permalink: /series/
+---
+
+<section class="tags-index">
+  <h1>Series</h1>
+
+  {% assign all_series = site.posts | map: "series" | compact | uniq | sort %}
+  <nav aria-label="Jump to series">
+    <ul class="tags-cloud">
+      {% for s in all_series %}
+      <li><a href="#{{ s | slugify }}">{{ s }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  {% for s in all_series %}
+  {% assign in_series = site.posts | where: "series", s %}
+  <div class="tag-group">
+    <h2 id="{{ s | slugify }}">{{ s }}<span class="count">{{ in_series | size }} post{% if in_series.size != 1 %}s{% endif %}</span></h2>
+    <ul>
+      {% for post in in_series %}
+      <li>
+        <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <div class="post-meta">{{ post.date | date: "%b %Y" }}</div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</section>

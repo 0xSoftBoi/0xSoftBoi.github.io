@@ -31,4 +31,4 @@ Smart-contract security, cross-chain bridges, Ethereum, Rust, zero-knowledge pro
 - alloy-rs/core #1105 — EIP-712 self-referential struct canonicalization in dyn-abi: https://github.com/alloy-rs/core/pull/1105
 - uutils/coreutils #12327 — date timezone re-zoning in the Rust rewrite of GNU coreutils: https://github.com/uutils/coreutils/pull/12327
 - lock-mint-bridge-lab — audited lock-and-mint bridge: https://github.com/0xSoftBoi/lock-mint-bridge-lab
-- BRIDGE-bench — LLM reasoning vs. real DeFi exploits: https://github.com/0xSoftBoi/anthropic-fellowship
+- BRIDGE-bench — LLM reasoning vs. real DeFi exploits (DOI 10.5281/zenodo.20604295): https://github.com/0xSoftBoi/anthropic-fellowship

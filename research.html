@@ -12,7 +12,7 @@ permalink: /research/
   <h2>BRIDGE-bench — LLM reasoning against compositional bridge hacks</h2>
   <p>A benchmark of real cross-chain bridge exploits, scored on whether an analyzer can flag the vulnerability that was actually used. The exploits are compositional: the bug lives in the interaction of several components rather than in any single line, which is exactly where pattern-matching static analysis falls down. The pipeline pairs a static pre-filter — to cut the search space — with an LLM that reasons over the surviving candidates.</p>
   <p class="result"><strong>Result:</strong> static analysis alone scores ~0% F1 on the compositional bridge hacks; a static-pre-filtered LLM reaches ~40% F1.</p>
-  <p class="quiet"><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">[code]</a> &middot; DOI: pending</p>
+  <p class="quiet"><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">[code]</a> &middot; <a href="https://doi.org/10.5281/zenodo.20604295" target="_blank" rel="noopener noreferrer">DOI: 10.5281/zenodo.20604295</a></p>
 
   <h2>gnome-materials — active learning for materials discovery</h2>
   <p>A GNoME-style active-learning loop for materials discovery over a pretrained CHGNet potential. Rather than labeling the full candidate pool, the loop selects the most informative candidates to evaluate, recovering most of the top-ranked materials at a fraction of the labeling cost.</p>
@@ -21,3 +21,17 @@ permalink: /research/
 
   <p class="more">Security write-ups on the <a href="{{ '/security/' | relative_url }}">security</a> page; background on the <a href="{{ '/about/' | relative_url }}">about</a> page.</p>
 </section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "name": "BRIDGE-bench: Measuring LLM Reasoning on Compositional Cross-Chain Bridge Exploits",
+  "author": { "@id": "https://0xsoftboi.github.io/#person" },
+  "datePublished": "2026-06-09",
+  "identifier": "https://doi.org/10.5281/zenodo.20604295",
+  "sameAs": "https://doi.org/10.5281/zenodo.20604295",
+  "url": "https://github.com/0xSoftBoi/anthropic-fellowship",
+  "abstract": "A benchmark of ten real-world cross-chain bridge exploits ($1.6B in historical losses) measuring whether LLMs can reason about compositional vulnerabilities that violate accounting invariants. Static analysis scores ~0% F1; a static-pre-filtered LLM reaches ~40% F1."
+}
+</script>

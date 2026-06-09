@@ -2,6 +2,7 @@
 layout: post
 title: "Who audits the auditor?"
 date: 2026-06-09
+series: "Applied ML"
 tags: [security, static-analysis, agents, solidity, tooling]
 image: /assets/og/who-audits-the-auditor.png
 excerpt: "I built a Solidity static-analysis tool with an agent fleet. The phase that mattered wasn't writing the detectors — it was pointing a separate model at them and saying: lie detector, prove you lie."

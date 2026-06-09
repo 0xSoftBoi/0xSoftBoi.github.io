@@ -138,6 +138,7 @@ p{margin:0 0 16px}
 
 /* ---- page hero art (AI-generated, warm raster; framed so it reads as a print in dark mode) ---- */
 .hero{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--rule);margin:18px 0 10px}
+.post-hero{margin:14px 0 14px}
 @media (prefers-color-scheme:dark){.hero{opacity:.92}}
 
 /* fenced code blocks (kramdown/rouge) */

@@ -115,8 +115,12 @@ def main(which):
         img = client.text_to_image(f"{motif}, {STYLE}", model=MODEL, width=1200, height=384)
         bg = os.path.join(TMP, f"bg-{slug}.png")
         img.save(bg)
+        # text-less art doubles as the in-page post hero
+        posts_art = os.path.join(ROOT, "assets", "art", "posts")
+        os.makedirs(posts_art, exist_ok=True)
+        img.save(os.path.join(posts_art, slug + ".png"))
         render(card_html(bg, title, tags_line, title_size(title)), os.path.join(OG, slug + ".png"))
-        print(f"  -> assets/og/{slug}.png", flush=True)
+        print(f"  -> assets/og/{slug}.png + assets/art/posts/{slug}.png", flush=True)
 
 
 if __name__ == "__main__":

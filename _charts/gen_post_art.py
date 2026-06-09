@@ -47,6 +47,7 @@ MOTIFS = {
     "the-index-fund-that-held-the-wrong-asset": "a basket of asset tokens that is secretly empty, a mismatched gauge",
     "rebuilding-a-perps-dex-from-its-docs": "a perpetual-futures price chart reconstructed from blueprint documents, a hidden house-edge tilt",
     "a-social-good-protocol-built-by-an-agent-fleet": "a fleet of small agent nodes collaboratively assembling a contract, one node inspecting another's work",
+    "running-an-op-stack-l2-with-reth": "a layered rollup stack settling onto a base chain, four interlocking process blocks sharing a key, a pipeline of CI checks",
 }
 
 

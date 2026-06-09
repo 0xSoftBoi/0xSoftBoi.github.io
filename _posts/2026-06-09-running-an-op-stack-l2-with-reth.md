@@ -2,6 +2,7 @@
 layout: post
 title: "Running an OP Stack L2 with reth"
 date: 2026-06-09
+series: "Systems & infrastructure"
 tags: [optimism, rollup, reth, ethereum, devops]
 image: /assets/og/running-an-op-stack-l2-with-reth.png
 excerpt: "An OP Stack rollup is four processes and a shared secret. I finalized an old deployment of mine into something reproducible — and the part that actually caught bugs wasn't me, it was CI."

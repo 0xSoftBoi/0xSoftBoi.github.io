@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Anatomy of a memecoin honeypot"
-date: 2026-06-09
+date: 2026-06-09 12:00:00
 series: "Bridge & DeFi security"
 tags: [solidity, security, memecoin, rug]
 image: /assets/og/anatomy-of-a-memecoin-honeypot.png

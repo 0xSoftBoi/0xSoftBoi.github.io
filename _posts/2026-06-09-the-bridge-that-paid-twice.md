@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The bridge that paid twice"
-date: 2026-06-09
+date: 2026-06-09 11:00:00
 series: "Bridge & DeFi security"
 tags: [solidity, bridges, security, reorg]
 image: /assets/og/the-bridge-that-paid-twice.png

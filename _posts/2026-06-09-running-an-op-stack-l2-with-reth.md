@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Running an OP Stack L2 with reth"
-date: 2026-06-09
+date: 2026-06-09 16:00:00
 series: "Systems & infrastructure"
 tags: [optimism, rollup, reth, ethereum, devops]
 image: /assets/og/running-an-op-stack-l2-with-reth.png

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The index fund that held the wrong asset"
-date: 2026-06-09
+date: 2026-06-09 13:00:00
 series: "Bridge & DeFi security"
 tags: [sui, move, defi, oracle, security]
 image: /assets/og/the-index-fund-that-held-the-wrong-asset.png

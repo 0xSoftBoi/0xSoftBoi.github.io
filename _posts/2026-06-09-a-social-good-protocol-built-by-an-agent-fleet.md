@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "A social-good protocol, built by an agent fleet"
-date: 2026-06-09
+date: 2026-06-09 14:00:00
 series: "Applied ML"
 tags: [agents, claude, workflow, solidity, security]
 image: /assets/og/a-social-good-protocol-built-by-an-agent-fleet.png

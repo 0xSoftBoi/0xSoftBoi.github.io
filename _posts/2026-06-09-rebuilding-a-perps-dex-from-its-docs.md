@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rebuilding a perps DEX from its docs"
-date: 2026-06-09
+date: 2026-06-09 15:00:00
 series: "Bridge & DeFi security"
 tags: [defi, perps, solidity, foundry, security]
 image: /assets/og/rebuilding-a-perps-dex-from-its-docs.png

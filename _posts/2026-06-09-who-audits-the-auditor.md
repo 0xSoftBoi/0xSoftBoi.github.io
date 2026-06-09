@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Who audits the auditor?"
-date: 2026-06-09
+date: 2026-06-09 18:00:00
 series: "Applied ML"
 tags: [security, static-analysis, agents, solidity, tooling]
 image: /assets/og/who-audits-the-auditor.png

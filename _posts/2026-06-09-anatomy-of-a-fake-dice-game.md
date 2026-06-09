@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Anatomy of a fake dice game"
-date: 2026-06-09
+date: 2026-06-09 10:00:00
 series: "On-chain randomness & verifiability"
 tags: [solidity, randomness, security, gambling]
 image: /assets/og/anatomy-of-a-fake-dice-game.png

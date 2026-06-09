@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "An arbitrage bot with no slippage is a sandwich"
-date: 2026-06-09
+date: 2026-06-09 17:00:00
 series: "Bridge & DeFi security"
 tags: [defi, mev, flashloan, solidity, security]
 image: /assets/og/an-arb-bot-with-no-slippage-is-a-sandwich.png

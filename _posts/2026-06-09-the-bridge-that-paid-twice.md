@@ -2,6 +2,7 @@
 layout: post
 title: "The bridge that paid twice"
 date: 2026-06-09
+series: "Bridge & DeFi security"
 tags: [solidity, bridges, security, reorg]
 image: /assets/og/the-bridge-that-paid-twice.png
 excerpt: "A token bridge whose relayer calls release() on every Deposit event. That sounds fine until you remember event delivery isn't exactly-once — and a reorg, a reconnect, or a restart makes the destination pay the same lock again. Here's the fix that makes a payout happen exactly once."

@@ -2,6 +2,7 @@
 layout: post
 title: "Anatomy of a memecoin honeypot"
 date: 2026-06-09
+series: "Bridge & DeFi security"
 tags: [solidity, security, memecoin, rug]
 image: /assets/og/anatomy-of-a-memecoin-honeypot.png
 excerpt: "A token contract I found trades perfectly and looks like every other ERC-20. It also lets the deployer freeze your bag with one call. Here's the line that does it, proven against the real contract — and what an un-ruggable token looks like instead."

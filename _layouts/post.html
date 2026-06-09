@@ -6,14 +6,17 @@ layout: default
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": {{ page.title | jsonify }},
+  "description": {{ page.excerpt | strip_html | strip_newlines | jsonify }},
   "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.date | date_to_xmlschema }}",
   "url": "{{ page.url | absolute_url }}",
   "mainEntityOfPage": "{{ page.url | absolute_url }}",
-  "author": {
-    "@type": "Person",
-    "name": "0xSoftBoi",
-    "url": "https://0xsoftboi.github.io"
-  }
+  "inLanguage": "en",
+  {% if page.image %}"image": "{{ page.image | absolute_url }}",{% endif %}
+  {% if page.series %}"articleSection": {{ page.series | jsonify }},{% endif %}
+  {% if page.tags %}"keywords": {{ page.tags | join: ", " | jsonify }},{% endif %}
+  "author": { "@id": "https://0xsoftboi.github.io/#person" },
+  "publisher": { "@id": "https://0xsoftboi.github.io/#person" }
 }
 </script>
 <article class="post">

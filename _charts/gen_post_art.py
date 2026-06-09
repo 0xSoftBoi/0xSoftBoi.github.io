@@ -86,7 +86,7 @@ html,body{{width:1200px;height:630px;background:{BG};overflow:hidden}}
 </style></head><body><div class="card">
 <div class="art"></div>
 <div class="txt">
-  <div class="mark">0xSoftBoi &middot; security &amp; systems</div>
+  <div class="mark">Tsolmondorj Natsagdorj &middot; security &amp; systems</div>
   <div class="title">{html.escape(title)}</div>
   <div class="row"><span class="tags">{html.escape(tags_line)}</span><span>0xsoftboi.github.io</span></div>
 </div></div></body></html>"""

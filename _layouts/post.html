@@ -51,3 +51,27 @@ layout: default
   </nav>
   {% endif %}
 </article>
+
+<script>
+/* Auto table-of-contents for long posts: builds from <h2>s (kramdown auto-ids),
+   reuses the #markdown-toc styling, and stays out of the way of short posts and
+   posts that already declare a kramdown {:toc}. */
+(function () {
+  var body = document.querySelector('.post-body');
+  if (!body || document.getElementById('markdown-toc')) return;
+  var hs = body.querySelectorAll('h2');
+  if (hs.length < 3) return;
+  var ul = document.createElement('ul');
+  ul.id = 'markdown-toc';
+  hs.forEach(function (h) {
+    if (!h.id) h.id = h.textContent.trim().toLowerCase().replace(/[^\w]+/g, '-').replace(/(^-|-$)/g, '');
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+  body.insertBefore(ul, body.firstChild);
+})();
+</script>

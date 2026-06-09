@@ -75,6 +75,8 @@ Here's the part it would be easy to oversell, so I'll be blunt. My demo encrypts
 
 > **Update.** I took that contract off the sketchpad. `FogChessFHE.sol` now compiles against the real fhEVM SDK (`@fhevm/solidity` 0.11.1) and *runs* in its mock coprocessor: a hardhat test commits an encrypted 64-cell board on-chain, runs `occupancy` and the full `inCheck` ray-walk on the coprocessor, and the caller decrypts exactly one ACL-gated bit — open rook on the file is check, blocked rook is not, the same positions the Rust tests use. So the on-chain *path* is real now, not pseudocode. What's still designed-and-not-deployed is precisely the trust: the mock decrypts with one key, where a live deployment uses the threshold committee. A Sepolia run against the real Gateway/KMS is the one remaining step — and it's the one that matters most.
 
+> **Update 2 — it's live.** I took the last step. `FogChessFHE` is deployed on Ethereum Sepolia at [`0x99db…da12`](https://sepolia.etherscan.io/address/0x99db76240c884F35133A6c9a12249C67a906da12). An encrypted 64-cell board was committed on-chain, `inCheck` ran on the **live coprocessor**, and the result bit was decrypted by the **real threshold KMS committee** — no single key-holder, not a mock key — returning `true` for an open rook on the e-file. So the trust is now real, not designed: the one thing that mattered most is done. The honest residual is small — a single demo signer played both seats (a real game uses two keys), and it's testnet with FHE-heavy gas. But the load-bearing claim, *"no one is the referee,"* is now true on a live chain.
+
 The maths runs today; the trust distribution is drawn, not built. Conflating those two is how "trustless" gets oversold, and I'd rather show you the seam.
 
 ## The honest cost

@@ -45,6 +45,8 @@ MOTIFS = {
     "anatomy-of-a-memecoin-honeypot": "a honeypot jar trapping a coin behind a one-way valve",
     "the-bridge-that-paid-twice": "a bridge paying out twice across a forked chain after a reorg",
     "the-index-fund-that-held-the-wrong-asset": "a basket of asset tokens that is secretly empty, a mismatched gauge",
+    "rebuilding-a-perps-dex-from-its-docs": "a perpetual-futures price chart reconstructed from blueprint documents, a hidden house-edge tilt",
+    "a-social-good-protocol-built-by-an-agent-fleet": "a fleet of small agent nodes collaboratively assembling a contract, one node inspecting another's work",
 }
 
 

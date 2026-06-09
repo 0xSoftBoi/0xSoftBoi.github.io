@@ -2,6 +2,7 @@
 layout: post
 title: "A social-good protocol, built by an agent fleet"
 date: 2026-06-09
+series: "Applied ML"
 tags: [agents, claude, workflow, solidity, security]
 image: /assets/og/a-social-good-protocol-built-by-an-agent-fleet.png
 excerpt: "I had an empty repo and pointed a multi-agent workflow at it. The result was a tested rewards protocol — but the part worth writing down is which model sat in which seat, and the bug the auditor caught that the builder wrote."

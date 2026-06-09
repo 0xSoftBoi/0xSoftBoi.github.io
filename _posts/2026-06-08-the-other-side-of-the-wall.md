@@ -73,6 +73,8 @@ Here's the part it would be easy to oversell, so I'll be blunt. My demo encrypts
 - **The computation is referee-free.** The predicate runs on ciphertext and only the answer bit is ever revealed. That's real, and it's what `cargo test` checks.
 - **The trust is not.** Removing the single key-holder needs a **threshold KMS** — a committee where no member can decrypt alone. That's [Zama's fhEVM](https://docs.zama.ai/fhevm): the board lives on-chain as ciphertext handles, a coprocessor runs the FHE, and the committee reveals only the ACL-permitted bit. I wrote that contract as a design (`FogChessFHE.sol`) — it needs the Zama network, so it's *designed, not deployed*.
 
+> **Update.** I took that contract off the sketchpad. `FogChessFHE.sol` now compiles against the real fhEVM SDK (`@fhevm/solidity` 0.11.1) and *runs* in its mock coprocessor: a hardhat test commits an encrypted 64-cell board on-chain, runs `occupancy` and the full `inCheck` ray-walk on the coprocessor, and the caller decrypts exactly one ACL-gated bit — open rook on the file is check, blocked rook is not, the same positions the Rust tests use. So the on-chain *path* is real now, not pseudocode. What's still designed-and-not-deployed is precisely the trust: the mock decrypts with one key, where a live deployment uses the threshold committee. A Sepolia run against the real Gateway/KMS is the one remaining step — and it's the one that matters most.
+
 The maths runs today; the trust distribution is drawn, not built. Conflating those two is how "trustless" gets oversold, and I'd rather show you the seam.
 
 ## The honest cost

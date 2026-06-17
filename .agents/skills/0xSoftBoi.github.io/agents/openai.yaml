@@ -1,0 +1,6 @@
+interface:
+  display_name: "0xSoftBoi.github.io"
+  short_description: "Repo-specific patterns and workflows for 0xSoftBoi.github.io"
+  default_prompt: "Use the 0xSoftBoi.github.io repo skill to follow existing architecture, testing, and workflow conventions."
+policy:
+  allow_implicit_invocation: true

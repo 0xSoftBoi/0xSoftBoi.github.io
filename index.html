@@ -1,13 +1,28 @@
 ---
 layout: default
-title: "Tsolmondorj Natsagdorj — security & systems"
+title: "Tsolmondorj Natsagdorj — ML systems, evaluation & security"
 ---
 
 <img class="hero" src="{{ '/assets/art/home-hero.png' | relative_url }}" alt="">
 
 <section class="intro">
-  <h1 class="visually-hidden">Tsolmondorj Natsagdorj — security &amp; systems</h1>
-  <p class="lede">I'm <strong>Tsolmondorj Natsagdorj</strong> (0xSoftBoi). I work on cross-chain infrastructure, smart-contract security, and the machine learning pointed at both — and I'm partial to the one accounting bug that lets a bridge print money.</p>
+  <h1 class="visually-hidden">Tsolmondorj Natsagdorj — ML systems, evaluation &amp; security</h1>
+  <p class="lede">I'm <strong>Tsolmondorj Natsagdorj</strong> (0xSoftBoi), a systems + ML engineer working on model evaluation, agent infrastructure, and security-critical software. I use AI aggressively in engineering, then try to break the assumptions and measurements behind what it produced.</p>
+</section>
+
+<section class="work">
+  <h2>Selected work</h2>
+  <ul class="work-list">
+    <li><a href="https://github.com/ml-explore/mlx-lm/pull/1372" target="_blank" rel="noopener noreferrer">ml-explore/mlx-lm #1372</a><span class="tag">merged</span> — corrected the XTC sampler threshold default.</li>
+    <li><a href="https://github.com/materialyzeai/matgl/pull/801" target="_blank" rel="noopener noreferrer">MatGL #801</a> + <a href="https://github.com/materialyzeai/matgl/pull/809" target="_blank" rel="noopener noreferrer">#809</a><span class="tag">merged</span> — added an MC-dropout wrapper and fixed SoftExponential autograd / NaN behavior.</li>
+    <li><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">BRIDGE-bench</a><span class="tag">research</span> — an eval on real cross-chain exploits. I found bug-description leakage in 13/24 prompts, replaced the headline result with a measurement audit, and added sanitization, matched controls, and judge-validity checks.</li>
+    <li><a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">active-materials-discovery</a><span class="tag">research</span> — ~5.15× discovery acceleration on <code>matbench_perovskites</code>, plus a useful negative result: MC-dropout uncertainty was miscalibrated (Spearman ρ = -0.47 vs. absolute error).</li>
+    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">alloy-rs/core #1105</a><span class="tag">merged</span> — fixed EIP-712 canonicalization for self-referential struct types in <code>dyn-abi</code>.</li>
+    <li><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">uutils/coreutils #12327</a><span class="tag">merged</span> — corrected <code>date</code> timezone re-zoning; I also landed three parsing fixes in <a href="https://github.com/uutils/parse_datetime/pulls?q=is%3Apr+author%3A0xSoftBoi+is%3Amerged" target="_blank" rel="noopener noreferrer">uutils/parse_datetime</a>.</li>
+    <li><a href="https://github.com/0xSoftBoi/sensorforge" target="_blank" rel="noopener noreferrer">sensorforge</a> — robotics systems work spanning iPhone/ARKit capture, Jetson integration, and a Rust/Metal/CUDA active-inference runtime.</li>
+    <li><a href="https://github.com/0xSoftBoi/suwappubot" target="_blank" rel="noopener noreferrer">Suwappu</a> — an agent-native cross-chain system spanning provider integrations, SDKs, agent interfaces, and security-critical execution.</li>
+  </ul>
+  <p class="more">More projects and current upstream work are on <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">GitHub</a>. Background on the <a href="{{ '/about/' | relative_url }}">about</a> page.</p>
 </section>
 
 <section class="writing">
@@ -22,18 +37,4 @@ title: "Tsolmondorj Natsagdorj — security & systems"
     {% endfor %}
   </ul>
   <p class="more">{{ site.posts | size }} posts in all — <a href="{{ '/blog/' | relative_url }}">browse the archive</a> or <a href="{{ '/series/' | relative_url }}">by series</a>.</p>
-</section>
-
-<section class="work">
-  <h2>Selected work</h2>
-  <ul class="work-list">
-    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">alloy</a><span class="tag">merged</span> — fixed EIP-712 canonicalization to allow self-referential struct types in <code>dyn-abi</code>. alloy is the Ethereum Rust library behind Foundry and Reth.</li>
-    <li><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">uutils/coreutils</a><span class="tag">merged</span> — corrected <code>date</code> timezone re-zoning in the Rust rewrite of GNU coreutils.</li>
-    <li><a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">Suwappu</a> — an agent-native cross-chain DEX with a post-quantum bridge (ML-DSA-65). I designed the custody layer and audited it end-to-end with Foundry invariants, Slither and Halmos.</li>
-    <li><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">BRIDGE-bench (anthropic-fellowship)</a><span class="tag">research</span> — measuring LLM reasoning against real DeFi exploits: static analysis scores ~0% F1 on compositional bridge hacks; a static-pre-filtered LLM reaches ~40%. Also a TransformerLens mech-interp replication suite.</li>
-    <li><a href="https://github.com/0xSoftBoi/gnome-materials" target="_blank" rel="noopener noreferrer">gnome-materials</a> — GNoME-style active learning for materials discovery on a pretrained CHGNet potential: 95% top-100 recall on a 20% labeling budget.</li>
-    <li><a href="https://github.com/0xSoftBoi/sensorforge" target="_blank" rel="noopener noreferrer">sensorforge</a> — a robotics monorepo: iPhone/ARKit sensor capture, a Jetson Orin voice assistant, and an active-inference engine.</li>
-    <li><a href="https://github.com/0xSoftBoi/quantgroup" target="_blank" rel="noopener noreferrer">quantgroup</a> — a constant-product AMM annotated for auditors: attack simulations and stateful invariant tests.</li>
-  </ul>
-  <p class="more">More open-source work — candle, polars, mlx-lm — and projects on <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a>. Background on the <a href="{{ '/about/' | relative_url }}">about</a> page.</p>
 </section>

@@ -6,16 +6,21 @@ permalink: /about/
 
 <section class="about">
   <h1>About</h1>
-  <p class="lede">I'm Tsolmondorj Natsagdorj, an engineer working where cross-chain infrastructure, smart-contract security, and AI agents meet. I build bridges, audit them, and write the agents that trade across them.</p>
+  <p class="lede">I'm Tsolmondorj Natsagdorj, a systems + ML engineer working on model evaluation, agent infrastructure, and security-critical software. I like engineering where a plausible result is only the start: the interesting part is finding the assumption, edge case, or measurement bug that can make it wrong.</p>
 
   <h2>Now</h2>
-  <p>I run <strong>Zero 1 Labs</strong>, a personal holding company for my ventures and research. Its flagship is <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">Suwappu</a> — an agent-native cross-chain DEX with a post-quantum bridge I designed and audited end-to-end. The custody layer is gated by on-chain attestations (ML-DSA-65 on the home chain); I proved the supply and double-spend invariants with Foundry stateful fuzzing, Slither and Halmos, and shipped every fix with a revert-fails regression so the test goes red again if the fix is removed.</p>
+  <p>I build <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">Suwappu</a>, an agent-native cross-chain system. The work spans provider and agent interfaces, cross-chain state, and security-critical execution. I run that work through <strong>Zero 1 Labs</strong>, alongside independent research and open-source engineering.</p>
+
+  <h2>Research</h2>
+  <p>In <a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">BRIDGE-bench</a>, I built an eval of LLM reasoning on real bridge exploits, then audited the benchmark itself. Thirteen of 24 prompts leaked bug descriptions, and changing the judge moved the score by 14.5 points. I treated that as the result: added prompt sanitization, matched controls, dataset-integrity checks, and judge-validity tests rather than keeping a contaminated headline metric.</p>
+  <p>In <a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">active-materials-discovery</a>, active learning reached ~5.15× discovery acceleration on <code>matbench_perovskites</code>, but MC-dropout uncertainty was miscalibrated (Spearman ρ = -0.47 against absolute error). The gain came from the model mean, not the uncertainty bonus. That negative result led directly into upstream MatGL work.</p>
 
   <h2>Open source</h2>
   <ul class="work-list">
-    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">alloy-rs/core</a><span class="tag">merged</span> — EIP-712 self-referential struct canonicalization in <code>dyn-abi</code>. alloy underpins Foundry and Reth.</li>
-    <li><a href="https://github.com/uutils/coreutils" target="_blank" rel="noopener noreferrer">uutils/coreutils</a><span class="tag">merged</span> — <code>date</code> timezone handling in the Rust rewrite of GNU coreutils.</li>
-    <li>Open contributions to HuggingFace <strong>candle</strong> (a causal-mask prefill fix), <strong>polars</strong> (non-UTF8 CSV encoding), and Apple's <strong>mlx-lm</strong>.</li>
+    <li><a href="https://github.com/ml-explore/mlx-lm/pull/1372" target="_blank" rel="noopener noreferrer">ml-explore/mlx-lm #1372</a><span class="tag">merged</span> — corrected the XTC sampler threshold default.</li>
+    <li><a href="https://github.com/materialyzeai/matgl/pull/801" target="_blank" rel="noopener noreferrer">materialyzeai/matgl #801</a> + <a href="https://github.com/materialyzeai/matgl/pull/809" target="_blank" rel="noopener noreferrer">#809</a><span class="tag">merged</span> — MC-dropout support and a SoftExponential autograd / NaN fix.</li>
+    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">alloy-rs/core #1105</a><span class="tag">merged</span> — EIP-712 self-referential struct canonicalization in <code>dyn-abi</code>.</li>
+    <li><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">uutils/coreutils #12327</a><span class="tag">merged</span> — <code>date</code> timezone re-zoning, plus merged parser fixes in <a href="https://github.com/uutils/parse_datetime/pulls?q=is%3Apr+author%3A0xSoftBoi+is%3Amerged" target="_blank" rel="noopener noreferrer">uutils/parse_datetime</a>.</li>
   </ul>
 
   <h2>Before</h2>
@@ -27,8 +32,8 @@ permalink: /about/
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Who is Tsolmondorj Natsagdorj?","acceptedAnswer":{"@type":"Answer","text":"Tsolmondorj Natsagdorj (online: 0xSoftBoi) is a security and systems engineer working on cross-chain infrastructure and smart-contract security, in Rust and the EVM."}},
-{"@type":"Question","name":"What has Tsolmondorj Natsagdorj contributed to?","acceptedAnswer":{"@type":"Answer","text":"Merged upstream contributions to alloy (EIP-712 dyn-abi canonicalization, the Rust library behind Foundry and Reth) and uutils/coreutils (date timezone handling); an end-to-end audited lock-and-mint bridge; and BRIDGE-bench, a benchmark of LLM reasoning against real DeFi exploits."}},
-{"@type":"Question","name":"What is Tsolmondorj Natsagdorj building now?","acceptedAnswer":{"@type":"Answer","text":"Suwappu, an agent-native cross-chain DEX."}}
+{"@type":"Question","name":"Who is Tsolmondorj Natsagdorj?","acceptedAnswer":{"@type":"Answer","text":"Tsolmondorj Natsagdorj (online: 0xSoftBoi) is a systems and ML engineer working on model evaluation, agent infrastructure, and security-critical software."}},
+{"@type":"Question","name":"What has Tsolmondorj Natsagdorj contributed upstream?","acceptedAnswer":{"@type":"Answer","text":"Merged upstream contributions include MLX-LM, MatGL, Alloy, uutils/coreutils, and uutils/parse_datetime."}},
+{"@type":"Question","name":"What does Tsolmondorj Natsagdorj research?","acceptedAnswer":{"@type":"Answer","text":"Model evaluation under contamination and grader sensitivity, uncertainty-aware active learning, agent systems, and adversarially reliable software."}}
 ]}
 </script>

@@ -1,0 +1,36 @@
+---
+layout: default
+title: "roce-preflight — evidence case study"
+permalink: /work/roce-preflight/
+---
+<section class="case-study">
+  <a class="back" href="{{ '/' | relative_url }}">← work</a>
+  <span class="program-kicker">systems · networking · observed</span>
+  <h1>197 passing tests were not evidence that RDMA worked.</h1>
+  <p class="lede">roce-preflight is a diagnostic tool for RoCE hosts. Its most useful result was finding the boundary its own test suite had not crossed.</p>
+
+  <div class="skim-grid">
+    <div><span>Problem</span><p>Parsers, ranking logic, snapshots, and lifecycle decisions were well tested against synthetic state, but the suite did not require an RDMA device.</p></div>
+    <div><span>Result</span><p><strong>Real RDMA execution exposed four defects after 197 tests passed.</strong> The first attempted correction also passed the unit suite and still failed on-device.</p></div>
+    <div><span>Independent evidence</span><p>The CI job creates a Linux soft-RoCE device, asserts the backend did not fall back to simulation, exercises real verbs/sysfs state, and sends real perftest traffic.</p></div>
+    <div><span>Boundary</span><p>Soft-RoCE validates kernel/userspace interface assumptions. It does not establish mlx5, firmware, PCIe/NUMA, switch, PFC/ECN, multi-host, or production-performance claims.</p></div>
+  </div>
+
+  <h2>What failed</h2>
+  <div class="evidence-table">
+    <div><b>MTU</b><span>link rate was printed where active MTU belonged</span></div>
+    <div><b>GID diagnosis</b><span>the report could contradict the live GID state</span></div>
+    <div><b>QP lifecycle</b><span>RC/UC/UD selected an unroutable <code>fe80::</code> GID and failed with <code>ENETUNREACH</code></span></div>
+    <div><b>Enumeration</b><span>a three-entry live GID table was expanded into 1,024 entries</span></div>
+  </div>
+
+  <h2>Verification path</h2>
+  <ul class="evidence-links">
+    <li><a href="https://github.com/0xSoftBoi/roce-preflight" target="_blank" rel="noopener noreferrer">source repository ↗</a></li>
+    <li><a href="https://github.com/0xSoftBoi/roce-preflight/blob/main/.github/workflows/soft-roce.yml" target="_blank" rel="noopener noreferrer">real-device CI workflow ↗</a></li>
+    <li><a href="https://github.com/0xSoftBoi/roce-preflight/blob/main/docs/img/ci-found-bugs.svg" target="_blank" rel="noopener noreferrer">four-defect evidence graphic ↗</a></li>
+    <li><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">full postmortem →</a></li>
+  </ul>
+
+  <aside class="boundary-box"><span class="program-kicker">What would change the interpretation?</span><p>If an independently maintained simulator repeatedly caught the same interface-assumption defects before device execution, the unique discovery value of the hardware boundary would weaken. The job could still be valuable as regression protection.</p></aside>
+</section>

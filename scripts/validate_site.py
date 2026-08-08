@@ -42,7 +42,6 @@ def post_slugs() -> set[str]:
 
 def audit_slugs() -> set[str]:
     text = AUDIT.read_text(encoding="utf-8")
-    # Top-level mapping keys have no indentation. Ignore comments/blank lines.
     return {
         m.group(1)
         for m in re.finditer(r"^([a-z0-9][a-z0-9-]*):\s*$", text, flags=re.M)
@@ -94,7 +93,13 @@ def validate() -> list[str]:
         "blog/index.html",
         "research/index.html",
         "about/index.html",
+        "formation/index.html",
+        "revisions/index.html",
         "research-standard/index.html",
+        "work/roce-preflight/index.html",
+        "work/bridge-bench/index.html",
+        "work/materials/index.html",
+        "work/upstream/index.html",
         "blog/197-tests-four-real-hardware-bugs/index.html",
         "blog/static-analysis-scores-zero-on-real-exploits/index.html",
         "blog/greedy-was-enough-active-learning-pretrained-potential/index.html",
@@ -107,8 +112,6 @@ def validate() -> list[str]:
 
     for html in SITE.rglob("*.html"):
         text = html.read_text(encoding="utf-8", errors="replace")
-        # Search-engine ownership verification files are deliberately one-line token
-        # documents and should not be held to document-page metadata requirements.
         if not is_site_verification_file(html):
             if "<title" not in text.lower():
                 errors.append(f"{html.relative_to(SITE)}: missing title")
@@ -128,7 +131,6 @@ def validate() -> list[str]:
                     f"{target.relative_to(SITE) if target.is_relative_to(SITE) else target}"
                 )
 
-    # Prevent the two known-invalid headline interpretations from returning to current overview pages.
     for source in (ROOT / "index.html", ROOT / "research.html"):
         text = source.read_text(encoding="utf-8")
         banned = [
@@ -139,6 +141,17 @@ def validate() -> list[str]:
         for phrase in banned:
             if phrase in text:
                 errors.append(f"{source.name}: stale headline claim returned: {phrase}")
+
+    # Trust-layer regression checks: these public verification surfaces are part of
+    # the portfolio contract, not optional editorial pages.
+    revisions = (SITE / "revisions/index.html").read_text(encoding="utf-8", errors="replace") if (SITE / "revisions/index.html").exists() else ""
+    if "13/24" not in revisions or "−0.47" not in revisions:
+        errors.append("revisions page is missing the two material research corrections")
+
+    homepage = (SITE / "index.html").read_text(encoding="utf-8", errors="replace") if (SITE / "index.html").exists() else ""
+    for href in ("/work/roce-preflight/", "/work/bridge-bench/", "/work/materials/", "/work/upstream/"):
+        if href not in homepage:
+            errors.append(f"homepage is missing verification path: {href}")
 
     return errors
 

@@ -35,7 +35,13 @@ jobs:
             /blog/ \
             /research/ \
             /about/ \
+            /formation/ \
+            /revisions/ \
             /research-standard/ \
+            /work/roce-preflight/ \
+            /work/bridge-bench/ \
+            /work/materials/ \
+            /work/upstream/ \
             /blog/197-tests-four-real-hardware-bugs/ \
             /blog/static-analysis-scores-zero-on-real-exploits/ \
             /blog/greedy-was-enough-active-learning-pretrained-potential/ \

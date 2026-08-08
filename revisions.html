@@ -1,0 +1,32 @@
+---
+layout: default
+title: "Revisions — Tsolmondorj Natsagdorj"
+permalink: /revisions/
+---
+
+<section class="about">
+  <span class="section-kicker">research integrity</span>
+  <h1>Revisions</h1>
+  <p class="lede">A result is allowed to become less flattering when better evidence arrives.</p>
+  <p>This page is generated from the same audit ledger that labels every article on the site. I keep corrections visible because the ability to weaken your own claim is part of technical judgment, not an embarrassment to hide in Git history.</p>
+
+  <div class="revision-list">
+  {% for entry in site.data.writing_audit %}
+    {% assign slug = entry[0] %}
+    {% assign audit = entry[1] %}
+    {% if audit.note %}
+      {% assign post = site.posts | where: "slug", slug | first %}
+      <article class="revision-item">
+        <div class="revision-meta"><span class="status-chip">{{ audit.label | default: audit.status }}</span><span>{{ audit.reviewed }}</span></div>
+        <h2>{% if post %}<a href="{{ post.url | relative_url }}">{{ post.title }}</a>{% else %}{{ slug }}{% endif %}</h2>
+        <p>{{ audit.note }}</p>
+        {% if audit.primary %}<p class="evidence-source">Primary evidence: <a href="{{ audit.primary }}" target="_blank" rel="noopener noreferrer">{{ audit.primary_label | default: 'source artifact' }} ↗</a></p>{% endif %}
+      </article>
+    {% endif %}
+  {% endfor %}
+  </div>
+
+  <h2>Policy</h2>
+  <p><strong>Observed</strong>, <strong>derived</strong>, <strong>estimated</strong>, and <strong>target</strong> are different evidence classes. A later audit can downgrade an earlier headline. A design target never becomes a measured result because the prose is persuasive.</p>
+  <p class="more"><a href="{{ '/research-standard/' | relative_url }}">Publication standard →</a> · <a href="{{ '/research/' | relative_url }}">research programs →</a></p>
+</section>

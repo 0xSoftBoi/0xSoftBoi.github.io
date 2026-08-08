@@ -7,7 +7,7 @@ permalink: /research/
 <section class="about">
   <h1>Research</h1>
   <p class="lede">I work on measurement and systems problems where a plausible abstraction can quietly stop matching the thing underneath it.</p>
-  <p>My standard is evidence-first: primary artifacts before prose, negative results remain negative, targets remain targets, and a later validity failure can weaken an earlier headline rather than being written around.</p>
+  <p>My standard is evidence-first: primary artifacts before prose, negative results remain negative, targets remain targets, and a later validity failure can weaken an earlier headline rather than being written around. <a href="{{ '/revisions/' | relative_url }}">The correction history is public.</a></p>
 
   <div class="programs">
     <article class="program">
@@ -15,7 +15,7 @@ permalink: /research/
       <h2>BRIDGE-bench — when the benchmark leaks its own answer</h2>
       <p>BRIDGE-bench evaluates model reasoning over verified smart-contract exploit examples. A later prompt audit found severe author-injected leakage in <strong>13 of 24</strong> examples. In the sharpest Euler case, the prompt header contained the exact ground-truth label while the vulnerable function was absent from the committed source bundle.</p>
       <p>The historical model score is therefore a <strong>contaminated upper bound</strong>, not clean vulnerability-detection performance. The repository now has comment-stripping, identity anonymization, sanitizer invariants, and a locked paired remeasurement design. I am not claiming the sanitized score because the paid inference rerun is intentionally not part of the current program.</p>
-      <div class="program-links"><a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">evaluation postmortem →</a><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
+      <div class="program-links"><a href="{{ '/work/bridge-bench/' | relative_url }}">90-second evidence view →</a><a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">evaluation postmortem →</a><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
     </article>
 
     <article class="program">
@@ -23,7 +23,7 @@ permalink: /research/
       <h2>Active materials discovery — useful mean, failed uncertainty</h2>
       <p>On a static 18,928-structure <code>matbench_perovskites</code> screening task, the pretrained mean prediction reaches roughly <strong>5× discovery acceleration</strong> relative to random at the tested 5% budget. A low-weight UCB rule ties greedy ranking.</p>
       <p>Direct calibration changes the interpretation: the readout-level MC-dropout standard deviation has <strong>Spearman −0.47</strong> correlation with absolute error, and increasing its acquisition weight eventually pushes DAF below random. The current result is not “uncertainty helps”; it is that a good point predictor and a good uncertainty estimator are separate achievements.</p>
-      <div class="program-links"><a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}">negative result →</a><a href="{{ '/blog/a-research-primitive-should-outlive-its-result/' | relative_url }}">upstream primitive →</a><a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
+      <div class="program-links"><a href="{{ '/work/materials/' | relative_url }}">90-second evidence view →</a><a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}">negative result →</a><a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
     </article>
 
     <article class="program">
@@ -31,7 +31,7 @@ permalink: /research/
       <h2>roce-preflight — independent state as a test boundary</h2>
       <p>The project had 197 passing unit tests before the first real RDMA path exposed four defects in MTU reporting, GID diagnosis, route selection, and GID enumeration. The first attempted fix passed the unit suite and still failed on the device.</p>
       <p>The result is a test architecture, not a benchmark brag: logic stays fast and synthetic; claims about Linux RDMA require real verbs and sysfs state; physical-NIC/fabric performance remains a separate evidence class.</p>
-      <div class="program-links"><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">postmortem →</a><a href="https://github.com/0xSoftBoi/roce-preflight" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
+      <div class="program-links"><a href="{{ '/work/roce-preflight/' | relative_url }}">90-second evidence view →</a><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">postmortem →</a><a href="https://github.com/0xSoftBoi/roce-preflight" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
     </article>
 
     <article class="program">
@@ -45,5 +45,5 @@ permalink: /research/
 
   <h2>Method</h2>
   <p>I use four evidence classes in technical work: <strong>observed</strong>, <strong>derived</strong>, <strong>estimated</strong>, and <strong>target</strong>. The article should never make one look like another. The strongest rival explanation belongs in the main argument, not a footnote.</p>
-  <p class="more"><a href="{{ '/blog/correctness-under-hidden-failure-modes/' | relative_url }}">Read the engineering thesis →</a> · <a href="{{ '/blog/' | relative_url }}">all writing →</a></p>
+  <p class="more"><a href="{{ '/revisions/' | relative_url }}">Public revisions →</a> · <a href="{{ '/formation/' | relative_url }}">Formation →</a> · <a href="{{ '/blog/correctness-under-hidden-failure-modes/' | relative_url }}">engineering thesis →</a></p>
 </section>

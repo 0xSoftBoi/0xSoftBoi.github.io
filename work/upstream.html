@@ -1,0 +1,39 @@
+---
+layout: default
+title: "Upstream correctness — evidence case study"
+permalink: /work/upstream/
+---
+<section class="case-study">
+  <a class="back" href="{{ '/' | relative_url }}">← work</a>
+  <span class="program-kicker">open source · independent review</span>
+  <h1>The strongest code evidence is often code you do not control.</h1>
+  <p class="lede">A local repository can define its own success conditions. Upstream work has to survive another project's API contracts, reviewers, tests, compatibility constraints, and downstream users.</p>
+
+  <div class="skim-grid">
+    <div><span>Problem</span><p>Portfolio projects are valuable but self-authored evidence. I wanted a second evidence class: small correctness fixes accepted into mature codebases whose standards I did not set.</p></div>
+    <div><span>Result</span><p><strong>Eight selected patches merged</strong> across MatGL, MLX-LM, Alloy, and uutils, spanning autograd, uncertainty infrastructure, inference defaults, recursive type semantics, and date/time compatibility.</p></div>
+    <div><span>Independent evidence</span><p>Each result is a merged third-party pull request with its own review history, CI, tests, and maintainers. The links below are the proof; this page is only an index.</p></div>
+    <div><span>Boundary</span><p>Merge is evidence that the change met that project's acceptance bar. It is not evidence that every design choice was optimal, nor that the patch had large product impact.</p></div>
+  </div>
+
+  <h2>Selected merged work</h2>
+  <div class="evidence-table">
+    <div><b><a href="https://github.com/materialyzeai/matgl/pull/801" target="_blank" rel="noopener noreferrer">MatGL #801 ↗</a></b><span>reusable MC-dropout uncertainty primitive with explicit supported-model boundaries</span></div>
+    <div><b><a href="https://github.com/materialyzeai/matgl/pull/809" target="_blank" rel="noopener noreferrer">MatGL #809 ↗</a></b><span>autograd-correct, numerically safe SoftExponential semantics</span></div>
+    <div><b><a href="https://github.com/ml-explore/mlx-lm/pull/1372" target="_blank" rel="noopener noreferrer">MLX-LM #1372 ↗</a></b><span>pathological XTC default composition corrected across sampler, CLI, and server</span></div>
+    <div><b><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">Alloy #1105 ↗</a></b><span>self-referential EIP-712 type canonicalization while preserving runtime recursion limits</span></div>
+    <div><b><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">coreutils #12327 ↗</a></b><span>GNU-compatible date timezone re-zoning</span></div>
+    <div><b><a href="https://github.com/uutils/parse_datetime/pull/284" target="_blank" rel="noopener noreferrer">uutils #284/#285/#287 ↗</a></b><span>AM/PM composition, negative fractional epoch semantics, and UT compatibility</span></div>
+  </div>
+
+  <h2>What I learned</h2>
+  <p>The unit of correctness gets larger upstream. The question stops being “does my example work?” and becomes “what may every downstream caller safely assume after this lands?” That shift is why the patches cluster around edge semantics: gradients, default composition, recursive representations, timezones, and compatibility behavior.</p>
+
+  <h2>Verification path</h2>
+  <ul class="evidence-links">
+    <li><a href="{{ '/blog/upstream-is-a-different-kind-of-test/' | relative_url }}">engineering synthesis →</a></li>
+    <li><a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">GitHub profile ↗</a></li>
+  </ul>
+
+  <aside class="boundary-box"><span class="program-kicker">What would strengthen this evidence?</span><p>More repeated upstream work in the domains closest to the target role, especially fixes that involve performance, concurrency, distributed systems, evaluation infrastructure, or hardware-facing reliability—not simply a larger PR count.</p></aside>
+</section>

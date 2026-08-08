@@ -145,7 +145,7 @@ def validate() -> list[str]:
     # Trust-layer regression checks: these public verification surfaces are part of
     # the portfolio contract, not optional editorial pages.
     revisions = (SITE / "revisions/index.html").read_text(encoding="utf-8", errors="replace") if (SITE / "revisions/index.html").exists() else ""
-    if "13 of 24" not in revisions or "−0.47" not in revisions:
+    if "13/24" not in revisions or "−0.47" not in revisions:
         errors.append("revisions page is missing the two material research corrections")
 
     homepage = (SITE / "index.html").read_text(encoding="utf-8", errors="replace") if (SITE / "index.html").exists() else ""

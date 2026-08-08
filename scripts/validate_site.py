@@ -68,6 +68,11 @@ def built_target(source: Path, raw: str) -> Path | None:
     return candidate
 
 
+def is_site_verification_file(path: Path) -> bool:
+    """Google verification files are intentionally bare token documents, not pages."""
+    return path.parent == SITE and bool(re.fullmatch(r"google[a-z0-9]+\.html", path.name))
+
+
 def validate() -> list[str]:
     errors: list[str] = []
     posts = post_slugs()
@@ -102,10 +107,13 @@ def validate() -> list[str]:
 
     for html in SITE.rglob("*.html"):
         text = html.read_text(encoding="utf-8", errors="replace")
-        if "<title" not in text.lower():
-            errors.append(f"{html.relative_to(SITE)}: missing title")
-        if "name=\"viewport\"" not in text.lower() and "name='viewport'" not in text.lower():
-            errors.append(f"{html.relative_to(SITE)}: missing viewport meta")
+        # Search-engine ownership verification files are deliberately one-line token
+        # documents and should not be held to document-page metadata requirements.
+        if not is_site_verification_file(html):
+            if "<title" not in text.lower():
+                errors.append(f"{html.relative_to(SITE)}: missing title")
+            if "name=\"viewport\"" not in text.lower() and "name='viewport'" not in text.lower():
+                errors.append(f"{html.relative_to(SITE)}: missing viewport meta")
         parser = Links()
         try:
             parser.feed(text)
@@ -115,8 +123,6 @@ def validate() -> list[str]:
         for kind, raw in parser.targets:
             target = built_target(html, raw)
             if target is not None and not target.exists():
-                # Jekyll SEO/feed can emit root-relative endpoints generated outside HTML.
-                # They still must exist in _site for local links/assets.
                 errors.append(
                     f"{html.relative_to(SITE)}: broken local {kind}={raw!r} -> "
                     f"{target.relative_to(SITE) if target.is_relative_to(SITE) else target}"

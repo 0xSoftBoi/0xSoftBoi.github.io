@@ -68,9 +68,28 @@
 .formation-path h2{font-size:1.34rem;margin:5px 0 6px}
 .formation-path p{color:var(--muted);font-size:.94rem;max-width:760px}
 
+/* Hiring conversion */
+.resume-page{max-width:880px;margin:0 auto}
+.resume-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:20px;border-bottom:1px solid var(--rule);margin-bottom:24px}
+.resume-head h1{margin:4px 0 0}
+.resume-head .lede{margin:3px 0 0;color:var(--muted)}
+.resume-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;font-family:var(--mono);font-size:.74rem}
+.resume-actions a{display:inline-block;border:1px solid var(--rule);border-radius:5px;padding:7px 10px;text-decoration:none}
+.resume-actions a:hover{border-color:var(--accent)}
+.resume-page>p{max-width:800px}
+.resume-page h2{margin-top:38px}
+.resume-entries{border-top:1px solid var(--rule)}
+.resume-entries article{padding:16px 0;border-bottom:1px solid var(--rule)}
+.resume-entries h3{margin:0 0 6px;font-size:1.04rem}
+.resume-entries h3 span{margin-left:7px;font-family:var(--mono);font-size:.65rem;font-weight:400;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.resume-entries p{font-size:.91rem;color:var(--muted);margin:4px 0;line-height:1.55}
+.resume-contact{margin-top:42px;padding-top:18px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+
 @media(max-width:620px){
   .proof-grid,.skim-grid{grid-template-columns:1fr}
   .archive-heading{display:block}
   .program-links{gap:8px}
   .evidence-table>div{grid-template-columns:1fr;gap:4px}
+  .resume-head{display:block}
+  .resume-actions{justify-content:flex-start;margin-top:14px}
 }

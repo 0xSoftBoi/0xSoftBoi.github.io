@@ -5,33 +5,45 @@ permalink: /research/
 ---
 
 <section class="about">
-  <img class="hero" src="{{ '/assets/art/research-hero.png' | relative_url }}" alt="">
   <h1>Research</h1>
-  <p>Two projects measuring what automated reasoning can and can't do — one pointed at DeFi exploits, one at materials discovery.</p>
+  <p class="lede">I work on measurement and systems problems where a plausible abstraction can quietly stop matching the thing underneath it.</p>
+  <p>My standard is evidence-first: primary artifacts before prose, negative results remain negative, targets remain targets, and a later validity failure can weaken an earlier headline rather than being written around.</p>
 
-  <h2>BRIDGE-bench — LLM reasoning against compositional bridge hacks</h2>
-  <p>A benchmark of real cross-chain bridge exploits, scored on whether an analyzer can flag the vulnerability that was actually used. The exploits are compositional: the bug lives in the interaction of several components rather than in any single line, which is exactly where pattern-matching static analysis falls down. The pipeline pairs a static pre-filter — to cut the search space — with an LLM that reasons over the surviving candidates.</p>
-  <p class="result"><strong>Result:</strong> static analysis alone scores ~0% F1 on the compositional bridge hacks; a static-pre-filtered LLM reaches ~40% F1.</p>
-  <p class="quiet"><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">[code]</a> &middot; <a href="https://doi.org/10.5281/zenodo.20604295" target="_blank" rel="noopener noreferrer">DOI: 10.5281/zenodo.20604295</a></p>
+  <div class="programs">
+    <article class="program">
+      <span class="program-kicker">AI evaluations · security</span>
+      <h2>BRIDGE-bench — when the benchmark leaks its own answer</h2>
+      <p>BRIDGE-bench evaluates model reasoning over verified smart-contract exploit examples. A later prompt audit found severe author-injected leakage in <strong>13 of 24</strong> examples. In the sharpest Euler case, the prompt header contained the exact ground-truth label while the vulnerable function was absent from the committed source bundle.</p>
+      <p>The historical model score is therefore a <strong>contaminated upper bound</strong>, not clean vulnerability-detection performance. The repository now has comment-stripping, identity anonymization, sanitizer invariants, and a locked paired remeasurement design. I am not claiming the sanitized score because the paid inference rerun is intentionally not part of the current program.</p>
+      <div class="program-links"><a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">evaluation postmortem →</a><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
+    </article>
 
-  <h2>gnome-materials — active learning for materials discovery</h2>
-  <p>A GNoME-style active-learning loop for materials discovery over a pretrained CHGNet potential. Rather than labeling the full candidate pool, the loop selects the most informative candidates to evaluate, recovering most of the top-ranked materials at a fraction of the labeling cost.</p>
-  <p class="result"><strong>Result:</strong> 95% top-100 recall at a 20% labeling budget.</p>
-  <p class="quiet"><a href="https://github.com/0xSoftBoi/gnome-materials" target="_blank" rel="noopener noreferrer">[code]</a> &middot; dataset: pending</p>
+    <article class="program">
+      <span class="program-kicker">Scientific ML</span>
+      <h2>Active materials discovery — useful mean, failed uncertainty</h2>
+      <p>On a static 18,928-structure <code>matbench_perovskites</code> screening task, the pretrained mean prediction reaches roughly <strong>5× discovery acceleration</strong> relative to random at the tested 5% budget. A low-weight UCB rule ties greedy ranking.</p>
+      <p>Direct calibration changes the interpretation: the readout-level MC-dropout standard deviation has <strong>Spearman −0.47</strong> correlation with absolute error, and increasing its acquisition weight eventually pushes DAF below random. The current result is not “uncertainty helps”; it is that a good point predictor and a good uncertainty estimator are separate achievements.</p>
+      <div class="program-links"><a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}">negative result →</a><a href="{{ '/blog/a-research-primitive-should-outlive-its-result/' | relative_url }}">upstream primitive →</a><a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
+    </article>
 
-  <p class="more">Security write-ups on the <a href="{{ '/security/' | relative_url }}">security</a> page; background on the <a href="{{ '/about/' | relative_url }}">about</a> page.</p>
+    <article class="program">
+      <span class="program-kicker">Systems · networking</span>
+      <h2>roce-preflight — independent state as a test boundary</h2>
+      <p>The project had 197 passing unit tests before the first real RDMA path exposed four defects in MTU reporting, GID diagnosis, route selection, and GID enumeration. The first attempted fix passed the unit suite and still failed on the device.</p>
+      <p>The result is a test architecture, not a benchmark brag: logic stays fast and synthetic; claims about Linux RDMA require real verbs and sysfs state; physical-NIC/fabric performance remains a separate evidence class.</p>
+      <div class="program-links"><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">postmortem →</a><a href="https://github.com/0xSoftBoi/roce-preflight" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
+    </article>
+
+    <article class="program">
+      <span class="program-kicker">Autonomy · hardware</span>
+      <h2>Aiur — prototype the risky interaction, not the rendering</h2>
+      <p>Aiur is a persistent airborne-carrier concept. CARRIER-P0 removes hydrogen, swarms, charging, outdoor autonomy, and heavy airborne compute until one falsifiable interaction remains: repeated mechanically verified recovery of a small aircraft onto a moving dock.</p>
+      <p>The current artifacts are design, models, CAD, controller logic, and acceptance gates. Recovery rates are <strong>targets</strong>, not observed results, until a physical telemetry dataset is committed.</p>
+      <div class="program-links"><a href="{{ '/blog/delete-the-science-fiction-parts-first/' | relative_url }}">design note →</a><a href="https://github.com/0xSoftBoi/aiur" target="_blank" rel="noopener noreferrer">repository ↗</a></div>
+    </article>
+  </div>
+
+  <h2>Method</h2>
+  <p>I use four evidence classes in technical work: <strong>observed</strong>, <strong>derived</strong>, <strong>estimated</strong>, and <strong>target</strong>. The article should never make one look like another. The strongest rival explanation belongs in the main argument, not a footnote.</p>
+  <p class="more"><a href="{{ '/blog/correctness-under-hidden-failure-modes/' | relative_url }}">Read the engineering thesis →</a> · <a href="{{ '/blog/' | relative_url }}">all writing →</a></p>
 </section>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ScholarlyArticle",
-  "name": "BRIDGE-bench: Measuring LLM Reasoning on Compositional Cross-Chain Bridge Exploits",
-  "author": { "@id": "https://0xsoftboi.github.io/#person" },
-  "datePublished": "2026-06-09",
-  "identifier": "https://doi.org/10.5281/zenodo.20604295",
-  "sameAs": "https://doi.org/10.5281/zenodo.20604295",
-  "url": "https://github.com/0xSoftBoi/anthropic-fellowship",
-  "abstract": "A benchmark of ten real-world cross-chain bridge exploits ($1.6B in historical losses) measuring whether LLMs can reason about compositional vulnerabilities that violate accounting invariants. Static analysis scores ~0% F1; a static-pre-filtered LLM reaches ~40% F1."
-}
-</script>

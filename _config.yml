@@ -1,9 +1,9 @@
 title: Tsolmondorj Natsagdorj
-tagline: security & systems
+tagline: systems & research
 description: >-
-  Tsolmondorj Natsagdorj — security & systems engineer working on cross-chain
-  infrastructure and smart-contract security, with merged contributions to
-  alloy and uutils/coreutils. Writing, open source, and selected work.
+  Systems and research engineering across reliable AI, high-performance networking,
+  scientific ML, autonomous systems, and security-critical infrastructure. Writing,
+  open source, experiments, and postmortems focused on hidden failure modes.
 author: Tsolmondorj Natsagdorj
 email: "layerinfinite@gmail.com"
 url: "https://0xsoftboi.github.io"
@@ -15,12 +15,12 @@ github: 0xSoftBoi
 website: https://suwappu.bot
 
 # Build
-future: true            # publish same-day posts whose timestamp is ahead of the UTC build clock
+future: true
 markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
-  auto_ids: true          # heading IDs for in-page TOC anchors
+  auto_ids: true
   toc_levels: 2..3
 permalink: /blog/:title/
 plugins:
@@ -28,14 +28,13 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# Default social-share image; posts override with their own per-post card.
+# Default social-share image; posts may override with a per-post card.
 defaults:
   - scope:
       path: ""
     values:
       image: /assets/og/default.png
 
-# Pagination not needed yet; keep it simple
 exclude:
   - Gemfile
   - Gemfile.lock

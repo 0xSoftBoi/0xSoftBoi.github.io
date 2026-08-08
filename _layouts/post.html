@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+{% assign audit = site.data.writing_audit[page.slug] %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -8,7 +9,7 @@ layout: default
   "headline": {{ page.title | jsonify }},
   "description": {{ page.excerpt | strip_html | strip_newlines | jsonify }},
   "datePublished": "{{ page.date | date_to_xmlschema }}",
-  "dateModified": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{% if audit and audit.reviewed %}{{ audit.reviewed }}{% else %}{{ page.date | date: '%Y-%m-%d' }}{% endif %}",
   "url": "{{ page.url | absolute_url }}",
   "mainEntityOfPage": "{{ page.url | absolute_url }}",
   "inLanguage": "en",
@@ -20,11 +21,21 @@ layout: default
 }
 </script>
 <article class="post">
-  <a class="back" href="{{ '/' | relative_url }}">← writing</a>
+  <a class="back" href="{{ '/blog/' | relative_url }}">← writing</a>
   {% assign hero_slug = page.url | split: '/blog/' | last | replace: '/', '' %}
   <img class="hero post-hero" src="{{ '/assets/art/posts/' | append: hero_slug | append: '.png' | relative_url }}" alt="" onerror="this.remove()">
   <h1 class="post-title">{{ page.title }}</h1>
-  <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }} · {{ content | strip_html | number_of_words | divided_by: 200.0 | ceil }} min{% if page.tags %} · {% for tag in page.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}{% endif %}</p>
+  <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }} · {{ content | strip_html | number_of_words | divided_by: 200.0 | ceil }} min{% if page.series %} · <a href="{{ '/series/' | relative_url }}#{{ page.series | slugify }}">{{ page.series }}</a>{% endif %}{% if audit %} · {{ audit.label | default: audit.status }}{% endif %}</p>
+
+  {% if audit and audit.note %}
+  <aside class="evidence-note evidence-{{ audit.status | slugify }}">
+    <p class="evidence-kicker">{% if audit.status == 'revised' %}Revision · {{ audit.reviewed }}{% elsif audit.status == 'design-note' %}Evidence boundary{% else %}Evidence review · {{ audit.reviewed }}{% endif %}</p>
+    <p>{{ audit.note }}</p>
+    {% if audit.current_url %}<p><a href="{{ audit.current_url | relative_url }}">Read the current treatment →</a></p>{% endif %}
+    {% if audit.primary %}<p class="evidence-source">Primary evidence: <a href="{{ audit.primary }}" target="_blank" rel="noopener noreferrer">{{ audit.primary_label | default: 'source artifact' }} ↗</a></p>{% endif %}
+  </aside>
+  {% endif %}
+
   <div class="post-body">
     {{ content }}
   </div>
@@ -56,9 +67,6 @@ layout: default
 </article>
 
 <script>
-/* Auto table-of-contents for long posts: builds from <h2>s (kramdown auto-ids),
-   reuses the #markdown-toc styling, and stays out of the way of short posts and
-   posts that already declare a kramdown {:toc}. */
 (function () {
   var body = document.querySelector('.post-body');
   if (!body || document.getElementById('markdown-toc')) return;

@@ -1,0 +1,36 @@
+---
+layout: default
+title: "Active materials discovery — evidence case study"
+permalink: /work/materials/
+---
+<section class="case-study">
+  <a class="back" href="{{ '/' | relative_url }}">← work</a>
+  <span class="program-kicker">scientific ML · observed negative result</span>
+  <h1>The point prediction worked. The confidence estimate did not.</h1>
+  <p class="lede">A pretrained materials model ranked stable candidates efficiently on a static screening task, while the tested MC-dropout uncertainty signal failed the calibration test needed to justify uncertainty-aware acquisition.</p>
+
+  <div class="skim-grid">
+    <div><span>Problem</span><p>Active learning usually assumes the acquisition function can trade off predicted value and model uncertainty. That only makes sense if the uncertainty score carries information about error.</p></div>
+    <div><span>Result</span><p><strong>Greedy mean ranking reached DAF 5.15 and low-weight UCB 5.17</strong> at the tested 5% budget, while MC-dropout σ had Spearman <strong>−0.47</strong> correlation with absolute error.</p></div>
+    <div><span>Independent evidence</span><p>The public benchmark runs five seeds over 18,928 perovskite structures and includes direct calibration diagnostics: σ↔error association, reliability, miscalibration area, and empirical coverage.</p></div>
+    <div><span>Boundary</span><p>This is a static labeled proxy benchmark, not a closed-loop DFT or laboratory discovery campaign. The result is specific to the tested pretrained model, readout-level MC-dropout configuration, dataset, and acquisition setup.</p></div>
+  </div>
+
+  <h2>The dose response</h2>
+  <div class="evidence-table">
+    <div><b>Random</b><span>DAF ≈ 1.01</span></div>
+    <div><b>Greedy μ</b><span>DAF 5.15 ± 0.04</span></div>
+    <div><b>UCB λ=0.5</b><span>DAF 5.17 ± 0.01</span></div>
+    <div><b>UCB λ=5</b><span>DAF 0.91 — below random as the bad uncertainty signal receives too much authority</span></div>
+  </div>
+
+  <h2>Verification path</h2>
+  <ul class="evidence-links">
+    <li><a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">research repository ↗</a></li>
+    <li><a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}">negative-result article →</a></li>
+    <li><a href="https://github.com/materialyzeai/matgl/pull/801" target="_blank" rel="noopener noreferrer">MatGL #801 — upstream uncertainty primitive ↗</a></li>
+    <li><a href="{{ '/revisions/' | relative_url }}">revision that superseded the earlier calibration interpretation →</a></li>
+  </ul>
+
+  <aside class="boundary-box"><span class="program-kicker">What would change the interpretation?</span><p>If another uncertainty method—deep ensembles, a differently placed stochastic mechanism, or a calibrated surrogate—showed positive error association and consistently improved acquisition, the conclusion would become narrower still: the failure belongs to this uncertainty mechanism, not uncertainty-aware active learning in general.</p></aside>
+</section>

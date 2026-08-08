@@ -9,6 +9,8 @@ permalink: /work/materials/
   <h1>The point prediction worked. The confidence estimate did not.</h1>
   <p class="lede">A pretrained materials model ranked stable candidates efficiently on a static screening task, while the tested MC-dropout uncertainty signal failed the calibration test needed to justify uncertainty-aware acquisition.</p>
 
+  <figure class="evidence-figure"><img src="{{ '/assets/evidence/materials-discovery.svg' | relative_url }}" alt="Materials screening result showing roughly five times discovery acceleration from mean ranking and a negative correlation between MC-dropout uncertainty and absolute error."><figcaption><strong>Observed negative result.</strong> The mean prediction is useful on this proxy screen; the tested uncertainty score is not evidence of knowing when the model is wrong.</figcaption></figure>
+
   <div class="skim-grid">
     <div><span>Problem</span><p>Active learning usually assumes the acquisition function can trade off predicted value and model uncertainty. That only makes sense if the uncertainty score carries information about error.</p></div>
     <div><span>Result</span><p><strong>Greedy mean ranking reached DAF 5.15 and low-weight UCB 5.17</strong> at the tested 5% budget, while MC-dropout σ had Spearman <strong>−0.47</strong> correlation with absolute error.</p></div>

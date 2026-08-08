@@ -9,6 +9,8 @@ permalink: /work/roce-preflight/
   <h1>197 passing tests were not evidence that RDMA worked.</h1>
   <p class="lede">roce-preflight is a diagnostic tool for RoCE hosts. Its most useful result was finding the boundary its own test suite had not crossed.</p>
 
+  <figure class="evidence-figure dark-evidence"><img src="{{ '/assets/evidence/roce-preflight.svg' | relative_url }}" alt="Diagram showing 197 passing unit tests, a real Soft-RoCE verbs path, and four defects exposed by device execution."><figcaption><strong>Observed evidence.</strong> The important transition is not 197 → 208 tests; it is synthetic state → independent Linux RDMA state.</figcaption></figure>
+
   <div class="skim-grid">
     <div><span>Problem</span><p>Parsers, ranking logic, snapshots, and lifecycle decisions were well tested against synthetic state, but the suite did not require an RDMA device.</p></div>
     <div><span>Result</span><p><strong>Real RDMA execution exposed four defects after 197 tests passed.</strong> The first attempted correction also passed the unit suite and still failed on-device.</p></div>

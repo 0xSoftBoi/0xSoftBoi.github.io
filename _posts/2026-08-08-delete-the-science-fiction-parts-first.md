@@ -19,6 +19,11 @@ When that prototype fails, it tells you almost nothing about **which assumption*
 
 For Aiur, that interaction is recovery.
 
+<figure class="evidence-figure dark-evidence">
+  <img src="{{ '/assets/evidence/aiur-carrier.svg' | relative_url }}" alt="Aiur CARRIER-P0 schematic showing a buoyant carrier, a positive recovery dock, approach vector, and predeclared physical acceptance targets.">
+  <figcaption><strong>Target, not result.</strong> The ≥50 attempts, ≥90% capture, and zero unsafe-contact numbers are predeclared acceptance gates. They remain unachieved until an instrumented physical dataset exists.</figcaption>
+</figure>
+
 * TOC
 {:toc}
 

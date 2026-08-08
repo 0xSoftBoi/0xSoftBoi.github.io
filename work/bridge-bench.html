@@ -9,6 +9,8 @@ permalink: /work/bridge-bench/
   <h1>The benchmark's strongest result was discovering that the benchmark was leaking.</h1>
   <p class="lede">BRIDGE-bench began as a capability evaluation over real smart-contract exploits. A prompt audit changed what the historical model score is allowed to mean.</p>
 
+  <figure class="evidence-figure"><img src="{{ '/assets/evidence/bridge-bench.svg' | relative_url }}" alt="BRIDGE-bench audit showing severe author-injected leakage in 13 of 24 prompts and a separate evaluator-validity comparison."><figcaption><strong>Revised evidence.</strong> The 13/24 leakage result is a zero-cost dataset audit. Historical model scores remain contaminated; the clean paired rerun is not claimed.</figcaption></figure>
+
   <div class="skim-grid">
     <div><span>Problem</span><p>The loader sent human-facing provenance comments into the model prompt alongside source code, mixing code reasoning with incident metadata.</p></div>
     <div><span>Result</span><p><strong>13 of 24 verified prompts contained severe author-injected leakage.</strong> In the sharpest Euler example, the exact target label appeared in the prompt while the vulnerable function was absent from the committed source bundle.</p></div>

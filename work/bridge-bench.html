@@ -1,0 +1,35 @@
+---
+layout: default
+title: "BRIDGE-bench — evidence case study"
+permalink: /work/bridge-bench/
+---
+<section class="case-study">
+  <a class="back" href="{{ '/' | relative_url }}">← work</a>
+  <span class="program-kicker">AI evaluations · revised evidence</span>
+  <h1>The benchmark's strongest result was discovering that the benchmark was leaking.</h1>
+  <p class="lede">BRIDGE-bench began as a capability evaluation over real smart-contract exploits. A prompt audit changed what the historical model score is allowed to mean.</p>
+
+  <div class="skim-grid">
+    <div><span>Problem</span><p>The loader sent human-facing provenance comments into the model prompt alongside source code, mixing code reasoning with incident metadata.</p></div>
+    <div><span>Result</span><p><strong>13 of 24 verified prompts contained severe author-injected leakage.</strong> In the sharpest Euler example, the exact target label appeared in the prompt while the vulnerable function was absent from the committed source bundle.</p></div>
+    <div><span>Independent evidence</span><p>Zero-cost sanitizer audits now define raw, stripped, and identity-anonymized prompt conditions and verify that sanitization preserves program structure.</p></div>
+    <div><span>Boundary</span><p>The historical Opus score is a contaminated upper bound. No paid raw→stripped→anon rerun is claimed, so there is no clean causal estimate of how much performance survives leakage removal.</p></div>
+  </div>
+
+  <h2>What changed</h2>
+  <div class="evidence-table">
+    <div><b>Before audit</b><span>aggregate F1 was treated as evidence about vulnerability-detection capability</span></div>
+    <div><b>After audit</b><span>the score remains historical data but is downgraded to contaminated evidence</span></div>
+    <div><b>Control</b><span>stripped prompts remove author provenance; anon additionally neutralizes protocol identity</span></div>
+    <div><b>Sanitizer gate</b><span>the preflight verifies code-token/structural invariants so a lower sanitized score cannot be blamed on accidental code corruption</span></div>
+  </div>
+
+  <h2>Verification path</h2>
+  <ul class="evidence-links">
+    <li><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">benchmark repository ↗</a></li>
+    <li><a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">evaluation postmortem →</a></li>
+    <li><a href="{{ '/revisions/' | relative_url }}">public revision ledger →</a></li>
+  </ul>
+
+  <aside class="boundary-box"><span class="program-kicker">What would change the interpretation?</span><p>A completed paired remeasurement on the same locked population could quantify the leakage effect. If stripped/anonymized performance remained near the historical score, the contamination would still be a methodological defect but less important to the capability conclusion. That experiment is not currently being claimed.</p></aside>
+</section>

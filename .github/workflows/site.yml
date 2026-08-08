@@ -37,6 +37,7 @@ jobs:
             /about/ \
             /formation/ \
             /revisions/ \
+            /resume/ \
             /research-standard/ \
             /work/roce-preflight/ \
             /work/bridge-bench/ \
@@ -49,3 +50,4 @@ jobs:
             /blog/delete-the-science-fiction-parts-first/; do
             curl --fail --silent --show-error "http://127.0.0.1:8080${path}" >/dev/null
           done
+          curl --fail --silent --show-error "http://127.0.0.1:8080/assets/Tsolmondorj-Natsagdorj-Resume.pdf" | head -c 5 | grep -q '%PDF-'

@@ -1,0 +1,144 @@
+# Canonical writing audit. Every legacy article is intentionally classified.
+# `status` controls presentation; a `note` becomes a visible revision/evidence box.
+
+an-amm-built-to-be-attacked:
+  status: engineering-note
+  label: engineering note
+  reviewed: 2026-08-08
+when-it-cant-explain-what-it-sees-it-asks:
+  status: engineering-note
+  label: engineering note
+  reviewed: 2026-08-08
+the-model-reads-not-it-just-cant-use-it:
+  status: exploratory
+  label: replication note
+  reviewed: 2026-08-08
+greedy-was-enough-active-learning-pretrained-potential:
+  status: revised
+  label: revised research note
+  reviewed: 2026-08-08
+  note: "The original version treated Greedy≈UCB as evidence that the uncertainty signal was useful or the pretrained surrogate was well calibrated. Direct calibration later found readout-level MC-dropout σ anti-correlated with absolute error (Spearman −0.47) on the current perovskite benchmark. The article is revised in place: the mean prediction is useful; this uncertainty estimate is not under the tested configuration."
+  primary: https://github.com/0xSoftBoi/active-materials-discovery
+  primary_label: active-materials-discovery
+static-analysis-scores-zero-on-real-exploits:
+  status: revised
+  label: revised evaluation postmortem
+  reviewed: 2026-08-08
+  note: "The original ~40% LLM F1 headline is not clean capability evidence. A later audit found severe author-injected prompt leakage in 13/24 verified contracts, including an Euler example whose header contained the exact label while the vulnerable function was absent from committed source. The article is revised in place and the historical score is treated as a contaminated upper bound; no paid sanitized rerun is claimed."
+  primary: https://github.com/0xSoftBoi/anthropic-fellowship
+  primary_label: BRIDGE-bench source + leakage audit
+recursive-types-finite-values-eip712-alloy:
+  status: revised
+  label: merged upstream
+  reviewed: 2026-08-08
+  note: "Revised after Alloy #1105 merged. The current treatment distinguishes legal self-reference during EIP-712 canonical type encoding from strict runtime resolution, which still cannot represent recursive values; mutual recursion remains rejected."
+  primary: https://github.com/alloy-rs/core/pull/1105
+  primary_label: Alloy PR #1105
+post-quantum-proof-shor-breaks-anyway:
+  status: engineering-note
+  label: cryptography note
+  reviewed: 2026-08-08
+auditing-my-own-bridge:
+  status: revised
+  label: revised security note
+  reviewed: 2026-08-08
+  note: "Revised to make the trust boundary explicit: supply≤collateral is a local accounting invariant, while an attestation gate makes an operator-coordination assumption enforceable on-chain. A signature proves who authorized a statement; it does not independently prove a remote-chain event."
+  primary: https://github.com/0xSoftBoi/lock-mint-bridge-lab
+  primary_label: lock-mint-bridge-lab
+how-cow-protocol-settles:
+  status: explainer
+  label: protocol explainer
+  reviewed: 2026-08-08
+the-on-chain-randomness-landscape:
+  status: explainer
+  label: protocol explainer
+  reviewed: 2026-08-08
+the-other-side-of-the-wall:
+  status: engineering-note
+  label: engineering note
+  reviewed: 2026-08-08
+verifiable-isnt-trustless-onchain-randomness:
+  status: explainer
+  label: security explainer
+  reviewed: 2026-08-08
+what-a-zk-proof-proves:
+  status: explainer
+  label: cryptography explainer
+  reviewed: 2026-08-08
+zk-dark-chess:
+  status: engineering-note
+  label: engineering note
+  reviewed: 2026-08-08
+a-social-good-protocol-built-by-an-agent-fleet:
+  status: engineering-note
+  label: build note
+  reviewed: 2026-08-08
+an-arb-bot-with-no-slippage-is-a-sandwich:
+  status: engineering-note
+  label: security note
+  reviewed: 2026-08-08
+anatomy-of-a-fake-dice-game:
+  status: engineering-note
+  label: security note
+  reviewed: 2026-08-08
+anatomy-of-a-memecoin-honeypot:
+  status: engineering-note
+  label: security note
+  reviewed: 2026-08-08
+rebuilding-a-perps-dex-from-its-docs:
+  status: engineering-note
+  label: build note
+  reviewed: 2026-08-08
+running-an-op-stack-l2-with-reth:
+  status: engineering-note
+  label: systems note
+  reviewed: 2026-08-08
+the-bridge-that-paid-twice:
+  status: engineering-note
+  label: security note
+  reviewed: 2026-08-08
+the-index-fund-that-held-the-wrong-asset:
+  status: engineering-note
+  label: security note
+  reviewed: 2026-08-08
+who-audits-the-auditor:
+  status: engineering-note
+  label: security note
+  reviewed: 2026-08-08
+
+# New evidence-first corpus.
+197-tests-four-real-hardware-bugs:
+  status: research
+  label: systems postmortem
+  reviewed: 2026-08-08
+correctness-under-hidden-failure-modes:
+  status: research
+  label: research synthesis
+  reviewed: 2026-08-08
+a-research-primitive-should-outlive-its-result:
+  status: research
+  label: open-source case study
+  reviewed: 2026-08-08
+autograd-is-part-of-the-api:
+  status: research
+  label: numerical correctness
+  reviewed: 2026-08-08
+a-default-is-executable-policy:
+  status: research
+  label: inference correctness
+  reviewed: 2026-08-08
+date-and-time-bugs-are-systems-bugs:
+  status: research
+  label: systems synthesis
+  reviewed: 2026-08-08
+upstream-is-a-different-kind-of-test:
+  status: research
+  label: open-source synthesis
+  reviewed: 2026-08-08
+delete-the-science-fiction-parts-first:
+  status: design-note
+  label: design note
+  reviewed: 2026-08-08
+  note: "This is deliberately a design note, not a test report. Aiur has specifications, models, CAD, a dock controller, and acceptance gates, but no committed physical recovery dataset yet. Recovery rates and closing-speed limits remain targets until instrumented telemetry exists."
+  primary: https://github.com/0xSoftBoi/aiur
+  primary_label: Aiur CARRIER-P0

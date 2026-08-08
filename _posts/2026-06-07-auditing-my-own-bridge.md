@@ -1,18 +1,18 @@
 ---
 layout: post
-title: "Auditing my own bridge: from “mints money from nothing” to all-criticals-closed"
+title: "An invariant is not an end-to-end proof"
 date: 2026-06-07
 series: "Bridge & DeFi security"
-tags: [security, bridges, solidity]
+tags: [security, bridges, solidity, invariants]
 image: /assets/og/auditing-my-own-bridge.png
-excerpt: "A lock-and-mint bridge is one giant accounting invariant. Here's how I turned that invariant into a fuzz test that found every way the contracts could create unbacked supply — and the on-chain fix pattern that closed it."
+excerpt: "Supply≤collateral is the right local invariant for a lock-and-mint bridge. The important lesson was learning what that invariant does not prove: an attestation gate can make operator coordination enforceable on-chain without independently proving a remote-chain event."
 ---
 
-A cross-chain lock-and-mint bridge is, underneath all the ceremony, **one accounting invariant**:
+A lock-and-mint bridge reduces to one accounting sentence:
 
-> wrapped tokens minted on the destination chain must never exceed the collateral locked on the source chain.
+> **wrapped supply on the destination must never exceed collateral locked on the source.**
 
-Break that, and the bridge prints money. So before writing a single fix, I wrote that invariant as a Foundry stateful fuzz test — deploying the source vault, the destination mint adapter, and the wrapped token *together*, with the relayer modeled as the adversary:
+I wrote that sentence as a Foundry stateful invariant before writing the fix:
 
 ```solidity
 function invariant_supply_le_collateral() public view {
@@ -20,66 +20,116 @@ function invariant_supply_le_collateral() public view {
 }
 ```
 
-It went red in under a second. The fuzzer found a one-call counterexample: the relayer calling `mint(arbitraryCommitId, attacker, 1e30, ...)`. The contract had a declared `CommitIdMismatch` error — and never used it. The mint trusted the relayer completely.
+With the relayer modeled as an adversary, the invariant went red immediately. A forged destination mint could create wrapped supply without a corresponding source lock.
 
-## The bug class
+That result was useful. The more important lesson came later: a strong local invariant does not turn the bridge into a trustless proof system. It tells you exactly which **local property** the contracts enforce—and forces you to name the assumption underneath it.
 
-Every critical reduced to the same root cause: **no on-chain binding between source-lock state, destination-mint state, and a verified operator.** Mint, unlock, and finalize all trusted a relayer set with no *sound* on-chain proof that the event they claimed had actually happened. That's the Ronin / Wormhole family — externally-verified bridges, the most expensive bug class in the space — whether the operator set is stolen outright (Ronin) or its signature check is bypassed by a bug (Wormhole), the contract mints on a say-so it never really verified.
+* TOC
+{:toc}
 
-A second invariant caught the cross-domain twin: a user could get their wrapped tokens minted *and* claim a refund of the original collateral, because the source vault's refund path had no idea the destination mint occurred.
+## The invariant catches the economic failure
 
-## The fix pattern
+A bridge can have thousands of lines of routing, finality, refund, and message-handling code. The economic failure is simpler: unbacked supply exists.
 
-The fix isn't "recompute the commitId" — a relayer can forge that too. It's an **attestation gate**: every value-moving call requires an authorized operator's signature over a digest that binds *all* the parameters plus `block.chainid` and the contract address:
+The public teaching lab drives the source vault and destination adapter with both honest and adversarial calls. Two properties matter most:
+
+1. `wrapped.totalSupply() <= vault.totalLocked(asset)`;
+2. the adversarial handler never succeeds in minting value.
+
+The campaign is configured for **512 runs × depth 100**. The point of that number is not to claim exhaustive verification. It is to repeatedly explore sequences of state transitions while checking the accounting property after every sequence.
+
+## The authorization gate closes a local path
+
+Every value-moving operation—mint, unlock, refund—passes through a verifier over a digest that binds the operation to its context: domain, chain ID, contract address, commit ID, recipient, amount, and source-chain ID.
+
+Conceptually:
 
 ```solidity
 bytes32 digest = keccak256(abi.encode(
-    DOMAIN, block.chainid, address(this),
-    commitId, recipient, amount, sourceChainId
+    DOMAIN,
+    block.chainid,
+    address(this),
+    commitId,
+    recipient,
+    amount,
+    sourceChainId
 ));
 require(verifier.verify(digest, attestation), "unauthorized");
 ```
 
-I made the verifier pluggable. On the home chain — a DAG L1 I control — it calls a native **ML-DSA-65 (FIPS 204) precompile**, so the check is genuinely post-quantum. On EVM destinations, where on-chain lattice verification costs 5–12M gas, it falls back to ECDSA and inherits PQ integrity transitively through consensus. (The tempting shortcut — an SP1→Groth16 proof — is [*not* post-quantum: the BN254 wrapper is broken by Shor](/blog/post-quantum-proof-shor-breaks-anyway/). A 270k-gas "PQ verify" that isn't PQ is worse than no claim.)
+Those fields close distinct replay and substitution surfaces. A commit is also forced into one terminal source-side outcome so the same lock cannot both back a destination mint and later be refunded.
 
-<figure class="chart">
-<svg viewBox="0 0 680 300" role="img" aria-labelledby="br-t">
-<title id="br-t">The fix: an attestation gate that binds every value-moving call to an operator signature</title>
-<defs>
-<marker id="c-arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
-<marker id="c-arrowhead-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker>
-</defs>
-<text class="c-title" x="20" y="26">One invariant, one gate</text>
-<text class="c-label-sm" x="20" y="46">supply minted on destination  ≤  collateral locked on source</text>
-<rect class="c-box" x="20" y="92" width="120" height="56" rx="6"/>
-<text class="c-val" x="80" y="116" text-anchor="middle">relayer</text>
-<text class="c-label-sm" x="80" y="134" text-anchor="middle">untrusted</text>
-<line class="c-arrow" x1="142" y1="120" x2="246" y2="120"/>
-<rect class="c-box-accent c-fill-soft" x="248" y="80" width="200" height="80" rx="8"/>
-<text class="c-val" x="348" y="106" text-anchor="middle">attestation gate</text>
-<text class="c-label-sm" x="348" y="126" text-anchor="middle">verify(digest, signature)</text>
-<text class="c-label-sm" x="348" y="142" text-anchor="middle">binds commitId · recipient ·</text>
-<text class="c-label-sm" x="348" y="156" text-anchor="middle">amount · chainId · address</text>
-<line class="c-arrow" x1="450" y1="120" x2="554" y2="120"/>
-<rect class="c-box" x="556" y="92" width="110" height="56" rx="6"/>
-<text class="c-val" x="611" y="116" text-anchor="middle">mint · unlock</text>
-<text class="c-label-sm" x="611" y="134" text-anchor="middle">finalize</text>
-<path class="c-arrow-muted" d="M80,150 C80,212 611,212 611,152" stroke-dasharray="5 4"/>
-<text class="c-label-sm" x="348" y="206" text-anchor="middle">the old path — relayer trusted directly, no on-chain proof — is removed</text>
-<text class="c-label-sm" x="348" y="252" text-anchor="middle">Without the gate the invariant breaks in one call: mint(arbitraryCommitId, attacker, 1e30).</text>
-<text class="c-label-sm" x="348" y="268" text-anchor="middle">The digest binds the parameters an operator signed, so a forged request no longer verifies.</text>
-</svg>
-<figcaption>Every critical reduced to one root cause — no on-chain binding between lock state, mint state, and a verified operator. The gate supplies it.</figcaption>
-</figure>
+That is real security value. But the verifier proves a narrower proposition than people often attach to it.
 
-## What the invariants taught me
+## A signature proves authorization, not truth
 
-The discipline that mattered most was **revert-fails**: every fix has a test that goes green when the fix lands *and red again when you revert the fix*. A passing test proves nothing if it never had the chance to fail. (The formal name is mutation testing: revert the fix to inject the "mutant," and a test that stays green has just told you it tests nothing.)
+If an operator signs “this source lock happened,” the destination contract can verify **who authorized the statement** and **which exact statement they authorized**.
 
-By the end: all four criticals closed, the supply and double-spend invariants green over 512 runs × depth 100, each backed by a revert-fails proof. The adversarial pass surfaced a few more — a token admin that was a parallel unconstrained minter, an unbounded release path — all closed the same way.
+It does not independently observe the source chain.
 
-Two honest caveats I kept throughout. The cross-domain "minted XOR refunded" guarantee is now an *operator-coordination* property the gates make *enforceable* — not eliminated. And no internal audit, however thorough, clears funds-holding code on its own; that's what independent audits and bug bounties are for.
+A malicious or compromised quorum can still authorize a false statement. The local accounting invariant can remain internally consistent relative to the signed state while the external fact is wrong.
 
-The invariant that went red in a second is green now over 400 runs. That tells me the gate holds. It tells me nothing about whether the bug I should fear lives behind an invariant I never thought to write — which is the one I'd hire someone else to find.
+That makes the attestation gate an **operator-coordination property made enforceable on-chain**. It is not a light client, validity proof, or independent consensus proof of the remote event.
 
-*A minimal, runnable version of the invariant suite and the attestation-gate pattern — the supply≤collateral fuzz test, the gate, and Ronin/Wormhole/Nomad reproductions — is public at [lock-mint-bridge-lab](https://github.com/0xSoftBoi/lock-mint-bridge-lab). More on the production architecture in [Suwappu](https://suwappu.bot).*
+This is the distinction I want the article to preserve:
+
+> **Cryptographic authorization can prove who approved a statement without proving the statement was true.**
+
+## The mutation test is the strongest part of the evidence
+
+A passing invariant can be accidentally irrelevant. The useful check is whether removing the intended defense makes the property fail again.
+
+The lab includes a gate-off mutation. With the authorization gate disabled, a forged mint breaks the supply invariant in one call.
+
+That is a much better causal story than “the tests are green after my patch.” It shows that the tested defense is actually on the path preventing the tested failure.
+
+This is the same reason I care about real-hardware CI elsewhere: a test is most informative when it has a credible way to prove the implementation wrong.
+
+## Historical exploit names are controls, not borrowed credibility
+
+The repository includes minimal Ronin-, Wormhole-, and Nomad-shaped tests to exercise broad failure categories: unauthorized operators, an unverified mint path, and default/zero authorization.
+
+They are **not** fork-level exploit reenactments. They do not reproduce every contract, validator set, chain state, or historical precondition.
+
+That boundary matters. Naming a famous exploit should not import the evidentiary weight of the historical incident into a small teaching model.
+
+## Post-quantum signatures do not erase the bridge trust model
+
+The larger bridge work experiments with multiple verifier backends, including post-quantum signature schemes on infrastructure designed to support them.
+
+The safe claim is mechanical: if a verifier implements a specific signature scheme correctly, the contract can enforce that authorization rule under that scheme's assumptions.
+
+The unsafe leap is: “the bridge is therefore post-quantum secure” or “the destination inherits post-quantum truth from consensus.” End-to-end bridge security still includes key management, validator/operator assumptions, replay domains, remote-state provenance, implementation correctness, and every cryptographic component actually used on the path.
+
+A quantum-resistant signature primitive solves one component. It does not erase the system model around it.
+
+## The strongest counterargument
+
+If the operator set is intentionally the oracle for remote events, then saying the gate enforces operator coordination may sound like a distinction without a difference: authorization *is* the protocol's definition of truth.
+
+That can be a valid system design. The distinction still matters for users and auditors because it tells them what compromise breaks safety.
+
+- In an operator-attested bridge, compromise of the threshold authority can create false remote facts.
+- In a light-client design, the relevant failure shifts toward consensus/finality verification and implementation assumptions.
+- In a proof-based design, the statement proved and the provenance of its public inputs become the boundary.
+
+Different systems can expose the same user interface while failing for completely different reasons.
+
+## What the invariant actually earns
+
+The evidence supports a narrow but valuable statement:
+
+- under the lab's state machine and verifier assumptions, the authorization gate prevents the forged-mint path exercised by the adversarial handler;
+- supply≤collateral remains green across the configured invariant campaign;
+- disabling the gate makes the tested accounting failure reappear.
+
+It does **not** prove that every relevant bridge invariant has been written, that the operator set is honest, that the remote event is independently verified, or that production funds-holding code is audited.
+
+That is why I now prefer a page that names one invariant and one assumption over a diagram that simply says “secure bridge.”
+
+### Primary evidence
+
+- [lock-mint-bridge-lab](https://github.com/0xSoftBoi/lock-mint-bridge-lab) — minimal runnable invariant and mutation-testing artifact.
+- [SECURITY.md](https://github.com/0xSoftBoi/lock-mint-bridge-lab/blob/main/SECURITY.md) — explicit scope and non-goals.
+
+**Evidence boundary:** this is an unaudited teaching artifact. The historical exploit-shaped tests are minimal controls, not faithful exploit reproductions. The local invariant is strong evidence about the modeled accounting property, not an end-to-end proof of remote-chain truth.

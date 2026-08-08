@@ -1,0 +1,39 @@
+/* Research-corpus additions. Keep the base essay theme restrained. */
+.evidence-note{margin:0 0 30px;padding:14px 16px;border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:7px;background:color-mix(in srgb,var(--accent) 4%,var(--bg))}
+.evidence-note p{margin:0 0 7px;font-size:.9rem;line-height:1.5;color:var(--muted)}
+.evidence-note p:last-child{margin-bottom:0}
+.evidence-note .evidence-kicker{font-family:var(--mono);font-size:.67rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.evidence-note .evidence-source{font-family:var(--mono);font-size:.7rem}
+.evidence-revised{border-left-color:#b14d2a}
+.evidence-design-note{border-left-style:dashed}
+
+.programs{margin:18px 0 0}
+.program{padding:24px 0;border-top:1px solid var(--rule)}
+.program:last-child{border-bottom:1px solid var(--rule)}
+.program-kicker,.section-kicker,.status-chip{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.program h2{font-size:1.42rem;margin:5px 0 6px}
+.program p{color:var(--muted);font-size:.96rem}
+.program-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:.87rem}
+
+.featured-posts{list-style:none;padding:0;margin:8px 0 0}
+.featured-posts li{padding:18px 0;border-top:1px solid var(--rule)}
+.featured-posts li:last-child{border-bottom:1px solid var(--rule)}
+.featured-posts .thesis{font-family:var(--serif);font-size:1.2rem;font-weight:600;color:var(--text)}
+.featured-posts .summary{font-size:.94rem;color:var(--muted);margin:5px 0 0}
+
+.archive-heading{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-top:52px}
+.archive-heading h2{margin:0}
+.posts .status-chip{margin-left:8px}
+
+.proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:20px 0 10px}
+.proof-grid>div{background:var(--bg);padding:14px 16px}
+.proof-grid b{display:block;font-family:var(--serif);font-size:1.08rem;margin-top:3px}
+
+.thesis-block{font-family:var(--serif);font-size:1.26rem;line-height:1.48;margin:28px 0 18px}
+.now-list{list-style:none;margin:8px 0 0;padding:0}
+.now-list li{padding:14px 0;border-top:1px solid var(--rule)}
+.now-list li:last-child{border-bottom:1px solid var(--rule)}
+.now-list strong{font-family:var(--serif);font-size:1.06rem}
+.now-list p{font-size:.92rem;color:var(--muted);margin:3px 0 0}
+
+@media(max-width:620px){.proof-grid{grid-template-columns:1fr}.archive-heading{display:block}.program-links{gap:8px}}

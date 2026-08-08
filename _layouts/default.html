@@ -18,31 +18,8 @@
   {
     "@context": "https://schema.org",
     "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://0xsoftboi.github.io/#website",
-      "url": "https://0xsoftboi.github.io",
-      "name": "Tsolmondorj Natsagdorj",
-      "inLanguage": "en",
-      "publisher": { "@id": "https://0xsoftboi.github.io/#person" }
-    },
-    {
-    "@type": "Person",
-    "@id": "https://0xsoftboi.github.io/#person",
-    "name": "Tsolmondorj Natsagdorj",
-    "alternateName": "0xSoftBoi",
-    "url": "https://0xsoftboi.github.io",
-    "jobTitle": "Systems & Research Engineer",
-    "description": "Systems and research engineer working across reliable AI, high-performance networking, scientific ML, autonomous systems, and security-critical infrastructure.",
-    "knowsAbout": ["Machine learning systems", "AI evaluations", "High-performance networking", "Rust", "Scientific machine learning", "Autonomous systems", "Smart contract security", "Distributed systems", "Formal verification"],
-    "sameAs": [
-      "https://github.com/0xSoftBoi",
-      "https://twitter.com/0xSoftBoi",
-      "https://www.linkedin.com/in/tsolmondorj",
-      "https://orcid.org/0009-0009-6010-6273",
-      "https://huggingface.co/0xsoftboi"
-    ]
-    }
+    {"@type":"WebSite","@id":"https://0xsoftboi.github.io/#website","url":"https://0xsoftboi.github.io","name":"Tsolmondorj Natsagdorj","inLanguage":"en","publisher":{"@id":"https://0xsoftboi.github.io/#person"}},
+    {"@type":"Person","@id":"https://0xsoftboi.github.io/#person","name":"Tsolmondorj Natsagdorj","alternateName":"0xSoftBoi","url":"https://0xsoftboi.github.io","jobTitle":"Systems & Research Engineer","description":"Systems and research engineer working on reliable AI, high-performance networking, scientific ML, autonomous systems, and security-critical infrastructure.","knowsAbout":["Machine learning systems","AI evaluations","High-performance networking","Rust","Scientific machine learning","Autonomous systems","Smart contract security","Distributed systems","Formal verification"],"sameAs":["https://github.com/0xSoftBoi","https://twitter.com/0xSoftBoi","https://www.linkedin.com/in/tsolmondorj","https://orcid.org/0009-0009-6010-6273","https://huggingface.co/0xsoftboi"]}
     ]
   }
   </script>
@@ -53,25 +30,21 @@
     <nav class="nav">
       <a class="brand" href="{{ '/' | relative_url }}">Tsolmondorj Natsagdorj</a>
       <div class="nav-links">
-        <a href="{{ '/' | relative_url }}">home</a>
+        <a href="{{ '/' | relative_url }}">work</a>
         <a href="{{ '/blog/' | relative_url }}">writing</a>
         <a href="{{ '/research/' | relative_url }}">research</a>
-        <a href="{{ '/series/' | relative_url }}">series</a>
         <a href="{{ '/about/' | relative_url }}">about</a>
         <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a>
       </div>
     </nav>
   </header>
-
-  <main id="main" class="container">
-    {{ content }}
-  </main>
-
+  <main id="main" class="container">{{ content }}</main>
   <footer class="site-footer">
     <span>© {{ site.time | date: "%Y" }} Tsolmondorj Natsagdorj</span>
+    <span><a href="{{ '/blog/' | relative_url }}">writing</a></span>
+    <span><a href="{{ '/research/' | relative_url }}">research</a></span>
     <span><a href="{{ '/feed.xml' | relative_url }}">rss</a></span>
     <span><a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a></span>
-    <span><a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot</a></span>
   </footer>
 </body>
 </html>

@@ -5,63 +5,50 @@ title: "Tsolmondorj Natsagdorj — systems & research"
 
 <section class="intro">
   <h1 class="visually-hidden">Tsolmondorj Natsagdorj — systems &amp; research</h1>
-  <p class="lede">I'm <strong>Tsolmondorj Natsagdorj</strong>. I build systems that have to survive contact with reality: reliable AI, high-performance networking, scientific ML, autonomous systems, and security-critical infrastructure.</p>
-  <p class="thesis-block">The recurring question in my work is simple: <strong>what evidence would reveal that the abstraction is lying?</strong></p>
+  <p class="lede">I'm <strong>Tsolmondorj Natsagdorj</strong>. I find where an abstraction stops matching reality, then build the test that exposes the gap.</p>
+  <p class="thesis-block">My work spans AI evaluation, high-performance networking, scientific ML, protocol correctness, and autonomy. The recurring question is the same: <strong>what evidence would prove the system wrong?</strong></p>
 </section>
 
-<div class="proof-grid" aria-label="Selected evidence">
-  <div><span class="section-kicker">upstream</span><b>8 selected merged PRs</b></div>
-  <div><span class="section-kicker">hardware boundary</span><b>real RDMA CI</b></div>
-  <div><span class="section-kicker">research habit</span><b>negative results published</b></div>
-  <div><span class="section-kicker">current programs</span><b>BRIDGE-bench · Aiur</b></div>
-</div>
-
 <section class="writing">
-  <h2>Now</h2>
-  <ul class="now-list">
-    <li><strong>AI evaluations — separate capability from dataset metadata.</strong><p>BRIDGE-bench's historical score is now treated as contaminated evidence after an audit found severe author-injected leakage in 13 of 24 verified prompts. The current work is measurement design, sanitizer invariants, and matched controls—not inventing a rerun result.</p></li>
-    <li><strong>Autonomy — make recovery boring before making the carrier large.</strong><p>Aiur CARRIER-P0 deletes hydrogen, swarms, charging, outdoor autonomy, and airborne compute until one risky interaction remains: mechanically verified recovery of one micro-UAV.</p></li>
-    <li><strong>Open source — correctness at somebody else's boundary.</strong><p>Recent merged work spans MatGL uncertainty/autograd, MLX-LM sampling defaults, Alloy EIP-712 recursion, and uutils date/time compatibility.</p></li>
+  <div class="archive-heading"><h2>Start here</h2><span class="section-kicker">three independently inspectable stories</span></div>
+  <ul class="featured-posts">
+    <li><a class="thesis" href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">197 passing tests, four real-hardware bugs</a><p class="summary">Real RDMA execution found four defects after the synthetic suite was green—and rejected the first attempted fix.</p></li>
+    <li><a class="thesis" href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">A benchmark can measure its own metadata</a><p class="summary">A prompt audit found severe provenance leakage in 13/24 examples, so I downgraded the original model score instead of defending it.</p></li>
+    <li><a class="thesis" href="{{ '/blog/upstream-is-a-different-kind-of-test/' | relative_url }}">Upstream is a different kind of test</a><p class="summary">Eight selected merged patches across MatGL, MLX-LM, Alloy, and uutils: correctness reviewed at somebody else's boundary.</p></li>
   </ul>
 </section>
 
-<section class="work">
-  <h2>Research programs</h2>
+<div class="proof-grid" aria-label="Selected evidence">
+  <a href="{{ '/blog/upstream-is-a-different-kind-of-test/' | relative_url }}"><span class="section-kicker">independent review</span><b>8 selected merged PRs</b></a>
+  <a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}"><span class="section-kicker">hardware boundary</span><b>197 tests → 4 device bugs</b></a>
+  <a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}"><span class="section-kicker">evaluation validity</span><b>13/24 severe leakage</b></a>
+  <a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}"><span class="section-kicker">negative result</span><b>σ ↔ |error| = −0.47</b></a>
+</div>
+
+<section class="writing">
+  <div class="archive-heading"><h2>Two ways into the work</h2><span class="section-kicker">same thesis · different systems</span></div>
   <div class="programs">
-    <article class="program">
-      <span class="program-kicker">systems · networking</span>
-      <h2>Make synthetic confidence answer to independent state.</h2>
-      <p><strong>roce-preflight</strong> tests RDMA/RoCE diagnostics against real Linux verbs and sysfs state. The first real-device path found four defects after 197 unit tests had passed—and rejected the first attempted fix.</p>
-      <div class="program-links"><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">postmortem →</a><a href="https://github.com/0xSoftBoi/roce-preflight" target="_blank" rel="noopener noreferrer">code ↗</a></div>
-    </article>
-    <article class="program">
-      <span class="program-kicker">ai evaluations · security</span>
-      <h2>Measure the capability, not the benchmark's curation history.</h2>
-      <p><strong>BRIDGE-bench</strong> started as an evaluation of model reasoning over real exploit contracts. Its most important result was a benchmark-validity failure: 13/24 prompts contained severe provenance leakage, including one exact-label case whose vulnerable function was absent from source.</p>
-      <div class="program-links"><a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">postmortem →</a><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">code ↗</a></div>
-    </article>
-    <article class="program">
-      <span class="program-kicker">scientific ml</span>
-      <h2>A useful prediction can carry a useless confidence estimate.</h2>
-      <p><strong>active-materials-discovery</strong> gets roughly 5× static screening acceleration from a pretrained mean prediction on the tested perovskite proxy task. The attached readout-level MC-dropout σ is anti-correlated with absolute error; overweighting it pushes acquisition below random.</p>
-      <div class="program-links"><a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}">negative result →</a><a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">code ↗</a></div>
-    </article>
-    <article class="program">
-      <span class="program-kicker">autonomy · hardware</span>
-      <h2>Delete scale until one interaction can falsify the architecture.</h2>
-      <p><strong>Aiur</strong> is a persistent airborne-carrier concept reduced to CARRIER-P0: one helium reference carrier, one active dock, one small aircraft, and explicit recovery gates. Physical recovery performance remains a target until telemetry exists.</p>
-      <div class="program-links"><a href="{{ '/blog/delete-the-science-fiction-parts-first/' | relative_url }}">design note →</a><a href="https://github.com/0xSoftBoi/aiur" target="_blank" rel="noopener noreferrer">code ↗</a></div>
-    </article>
+    <article class="program"><span class="program-kicker">AI &amp; ML systems</span><h2>Can the measurement be trusted?</h2><p>Evaluation validity, uncertainty calibration, ML inference semantics, autograd correctness, and reusable scientific-ML infrastructure.</p><div class="program-links"><a href="{{ '/research/' | relative_url }}">research →</a><a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">BRIDGE-bench →</a><a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}">materials ML →</a></div></article>
+    <article class="program"><span class="program-kicker">Systems &amp; autonomy</span><h2>What happens at the physical boundary?</h2><p>RDMA device state, compatibility semantics, protocol invariants, test architecture, and autonomy work where targets stay targets until hardware produces evidence.</p><div class="program-links"><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">RDMA →</a><a href="{{ '/blog/correctness-under-hidden-failure-modes/' | relative_url }}">engineering thesis →</a><a href="{{ '/blog/delete-the-science-fiction-parts-first/' | relative_url }}">Aiur design note →</a></div></article>
   </div>
 </section>
 
 <section class="writing">
-  <h2>Selected writing</h2>
-  <ul class="featured-posts">
-    <li><a class="thesis" href="{{ '/blog/correctness-under-hidden-failure-modes/' | relative_url }}">Correctness under hidden failure modes</a><p class="summary">Hardware, contaminated evals, miscalibrated uncertainty, and prototype gates are different forms of the same engineering problem.</p></li>
-    <li><a class="thesis" href="{{ '/blog/autograd-is-part-of-the-api/' | relative_url }}">Autograd is part of the API</a><p class="summary">Forward-correct ML code can still violate the optimization semantics its callers rely on.</p></li>
-    <li><a class="thesis" href="{{ '/blog/a-default-is-executable-policy/' | relative_url }}">A default is executable policy</a><p class="summary">A three-line MLX-LM fix for a configuration composition that could mask nearly the whole candidate distribution.</p></li>
-    <li><a class="thesis" href="{{ '/blog/upstream-is-a-different-kind-of-test/' | relative_url }}">Upstream is a different kind of test</a><p class="summary">What eight merged third-party patches changed about the unit of correctness.</p></li>
+  <div class="archive-heading"><h2>Now — August 2026</h2><span class="section-kicker">current work</span></div>
+  <ul class="now-list">
+    <li><strong>AI evaluations — separate capability from dataset metadata.</strong><p>BRIDGE-bench's historical score is contaminated evidence after the 13/24 leakage audit. Current work is zero-cost measurement design, sanitizer invariants, and matched controls; there is no claimed sanitized rerun.</p></li>
+    <li><strong>Autonomy — prove recovery before scale.</strong><p>Aiur CARRIER-P0 reduces the carrier idea to one falsifiable interaction: mechanically verified recovery of one small aircraft. Physical recovery performance remains a target until telemetry exists.</p></li>
+    <li><strong>Open source — correctness at somebody else's boundary.</strong><p>Merged work spans MatGL uncertainty/autograd, MLX-LM sampling defaults, Alloy EIP-712 recursion, and uutils date/time compatibility.</p></li>
   </ul>
-  <p class="more"><a href="{{ '/blog/' | relative_url }}">Read the full writing corpus →</a> · <a href="{{ '/research/' | relative_url }}">research programs →</a></p>
+</section>
+
+<section class="work">
+  <div class="archive-heading"><h2>Selected evidence</h2><span class="section-kicker">measured before aspirational</span></div>
+  <div class="programs">
+    <article class="program"><span class="program-kicker">observed · systems</span><h2>roce-preflight</h2><p>Real Linux RDMA verbs and sysfs state exposed four defects after 197 unit tests passed. The first attempted correction still failed on-device.</p><div class="program-links"><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">postmortem →</a><a href="https://github.com/0xSoftBoi/roce-preflight" target="_blank" rel="noopener noreferrer">source ↗</a></div></article>
+    <article class="program"><span class="program-kicker">revised evidence · AI evals</span><h2>BRIDGE-bench</h2><p>The benchmark's strongest finding became a validity failure in the benchmark itself. The original score is retained as contaminated historical evidence, not clean capability performance.</p><div class="program-links"><a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">correction →</a><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">source ↗</a></div></article>
+    <article class="program"><span class="program-kicker">observed negative result · scientific ML</span><h2>active-materials-discovery</h2><p>The pretrained mean ranked useful candidates at roughly 5× the random screening rate on the tested proxy task; the tested MC-dropout uncertainty signal was anti-correlated with error.</p><div class="program-links"><a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}">result →</a><a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">source ↗</a></div></article>
+    <article class="program"><span class="program-kicker">current experiment · autonomy</span><h2>Aiur</h2><p>Design, simulation, CAD, controller logic, and physical acceptance gates for an airborne recovery concept. Unlike the projects above, recovery performance is not yet observed.</p><div class="program-links"><a href="{{ '/blog/delete-the-science-fiction-parts-first/' | relative_url }}">design note →</a><a href="https://github.com/0xSoftBoi/aiur" target="_blank" rel="noopener noreferrer">source ↗</a></div></article>
+  </div>
+  <p class="more"><a href="{{ '/research/' | relative_url }}">Research programs and evidence boundaries →</a> · <a href="{{ '/blog/' | relative_url }}">all writing →</a></p>
 </section>

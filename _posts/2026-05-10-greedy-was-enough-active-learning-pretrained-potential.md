@@ -1,116 +1,115 @@
 ---
 layout: post
-title: "Greedy was enough: active learning on top of a pretrained potential"
+title: "When uncertainty makes active learning worse"
 date: 2026-05-10
 series: "Applied ML"
-tags: [ml, materials, active-learning, ai]
+tags: [ml, materials, active-learning, uncertainty]
 image: /assets/og/greedy-was-enough-active-learning-pretrained-potential.png
-excerpt: "I built a GNoME-style active-learning loop to find stable crystals on a labeling budget. The uncertainty-aware strategy I expected to win basically tied the greedy one — and that tie held from a 2,000-structure demo up to the full 256K-structure benchmark. The tie is the actual result."
+excerpt: "A pretrained materials surrogate found promising structures about five times as efficiently as random screening on a static benchmark. The mean prediction was useful. Its MC-dropout uncertainty was not: σ was anti-correlated with absolute error, and overweighting it pushed acquisition below random."
 ---
 
-DeepMind's [GNoME](https://www.nature.com/articles/s41586-023-06735-9) found a couple hundred thousand stable inorganic materials by pairing graph neural networks with active learning — a simple loop: train a cheap surrogate, let it pick which candidates are worth an expensive simulation, label those, repeat. The choice of *which to pick* is the whole game, and I wanted to know how much it matters when the surrogate is already very good.
+I started this project expecting to write a familiar active-learning story: a pretrained surrogate predicts both value and uncertainty; a UCB-style acquisition rule spends labels where candidates look promising *and* uncertain; exploration beats greedy ranking.
 
-So I built a small version: a pool of 2,000 candidate structures from the Materials Project, a pretrained [CHGNet](https://github.com/CederGroupHub/chgnet) potential as the surrogate, and a labeling budget of 400 — 20% of the pool. The question: with that budget, how many of the 100 most stable structures can you actually find, and does a clever acquisition strategy beat a dumb one?
+The part that survived is simpler and more useful. On a static screening benchmark over **18,928** structures from `matbench_perovskites`, the pretrained mean prediction was genuinely useful for ranking. The readout-level MC-dropout standard deviation was not.
+
+The distinction matters because a model can be a good predictor without being a good judge of when it is wrong.
+
+* TOC
+{:toc}
 
 ## The result
 
-| Strategy | Top-100 recall | Best found (eV/atom) | Labeled |
-|---|:--:|:--:|:--:|
-| Random | 25% | −4.375 | 400 / 2000 |
-| Greedy (mean) | **95%** | −4.403 | 400 / 2000 |
-| UCB (uncertainty-aware) | 93% | −4.403 | 400 / 2000 |
+The benchmark defines the bottom 5% of formation energy as the positive screening target. That is a **proxy ranking task**, not a claim that these structures are thermodynamically stable against the convex hull. With a 5% acquisition budget and five random seeds:
 
-<figure class="chart">
-<svg viewBox="0 0 680 300" role="img" aria-labelledby="recall-t">
-<title id="recall-t">Top-100 recall by acquisition strategy</title>
-<text class="c-title" x="18" y="22">Top-100 recall by acquisition strategy</text>
-<line class="c-grid" x1="18" y1="254.0" x2="662" y2="254.0"/>
-<text class="c-label-sm" x="662" y="250.0" text-anchor="end">0%</text>
-<line class="c-grid" x1="18" y1="149.0" x2="662" y2="149.0"/>
-<text class="c-label-sm" x="662" y="145.0" text-anchor="end">50%</text>
-<line class="c-grid" x1="18" y1="44.0" x2="662" y2="44.0"/>
-<text class="c-label-sm" x="662" y="40.0" text-anchor="end">100%</text>
-<rect class="c-bar-muted" x="69.5" y="201.5" width="111.6" height="52.5" rx="2"/>
-<text class="c-val" x="125.3" y="194.5" text-anchor="middle">25%</text>
-<text class="c-label" x="125.3" y="274.0" text-anchor="middle">Random</text>
-<rect class="c-bar" x="284.2" y="54.5" width="111.6" height="199.5" rx="2"/>
-<text class="c-val" x="340.0" y="47.5" text-anchor="middle">95%</text>
-<text class="c-label" x="340.0" y="274.0" text-anchor="middle">Greedy</text>
-<rect class="c-bar-muted" x="498.9" y="58.7" width="111.6" height="195.3" rx="2"/>
-<text class="c-val" x="554.7" y="51.7" text-anchor="middle">93%</text>
-<text class="c-label" x="554.7" y="274.0" text-anchor="middle">UCB</text>
-<line class="c-axis" x1="18" y1="254.0" x2="662" y2="254.0"/>
-</svg>
-<figcaption>Top-100 recall on a 400/2000 labeling budget. Both active strategies recover ~94% of the best structures; greedy and UCB essentially tie.</figcaption>
-</figure>
+| Strategy | Stable-proxy candidates found | Discovery acceleration | Top-100 recall |
+|---|---:|---:|---:|
+| Random | 49.8 ± 3.7 | 1.01 ± 0.07 | 5.0% |
+| Greedy, rank by μ | 254.0 ± 1.8 | **5.15 ± 0.04** | 43.2% |
+| UCB, λ = 0.5 | 254.8 ± 0.4 | **5.17 ± 0.01** | 43.8% |
+| UCB, λ = 2 | 241.0 | 4.89 | 41.0% |
+| UCB, λ = 5 | 45.0 | **0.91** | 1.6% |
 
-Both active strategies recovered 93–95% of the best structures while labeling a fifth of the pool; random sampling got 25%. That part is the expected GNoME-style win — active learning works, and it works hard.
+At a low uncertainty weight, UCB and greedy are effectively tied. As σ receives more authority, performance declines. At λ=5, the acquisition rule performs below random.
 
-The part I didn't expect, and the reason I think this is worth writing down: **greedy and UCB essentially tied.** I went in assuming the uncertainty-aware strategy — pick where the surrogate is both promising *and* unsure, to balance exploration against exploitation — would pull ahead. It didn't.
+That dose response is more informative than the tiny 5.15→5.17 difference at λ=0.5. If σ were identifying the places where the surrogate was most likely to be wrong in a useful way, increasing its influence should not systematically destroy the ranking this quickly.
 
-## Why the clever method didn't win
+## So I tested the uncertainty directly
 
-The tie isn't a null result; it's a measurement of the surrogate. UCB only beats greedy when the surrogate's uncertainty carries information greedy is ignoring — when "promising but unsure" candidates turn out to be where the wins hide. CHGNet is a *pretrained, physics-informed* potential. Its mean prediction of stability is already accurate enough across this pool that there's very little signal left in its uncertainty for exploration to exploit. The exploitation term alone is almost optimal, so adding an exploration term mostly reorders ties.
+The original version of this article made a stronger inference from `Greedy ≈ UCB`: I argued that the pretrained surrogate was already so well calibrated that there was little left for uncertainty-aware exploration to add.
 
-In other words: the better your prior, the less your uncertainty estimate buys you. You'd expect UCB to pull ahead in the regime where CHGNet is weak — a chemically unusual pool, far from its training distribution, where mean predictions are shaky and the model's "I'm not sure" actually means something. On a pool this well-covered by the pretrained backbone, greedy is enough, and paying for Monte-Carlo-Dropout uncertainty estimates is paying for exploration you don't need.
+That was not established by the acquisition result. Similar downstream performance does not prove calibrated uncertainty.
 
-There's a humbler reading I can't fully rule out, and it's the honest caveat on the result: MC-Dropout is a cheap way to estimate uncertainty and a famously miscalibrated one. Part of the tie might be that UCB never got a fair trial — its "I'm not sure" was noise rather than signal, so the exploration term had nothing real to act on. Distinguishing "uncertainty bought nothing because the mean is already good" from "uncertainty bought nothing because our σ is junk" takes two checks: does the tie survive at real scale, and does the *same* uncertainty ever win when the model is weak? I ran both.
+The later calibration experiment measures the relationship directly. For each structure, I compare the MC-dropout standard deviation σ with the absolute prediction error `|μ - y|`.
 
-## Does the tie survive at scale?
+| Diagnostic | Observed | Useful/calibrated direction |
+|---|---:|---:|
+| Spearman corr(σ, |error|) | **−0.47** | positive |
+| Spearman corr(σ, |μ|) | −0.72 | near zero |
+| reliability slope | −1.12 | +1 |
+| miscalibration area | 0.43 | 0 |
+| coverage at nominal 68% | 0.02 | 0.68 |
+| coverage at nominal 95% | 0.12 | 0.95 |
 
-The 2,000-structure run is a demo, and a single seed. The real test is [WBM](https://matbench-discovery.materialsproject.org/) — the 256,963-structure pool from the Matbench Discovery benchmark, of which 42,825 (16.7%) are actually stable. I ran the same loop there on a 2,200-label budget — *0.9%* of the pool — across five random seeds, so this time the spread is measured, not assumed.
+The sign of the first statistic changes the interpretation. Larger σ tended to correspond to **smaller** absolute errors. These values should not be read as calibrated predictive intervals.
 
-<figure class="chart">
-<svg viewBox="0 0 680 300" role="img" aria-labelledby="daf-t">
-<title id="daf-t">Discovery Acceleration Factor on WBM, five seeds</title>
-<text class="c-title" x="18" y="22">Discovery Acceleration Factor — WBM (256K), 5 seeds</text>
-<line class="c-grid" x1="18" y1="254.0" x2="662" y2="254.0"/>
-<text class="c-label-sm" x="662" y="250.0" text-anchor="end">0</text>
-<line class="c-grid" x1="18" y1="184.0" x2="662" y2="184.0"/>
-<text class="c-label-sm" x="662" y="180.0" text-anchor="end">0.5</text>
-<line class="c-grid" x1="18" y1="114.0" x2="662" y2="114.0"/>
-<text class="c-label-sm" x="662" y="110.0" text-anchor="end">1.0</text>
-<line class="c-grid" x1="18" y1="44.0" x2="662" y2="44.0"/>
-<text class="c-label-sm" x="662" y="40.0" text-anchor="end">1.5</text>
-<rect class="c-bar-muted" x="69.5" y="114.7" width="111.6" height="139.3" rx="2"/>
-<line class="c-axis" x1="125.3" y1="110.8" x2="125.3" y2="118.6"/>
-<line class="c-axis" x1="119.3" y1="110.8" x2="131.3" y2="110.8"/>
-<line class="c-axis" x1="119.3" y1="118.6" x2="131.3" y2="118.6"/>
-<text class="c-val" x="125.3" y="104.0" text-anchor="middle">0.995</text>
-<text class="c-label" x="125.3" y="274.0" text-anchor="middle">Random</text>
-<rect class="c-bar" x="284.2" y="95.2" width="111.6" height="158.8" rx="2"/>
-<line class="c-axis" x1="340.0" y1="92.8" x2="340.0" y2="97.6"/>
-<line class="c-axis" x1="334.0" y1="92.8" x2="346.0" y2="92.8"/>
-<line class="c-axis" x1="334.0" y1="97.6" x2="346.0" y2="97.6"/>
-<text class="c-val" x="340.0" y="85.0" text-anchor="middle">1.134</text>
-<text class="c-label" x="340.0" y="274.0" text-anchor="middle">Greedy</text>
-<rect class="c-bar-muted" x="498.9" y="95.8" width="111.6" height="158.2" rx="2"/>
-<line class="c-axis" x1="554.7" y1="92.2" x2="554.7" y2="99.4"/>
-<line class="c-axis" x1="548.7" y1="92.2" x2="560.7" y2="92.2"/>
-<line class="c-axis" x1="548.7" y1="99.4" x2="560.7" y2="99.4"/>
-<text class="c-val" x="554.7" y="85.0" text-anchor="middle">1.130</text>
-<text class="c-label" x="554.7" y="274.0" text-anchor="middle">UCB</text>
-<line class="c-axis" x1="18" y1="254.0" x2="662" y2="254.0"/>
-</svg>
-<figcaption>Discovery Acceleration Factor on the full 256K-structure WBM pool (5-seed mean, whiskers ± std). Random sits at 1.0 by construction; a perfect oracle would reach ~6.0. Greedy (1.134 ± 0.017) and UCB (1.130 ± 0.026) overlap completely.</figcaption>
-</figure>
+The strong association with prediction magnitude is also a warning that the stochastic readout may be tracking a property of the output region rather than clean epistemic uncertainty. That is a diagnostic clue, not a fully identified mechanism.
 
-The metric is the Discovery Acceleration Factor — how much more often you turn up a stable material than blind screening would. Random is 1.0 by construction; a perfect oracle would hit ~6.0 (one over the prevalence). Greedy lands at 1.134 ± 0.017, UCB at 1.130 ± 0.026. The error bars sit right on top of each other. The tie held — at a hundred times the scale, with the variance finally measured instead of hoped for.
+## What the benchmark does establish
 
-That last part earned its keep. A *single* seed had put UCB ahead, 1.16 to 1.12 — exactly the kind of gap you'd happily write up as "uncertainty wins." Five seeds dissolved it. The honest version of this result only exists because I stopped trusting one run. (And note the modesty of the win itself: 1.13×, not 6×. At 0.9% budget a strong-but-imperfect surrogate helps, but it isn't magic — which is the right frame for asking whether the *clever* version earns the extra cost.)
+The mean prediction carries strong ranking information on this pool. Discovery Acceleration Factor is precision at the fixed budget divided by the target prevalence, so random screening sits around 1 by construction. A DAF around 5 means the policy is finding bottom-5%-formation-energy candidates at roughly five times the random rate at this budget.
 
-## Was the uncertainty just noise?
+That is useful even though the uncertainty is bad. It means the pretrained representation can provide a strong prior for screening without a trustworthy uncertainty estimate attached to it.
 
-The deeper worry is the one above: maybe MC-Dropout's σ is so miscalibrated that UCB never had a real exploration signal, and greedy won by default rather than on merit. The clean way to check is to run the *same* uncertainty machinery on a model that is actually weak — where exploration *should* pay — and see if it does.
+The clean statement is:
 
-So I did: a 50,000-structure synthetic pool with a graph network trained from scratch, no pretrained prior, genuinely unsure of itself. There, UCB beats greedy by 25 points in top-10 recall, **70% to 45%**. Same dropout, same acquisition rule — it just finally had something to act on.
+> **A good point predictor and a good uncertainty estimator are separate achievements.**
 
-That's the result that closes the loop. The uncertainty isn't junk; it carries real signal when the model is weak. So the CHGNet tie isn't "our σ is broken" — it's "our prior is good enough that there's nothing left for σ to find." Greedy was enough *because* the surrogate was strong, exactly where you'd predict, and not an inch further.
+That sounds obvious when written down. It is easy to forget once a library returns `(mean, std)` and the second number looks like confidence.
 
-## A bonus lesson: use the foundation model frozen
+## What changed from the earlier WBM result
 
-One thing I expected to help and it consistently *hurt*: fine-tuning CHGNet on the freshly labeled structures each round. CHGNet was pretrained on 700,000 Materials Project structures; nudging it with a few hundred biased labels is enough to trigger catastrophic forgetting — you trade a broad, well-calibrated prior for a sharp, overfit one, and μ accuracy drops. Frozen won every time. If you're dropping a foundation-model potential into an active-learning loop, the boring move — leave it alone — is the right one.
+The project also contains a historical WBM experiment using a pretrained CHGNet surrogate on a 256K-structure crystal-stability benchmark. Across five seeds at a 0.9% labeling budget, greedy and UCB were statistically indistinguishable: DAF 1.134 ± 0.017 versus 1.130 ± 0.026.
 
-## The takeaway I keep
+I still think that numerical result is useful. I no longer use it as evidence that the uncertainty was calibrated. The repository now carries an explicit erratum making that distinction.
 
-This is the same lesson [the rest of my work keeps teaching](/blog/static-analysis-scores-zero-on-real-exploits/) from the other direction: know what your tool's confidence is actually worth before you build on it. A clever acquisition function on top of a strong pretrained model can quietly reduce to "trust the model," and the honest experiment is the one that measures whether the cleverness paid for itself. Here it didn't — and knowing *that*, and why, is more useful than a win would have been.
+The WBM result supports: **under that surrogate, acquisition rule, and budget, the tested UCB term did not improve over greedy mean ranking.**
+
+It does not support: **the model therefore knows when it is wrong.**
+
+## Why this can happen
+
+The implementation makes the graph-network backbone deterministic and places stochasticity in the readout. That is computationally attractive: the expensive representation can be computed once and the cheap head replayed. In the application repository, the optimized backbone-once path reports about **16.5× faster inference at 20 passes on an RTX 3080** while matching the naive path numerically.
+
+But computational convenience and epistemic validity are different questions. Last-layer or readout perturbations can under-represent uncertainty that comes from the learned representation itself. Distribution shift can make the problem worse. And the perovskite benchmark is being used as a proxy screening task for a pretrained formation-energy model, not as an in-distribution calibration benchmark designed for this exact uncertainty method.
+
+Those are plausible reasons for the failure. This experiment does not identify which one dominates.
+
+## The strongest counterargument
+
+The narrow conclusion is about **this** uncertainty construction on **this** task. It is not an argument against uncertainty-aware active learning in general.
+
+Deep ensembles, latent-distance methods, conformal approaches, Bayesian last-layer methods, or a model trained explicitly for calibrated uncertainty could behave differently. An iterative closed-loop campaign where new labels update the model could also create a different exploitation/exploration tradeoff from this static ranking setup.
+
+In fact, that is the point. If a different uncertainty method produces σ that is positively associated with error and improves selection under a robustness sweep of acquisition weights, I would update the conclusion immediately.
+
+## What I would measure before using UCB again
+
+I would not start with a fancy acquisition curve. I would start with four cheap checks:
+
+1. Does σ rank absolute error in the right direction?
+2. Do nominal intervals achieve anything close to their claimed coverage?
+3. Is σ mostly a disguised function of prediction magnitude or another nuisance variable?
+4. Does increasing the uncertainty weight produce a sensible robustness curve rather than a cliff?
+
+Only after those pass would I spend compute arguing about the best λ.
+
+That is the lesson I keep from this project. **Having an uncertainty number is not the same thing as having uncertainty information.**
+
+### Reproduction and sources
+
+- [active-materials-discovery](https://github.com/0xSoftBoi/active-materials-discovery) — benchmark, acquisition code, calibration diagnostics, optimization check, and the historical WBM erratum.
+- [MatGL](https://github.com/materialyzeai/matgl) — upstream materials graph library; the reusable MC-dropout wrapper from this work was merged as [PR #801](https://github.com/materialyzeai/matgl/pull/801).
+- [Matbench Discovery](https://matbench-discovery.materialsproject.org/) — crystal-stability benchmark context.
+- Gal & Ghahramani, *Dropout as a Bayesian Approximation* (ICML 2016) — the classic MC-dropout framing.
+
+**Evidence boundary:** the perovskite experiment is static acquisition screening with existing labels. It is not a closed-loop DFT campaign or laboratory materials-discovery result. The 16.5× speed figure is a reported benchmark on one RTX 3080 configuration, not a universal MatGL performance guarantee.

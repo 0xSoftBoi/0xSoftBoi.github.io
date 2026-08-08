@@ -6,29 +6,38 @@ permalink: /about/
 
 <section class="about">
   <h1>About</h1>
-  <p class="lede">I'm Tsolmondorj Natsagdorj, an engineer working where cross-chain infrastructure, smart-contract security, and AI agents meet. I build bridges, audit them, and write the agents that trade across them.</p>
+  <p class="lede">I'm Tsolmondorj Natsagdorj, a systems and research engineer. I work across reliable AI, high-performance networking, scientific ML, autonomous systems, and security-critical infrastructure.</p>
+
+  <p>The through-line is correctness under hidden failure modes: benchmarks that leak their labels, mocks that agree with the bug they are testing, uncertainty estimates that do not track error, protocol invariants that prove less than their diagrams imply, and ambitious hardware that needs physical gates before performance claims.</p>
 
   <h2>Now</h2>
-  <p>I run <strong>Zero 1 Labs</strong>, a personal holding company for my ventures and research. Its flagship is <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">Suwappu</a> — an agent-native cross-chain DEX with a post-quantum bridge I designed and audited end-to-end. The custody layer is gated by on-chain attestations (ML-DSA-65 on the home chain); I proved the supply and double-spend invariants with Foundry stateful fuzzing, Slither and Halmos, and shipped every fix with a revert-fails regression so the test goes red again if the fix is removed.</p>
+  <p>I build <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">Suwappu</a> and related systems, work on BRIDGE-bench and AI-evaluation methodology, maintain scientific-ML experiments around materials discovery, and prototype Aiur, an autonomous airborne-carrier research program. I also contribute correctness fixes and infrastructure upstream when a problem belongs in the shared library rather than only my project.</p>
 
-  <h2>Open source</h2>
+  <h2>Selected upstream</h2>
   <ul class="work-list">
-    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">alloy-rs/core</a><span class="tag">merged</span> — EIP-712 self-referential struct canonicalization in <code>dyn-abi</code>. alloy underpins Foundry and Reth.</li>
-    <li><a href="https://github.com/uutils/coreutils" target="_blank" rel="noopener noreferrer">uutils/coreutils</a><span class="tag">merged</span> — <code>date</code> timezone handling in the Rust rewrite of GNU coreutils.</li>
-    <li>Open contributions to HuggingFace <strong>candle</strong> (a causal-mask prefill fix), <strong>polars</strong> (non-UTF8 CSV encoding), and Apple's <strong>mlx-lm</strong>.</li>
+    <li><a href="https://github.com/materialyzeai/matgl/pull/801" target="_blank" rel="noopener noreferrer">MatGL #801</a><span class="tag">merged</span> — reusable MC-dropout uncertainty primitive with explicit supported-model boundaries.</li>
+    <li><a href="https://github.com/materialyzeai/matgl/pull/809" target="_blank" rel="noopener noreferrer">MatGL #809</a><span class="tag">merged</span> — SoftExponential autograd and numerical-domain correctness.</li>
+    <li><a href="https://github.com/ml-explore/mlx-lm/pull/1372" target="_blank" rel="noopener noreferrer">MLX-LM #1372</a><span class="tag">merged</span> — XTC sampling default correctness across sampler, CLI, and server.</li>
+    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">Alloy #1105</a><span class="tag">merged</span> — EIP-712 self-referential type canonicalization while preserving strict runtime-resolution limits.</li>
+    <li><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">uutils/coreutils #12327</a><span class="tag">merged</span> — GNU-compatible `date` timezone re-zoning.</li>
+    <li><a href="https://github.com/uutils/parse_datetime/pull/284" target="_blank" rel="noopener noreferrer">uutils/parse_datetime</a><span class="tag">3 merged</span> — AM/PM composition, negative fractional epoch floor semantics, and `UT` timezone compatibility.</li>
   </ul>
 
+  <h2>Research practice</h2>
+  <p>I separate observed, derived, estimated, and target claims. A later validity failure is allowed to weaken an earlier result. That is why the materials and BRIDGE-bench articles now carry visible revisions instead of preserving the flattering interpretation.</p>
+  <p class="quiet"><a href="{{ '/research/' | relative_url }}">research programs</a> · <a href="{{ '/blog/correctness-under-hidden-failure-modes/' | relative_url }}">engineering thesis</a> · <a href="{{ '/blog/' | relative_url }}">writing</a></p>
+
   <h2>Before</h2>
-  <p>I co-founded <strong>Blockchain at Mason</strong> (2016–2017), a student-run, faculty-supported organization I grew to 90+ members; we helped launch one of the first university blockchain minor programs in the US. I studied Economics &amp; Computer Science at George Mason University, leaving in 2017 to work on this full-time.</p>
+  <p>I co-founded <strong>Blockchain at Mason</strong> in 2016–2017, a student-run, faculty-supported organization that grew to 90+ members. I studied Economics &amp; Computer Science at George Mason University and left in 2017 to work full-time.</p>
 
   <h2>Elsewhere</h2>
-  <p class="quiet"><a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a> · <a href="https://twitter.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">x</a> · <a href="https://www.linkedin.com/in/tsolmondorj" target="_blank" rel="noopener noreferrer">linkedin</a> · <a href="https://orcid.org/0009-0009-6010-6273" target="_blank" rel="noopener noreferrer">orcid</a> · <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot</a> · languages: English, Mongolian</p>
+  <p class="quiet"><a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a> · <a href="https://twitter.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">x</a> · <a href="https://www.linkedin.com/in/tsolmondorj" target="_blank" rel="noopener noreferrer">linkedin</a> · <a href="https://orcid.org/0009-0009-6010-6273" target="_blank" rel="noopener noreferrer">orcid</a> · <a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot</a></p>
 </section>
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Who is Tsolmondorj Natsagdorj?","acceptedAnswer":{"@type":"Answer","text":"Tsolmondorj Natsagdorj (online: 0xSoftBoi) is a security and systems engineer working on cross-chain infrastructure and smart-contract security, in Rust and the EVM."}},
-{"@type":"Question","name":"What has Tsolmondorj Natsagdorj contributed to?","acceptedAnswer":{"@type":"Answer","text":"Merged upstream contributions to alloy (EIP-712 dyn-abi canonicalization, the Rust library behind Foundry and Reth) and uutils/coreutils (date timezone handling); an end-to-end audited lock-and-mint bridge; and BRIDGE-bench, a benchmark of LLM reasoning against real DeFi exploits."}},
-{"@type":"Question","name":"What is Tsolmondorj Natsagdorj building now?","acceptedAnswer":{"@type":"Answer","text":"Suwappu, an agent-native cross-chain DEX."}}
+{"@type":"Question","name":"Who is Tsolmondorj Natsagdorj?","acceptedAnswer":{"@type":"Answer","text":"Tsolmondorj Natsagdorj (online: 0xSoftBoi) is a systems and research engineer working across reliable AI, high-performance networking, scientific ML, autonomous systems, and security-critical infrastructure."}},
+{"@type":"Question","name":"What has Tsolmondorj Natsagdorj contributed to?","acceptedAnswer":{"@type":"Answer","text":"Merged upstream contributions include MatGL uncertainty and autograd fixes, MLX-LM sampling correctness, Alloy EIP-712 recursive canonicalization, and uutils coreutils/date-time compatibility fixes."}},
+{"@type":"Question","name":"What does Tsolmondorj Natsagdorj research?","acceptedAnswer":{"@type":"Answer","text":"AI evaluation validity, systems correctness at hardware boundaries, scientific-ML uncertainty, autonomous-system prototyping, and security-critical distributed systems."}}
 ]}
 </script>

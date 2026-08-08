@@ -22,14 +22,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate writing audit, built routes, and local links
+      - name: Validate writing audit, built routes, local links, and resume PDF
         run: python scripts/validate_site.py
       - name: Serve built site and smoke-test key routes
         run: |
           python -m http.server 8080 --directory _site >/tmp/site-http.log 2>&1 &
           pid=$!
-          trap 'kill $pid' EXIT
-          sleep 1
+          trap 'kill $pid 2>/dev/null || true' EXIT
+          for i in {1..10}; do
+            if curl --fail --silent http://127.0.0.1:8080/ >/dev/null; then break; fi
+            sleep 0.5
+          done
           for path in \
             / \
             /blog/ \
@@ -37,6 +40,7 @@ jobs:
             /about/ \
             /formation/ \
             /revisions/ \
+            /resume/ \
             /research-standard/ \
             /work/roce-preflight/ \
             /work/bridge-bench/ \

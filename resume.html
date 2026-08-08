@@ -1,0 +1,43 @@
+---
+layout: default
+title: "Resume — Tsolmondorj Natsagdorj"
+permalink: /resume/
+---
+<section class="resume-page">
+  <div class="resume-head">
+    <div><span class="section-kicker">resume · August 2026</span><h1>Tsolmondorj Natsagdorj</h1><p class="lede">Systems &amp; Research Engineer</p></div>
+    <div class="resume-actions"><a href="{{ '/assets/Tsolmondorj-Natsagdorj-Resume.pdf' | relative_url }}">Download PDF ↓</a><a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+  </div>
+
+  <p>I find where an abstraction stops matching reality, then build the test that exposes the gap. My work spans AI evaluation, high-performance networking, scientific ML, protocol correctness, and autonomy, with an emphasis on independent evidence, explicit limitations, and public correction when later validation weakens an earlier result.</p>
+
+  <h2>Selected technical evidence</h2>
+  <div class="resume-entries">
+    <article><h3>roce-preflight <span>systems · networking</span></h3><p><strong>Real RDMA execution exposed four defects after 197 unit tests passed</strong>; the first attempted fix still failed on-device. Built a Soft-RoCE CI boundary that asserts no simulation fallback, exercises real verbs/sysfs state, and sends perftest traffic.</p><p class="quiet"><a href="{{ '/work/roce-preflight/' | relative_url }}">case study →</a> · <a href="https://github.com/0xSoftBoi/roce-preflight" target="_blank" rel="noopener noreferrer">source ↗</a></p></article>
+    <article><h3>BRIDGE-bench <span>AI evaluations · security</span></h3><p>Audited a real-exploit benchmark and found <strong>severe author-injected prompt leakage in 13/24 examples</strong>. Downgraded the historical model score to a contaminated upper bound and added sanitizer invariants plus a locked paired remeasurement design.</p><p class="quiet"><a href="{{ '/work/bridge-bench/' | relative_url }}">case study →</a> · <a href="{{ '/revisions/' | relative_url }}">revision →</a> · <a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">source ↗</a></p></article>
+    <article><h3>active-materials-discovery <span>scientific ML</span></h3><p>On a static 18,928-structure perovskite screen, pretrained mean ranking reached <strong>DAF 5.15</strong> at a 5% budget; the tested MC-dropout uncertainty signal had <strong>Spearman σ↔|error| = −0.47</strong>, and overweighting it pushed acquisition below random.</p><p class="quiet"><a href="{{ '/work/materials/' | relative_url }}">case study →</a> · <a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">source ↗</a></p></article>
+  </div>
+
+  <h2>Merged upstream — independent review</h2>
+  <div class="evidence-table">
+    <div><b><a href="https://github.com/materialyzeai/matgl/pull/801" target="_blank" rel="noopener noreferrer">MatGL #801 ↗</a></b><span>Reusable MC-dropout uncertainty primitive with explicit model-support boundaries.</span></div>
+    <div><b><a href="https://github.com/materialyzeai/matgl/pull/809" target="_blank" rel="noopener noreferrer">MatGL #809 ↗</a></b><span>Autograd-correct, numerically safe SoftExponential activation.</span></div>
+    <div><b><a href="https://github.com/ml-explore/mlx-lm/pull/1372" target="_blank" rel="noopener noreferrer">MLX-LM #1372 ↗</a></b><span>Corrected pathological XTC sampling defaults across library, CLI, and server.</span></div>
+    <div><b><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">Alloy #1105 ↗</a></b><span>Self-referential EIP-712 type canonicalization while preserving strict runtime recursion limits.</span></div>
+    <div><b><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">uutils ↗</a></b><span>GNU-compatible date/time semantics across coreutils #12327 and parse_datetime #284/#285/#287.</span></div>
+  </div>
+
+  <h2>Current engineering</h2>
+  <div class="resume-entries">
+    <article><h3>Suwappu</h3><p>Build distributed systems, cryptographic protocols, transaction infrastructure, and adversarial-reliability tooling.</p><p class="quiet"><a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">suwappu.bot ↗</a></p></article>
+    <article><h3>Aiur <span>current experiment</span></h3><p>Autonomy/hardware program reduced to a falsifiable recovery prototype. Current artifacts include design, CAD, simulation, controller logic, and acceptance gates; physical recovery performance remains explicitly unproven until telemetry exists.</p><p class="quiet"><a href="https://github.com/0xSoftBoi/aiur" target="_blank" rel="noopener noreferrer">source ↗</a></p></article>
+  </div>
+
+  <h2>Formation</h2>
+  <p><strong>George Mason University</strong> — studied Economics &amp; Computer Science; left in 2017 to work full-time. <strong>Blockchain at Mason</strong> — co-founded the student-run, faculty-supported organization in 2016–2017; grew to 90+ members. <a href="{{ '/formation/' | relative_url }}">Full formation →</a></p>
+
+  <h2>Selected writing</h2>
+  <p><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">197 passing tests, four real-hardware bugs</a> · <a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">A benchmark can measure its own metadata</a> · <a href="{{ '/blog/upstream-is-a-different-kind-of-test/' | relative_url }}">Upstream is a different kind of test</a></p>
+
+  <p class="resume-contact">layerinfinite@gmail.com · <a href="https://0xsoftboi.github.io">0xsoftboi.github.io</a> · <a href="https://github.com/0xSoftBoi">github.com/0xSoftBoi</a></p>
+</section>

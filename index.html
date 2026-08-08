@@ -1,39 +1,67 @@
 ---
 layout: default
-title: "Tsolmondorj Natsagdorj — security & systems"
+title: "Tsolmondorj Natsagdorj — systems & research"
 ---
 
-<img class="hero" src="{{ '/assets/art/home-hero.png' | relative_url }}" alt="">
-
 <section class="intro">
-  <h1 class="visually-hidden">Tsolmondorj Natsagdorj — security &amp; systems</h1>
-  <p class="lede">I'm <strong>Tsolmondorj Natsagdorj</strong> (0xSoftBoi). I work on cross-chain infrastructure, smart-contract security, and the machine learning pointed at both — and I'm partial to the one accounting bug that lets a bridge print money.</p>
+  <h1 class="visually-hidden">Tsolmondorj Natsagdorj — systems &amp; research</h1>
+  <p class="lede">I'm <strong>Tsolmondorj Natsagdorj</strong>. I build systems that have to survive contact with reality: reliable AI, high-performance networking, scientific ML, autonomous systems, and security-critical infrastructure.</p>
+  <p class="thesis-block">The recurring question in my work is simple: <strong>what evidence would reveal that the abstraction is lying?</strong></p>
 </section>
 
+<div class="proof-grid" aria-label="Selected evidence">
+  <div><span class="section-kicker">upstream</span><b>8 selected merged PRs</b></div>
+  <div><span class="section-kicker">hardware boundary</span><b>real RDMA CI</b></div>
+  <div><span class="section-kicker">research habit</span><b>negative results published</b></div>
+  <div><span class="section-kicker">current programs</span><b>BRIDGE-bench · Aiur</b></div>
+</div>
+
 <section class="writing">
-  <h2>Writing</h2>
-  <ul class="posts">
-    {% for post in site.posts limit: 7 %}
-    <li>
-      <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <div class="post-meta">{{ post.date | date: "%b %Y" }} · {{ post.content | strip_html | number_of_words | divided_by: 200.0 | ceil }} min{% if post.series %} · <a href="{{ '/series/' | relative_url }}#{{ post.series | slugify }}">{{ post.series | escape }}</a>{% endif %}{% if post.tags %} · {% for tag in post.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}{% endif %}</div>
-      {% if post.excerpt %}<p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 220 }}</p>{% endif %}
-    </li>
-    {% endfor %}
+  <h2>Now</h2>
+  <ul class="now-list">
+    <li><strong>AI evaluations — separate capability from dataset metadata.</strong><p>BRIDGE-bench's historical score is now treated as contaminated evidence after an audit found severe author-injected leakage in 13 of 24 verified prompts. The current work is measurement design, sanitizer invariants, and matched controls—not inventing a rerun result.</p></li>
+    <li><strong>Autonomy — make recovery boring before making the carrier large.</strong><p>Aiur CARRIER-P0 deletes hydrogen, swarms, charging, outdoor autonomy, and airborne compute until one risky interaction remains: mechanically verified recovery of one micro-UAV.</p></li>
+    <li><strong>Open source — correctness at somebody else's boundary.</strong><p>Recent merged work spans MatGL uncertainty/autograd, MLX-LM sampling defaults, Alloy EIP-712 recursion, and uutils date/time compatibility.</p></li>
   </ul>
-  <p class="more">{{ site.posts | size }} posts in all — <a href="{{ '/blog/' | relative_url }}">browse the archive</a> or <a href="{{ '/series/' | relative_url }}">by series</a>.</p>
 </section>
 
 <section class="work">
-  <h2>Selected work</h2>
-  <ul class="work-list">
-    <li><a href="https://github.com/alloy-rs/core/pull/1105" target="_blank" rel="noopener noreferrer">alloy</a><span class="tag">merged</span> — fixed EIP-712 canonicalization to allow self-referential struct types in <code>dyn-abi</code>. alloy is the Ethereum Rust library behind Foundry and Reth.</li>
-    <li><a href="https://github.com/uutils/coreutils/pull/12327" target="_blank" rel="noopener noreferrer">uutils/coreutils</a><span class="tag">merged</span> — corrected <code>date</code> timezone re-zoning in the Rust rewrite of GNU coreutils.</li>
-    <li><a href="https://suwappu.bot" target="_blank" rel="noopener noreferrer">Suwappu</a> — an agent-native cross-chain DEX with a post-quantum bridge (ML-DSA-65). I designed the custody layer and audited it end-to-end with Foundry invariants, Slither and Halmos.</li>
-    <li><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">BRIDGE-bench (anthropic-fellowship)</a><span class="tag">research</span> — measuring LLM reasoning against real DeFi exploits: static analysis scores ~0% F1 on compositional bridge hacks; a static-pre-filtered LLM reaches ~40%. Also a TransformerLens mech-interp replication suite.</li>
-    <li><a href="https://github.com/0xSoftBoi/gnome-materials" target="_blank" rel="noopener noreferrer">gnome-materials</a> — GNoME-style active learning for materials discovery on a pretrained CHGNet potential: 95% top-100 recall on a 20% labeling budget.</li>
-    <li><a href="https://github.com/0xSoftBoi/sensorforge" target="_blank" rel="noopener noreferrer">sensorforge</a> — a robotics monorepo: iPhone/ARKit sensor capture, a Jetson Orin voice assistant, and an active-inference engine.</li>
-    <li><a href="https://github.com/0xSoftBoi/quantgroup" target="_blank" rel="noopener noreferrer">quantgroup</a> — a constant-product AMM annotated for auditors: attack simulations and stateful invariant tests.</li>
+  <h2>Research programs</h2>
+  <div class="programs">
+    <article class="program">
+      <span class="program-kicker">systems · networking</span>
+      <h2>Make synthetic confidence answer to independent state.</h2>
+      <p><strong>roce-preflight</strong> tests RDMA/RoCE diagnostics against real Linux verbs and sysfs state. The first real-device path found four defects after 197 unit tests had passed—and rejected the first attempted fix.</p>
+      <div class="program-links"><a href="{{ '/blog/197-tests-four-real-hardware-bugs/' | relative_url }}">postmortem →</a><a href="https://github.com/0xSoftBoi/roce-preflight" target="_blank" rel="noopener noreferrer">code ↗</a></div>
+    </article>
+    <article class="program">
+      <span class="program-kicker">ai evaluations · security</span>
+      <h2>Measure the capability, not the benchmark's curation history.</h2>
+      <p><strong>BRIDGE-bench</strong> started as an evaluation of model reasoning over real exploit contracts. Its most important result was a benchmark-validity failure: 13/24 prompts contained severe provenance leakage, including one exact-label case whose vulnerable function was absent from source.</p>
+      <div class="program-links"><a href="{{ '/blog/static-analysis-scores-zero-on-real-exploits/' | relative_url }}">postmortem →</a><a href="https://github.com/0xSoftBoi/anthropic-fellowship" target="_blank" rel="noopener noreferrer">code ↗</a></div>
+    </article>
+    <article class="program">
+      <span class="program-kicker">scientific ml</span>
+      <h2>A useful prediction can carry a useless confidence estimate.</h2>
+      <p><strong>active-materials-discovery</strong> gets roughly 5× static screening acceleration from a pretrained mean prediction on the tested perovskite proxy task. The attached readout-level MC-dropout σ is anti-correlated with absolute error; overweighting it pushes acquisition below random.</p>
+      <div class="program-links"><a href="{{ '/blog/greedy-was-enough-active-learning-pretrained-potential/' | relative_url }}">negative result →</a><a href="https://github.com/0xSoftBoi/active-materials-discovery" target="_blank" rel="noopener noreferrer">code ↗</a></div>
+    </article>
+    <article class="program">
+      <span class="program-kicker">autonomy · hardware</span>
+      <h2>Delete scale until one interaction can falsify the architecture.</h2>
+      <p><strong>Aiur</strong> is a persistent airborne-carrier concept reduced to CARRIER-P0: one helium reference carrier, one active dock, one small aircraft, and explicit recovery gates. Physical recovery performance remains a target until telemetry exists.</p>
+      <div class="program-links"><a href="{{ '/blog/delete-the-science-fiction-parts-first/' | relative_url }}">design note →</a><a href="https://github.com/0xSoftBoi/aiur" target="_blank" rel="noopener noreferrer">code ↗</a></div>
+    </article>
+  </div>
+</section>
+
+<section class="writing">
+  <h2>Selected writing</h2>
+  <ul class="featured-posts">
+    <li><a class="thesis" href="{{ '/blog/correctness-under-hidden-failure-modes/' | relative_url }}">Correctness under hidden failure modes</a><p class="summary">Hardware, contaminated evals, miscalibrated uncertainty, and prototype gates are different forms of the same engineering problem.</p></li>
+    <li><a class="thesis" href="{{ '/blog/autograd-is-part-of-the-api/' | relative_url }}">Autograd is part of the API</a><p class="summary">Forward-correct ML code can still violate the optimization semantics its callers rely on.</p></li>
+    <li><a class="thesis" href="{{ '/blog/a-default-is-executable-policy/' | relative_url }}">A default is executable policy</a><p class="summary">A three-line MLX-LM fix for a configuration composition that could mask nearly the whole candidate distribution.</p></li>
+    <li><a class="thesis" href="{{ '/blog/upstream-is-a-different-kind-of-test/' | relative_url }}">Upstream is a different kind of test</a><p class="summary">What eight merged third-party patches changed about the unit of correctness.</p></li>
   </ul>
-  <p class="more">More open-source work — candle, polars, mlx-lm — and projects on <a href="https://github.com/0xSoftBoi" target="_blank" rel="noopener noreferrer">github</a>. Background on the <a href="{{ '/about/' | relative_url }}">about</a> page.</p>
+  <p class="more"><a href="{{ '/blog/' | relative_url }}">Read the full writing corpus →</a> · <a href="{{ '/research/' | relative_url }}">research programs →</a></p>
 </section>

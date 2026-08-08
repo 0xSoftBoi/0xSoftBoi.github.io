@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "_site"
 POSTS = ROOT / "_posts"
 AUDIT = ROOT / "_data" / "writing_audit.yml"
+RESUME_PDF = SITE / "assets" / "Tsolmondorj-Natsagdorj-Resume.pdf"
 
 
 class Links(HTMLParser):
@@ -68,7 +69,6 @@ def built_target(source: Path, raw: str) -> Path | None:
 
 
 def is_site_verification_file(path: Path) -> bool:
-    """Google verification files are intentionally bare token documents, not pages."""
     return path.parent == SITE and bool(re.fullmatch(r"google[a-z0-9]+\.html", path.name))
 
 
@@ -95,6 +95,7 @@ def validate() -> list[str]:
         "about/index.html",
         "formation/index.html",
         "revisions/index.html",
+        "resume/index.html",
         "research-standard/index.html",
         "work/roce-preflight/index.html",
         "work/bridge-bench/index.html",
@@ -109,6 +110,13 @@ def validate() -> list[str]:
     for route in key_routes:
         if not (SITE / route).exists():
             errors.append(f"key built route missing: /{route}")
+
+    if not RESUME_PDF.exists():
+        errors.append("downloadable resume PDF missing from built site")
+    elif RESUME_PDF.stat().st_size < 5_000:
+        errors.append("downloadable resume PDF is unexpectedly small")
+    elif RESUME_PDF.read_bytes()[:5] != b"%PDF-":
+        errors.append("downloadable resume asset is not a PDF")
 
     for html in SITE.rglob("*.html"):
         text = html.read_text(encoding="utf-8", errors="replace")
@@ -142,8 +150,6 @@ def validate() -> list[str]:
             if phrase in text:
                 errors.append(f"{source.name}: stale headline claim returned: {phrase}")
 
-    # Trust-layer regression checks: these public verification surfaces are part of
-    # the portfolio contract, not optional editorial pages.
     revisions = (SITE / "revisions/index.html").read_text(encoding="utf-8", errors="replace") if (SITE / "revisions/index.html").exists() else ""
     if "13/24" not in revisions or "−0.47" not in revisions:
         errors.append("revisions page is missing the two material research corrections")
@@ -152,6 +158,11 @@ def validate() -> list[str]:
     for href in ("/work/roce-preflight/", "/work/bridge-bench/", "/work/materials/", "/work/upstream/"):
         if href not in homepage:
             errors.append(f"homepage is missing verification path: {href}")
+
+    resume = (SITE / "resume/index.html").read_text(encoding="utf-8", errors="replace") if (SITE / "resume/index.html").exists() else ""
+    for marker in ("13/24", "197 unit tests", "−0.47", "Tsolmondorj-Natsagdorj-Resume.pdf"):
+        if marker not in resume:
+            errors.append(f"resume is missing required evidence marker: {marker}")
 
     return errors
 

@@ -142,3 +142,10 @@ delete-the-science-fiction-parts-first:
   note: "This is deliberately a design note, not a test report. Aiur has specifications, models, CAD, a dock controller, and acceptance gates, but no committed physical recovery dataset yet. Recovery rates and closing-speed limits remain targets until instrumented telemetry exists."
   primary: https://github.com/0xSoftBoi/aiur
   primary_label: Aiur CARRIER-P0
+a-new-turbine-inside-a-1965-power-plant:
+  status: research
+  label: infrastructure case study
+  reviewed: 2026-08-09
+  note: "The SCADA calculations are a single photographed operating point, not annual performance evidence. External capacity and project claims are sourced separately; the grid-to-gate connection is an architectural inference."
+  primary: https://erc.gov.mn/mn/news/355
+  primary_label: Mongolia ERC commissioning record

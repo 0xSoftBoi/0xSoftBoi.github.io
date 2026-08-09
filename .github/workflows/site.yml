@@ -50,6 +50,7 @@ jobs:
             /blog/static-analysis-scores-zero-on-real-exploits/ \
             /blog/greedy-was-enough-active-learning-pretrained-potential/ \
             /blog/autograd-is-part-of-the-api/ \
-            /blog/delete-the-science-fiction-parts-first/; do
+            /blog/delete-the-science-fiction-parts-first/ \
+            /blog/a-new-turbine-inside-a-1965-power-plant/; do
             curl --fail --silent --show-error "http://127.0.0.1:8080${path}" >/dev/null
           done

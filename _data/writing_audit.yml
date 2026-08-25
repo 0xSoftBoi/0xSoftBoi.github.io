@@ -110,7 +110,7 @@ who-audits-the-auditor:
 197-tests-four-real-hardware-bugs:
   status: research
   label: systems postmortem
-  reviewed: 2026-08-08
+  reviewed: 2026-08-25
 correctness-under-hidden-failure-modes:
   status: research
   label: research synthesis

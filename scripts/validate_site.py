@@ -52,6 +52,41 @@ def built_target(source: Path, raw: str) -> Path | None:
 def is_site_verification_file(path: Path) -> bool:
     return path.parent == SITE and bool(re.fullmatch(r"google[a-z0-9]+\.html", path.name))
 
+MATH_DELIMS = re.compile(r"\\[(\[]")
+# `$x$` is NOT math to kramdown -- it needs `$$x$$`. Writing the single-dollar
+# form renders the LaTeX as literal text, silently. Catch the common shapes:
+# a dollar followed by a backslash-command or a single letter, then a dollar.
+LONE_DOLLAR = re.compile(r"(?<![$\w])\$(?!\$)(?=[\\A-Za-z])[^$\n`]{1,80}\$(?!\$)")
+
+def strip_code(markdown: str) -> str:
+    """Drop fenced blocks and inline spans -- `$nd` in shell is not math."""
+    text = re.sub(r"```.*?```", "", markdown, flags=re.S)
+    return re.sub(r"`[^`\n]*`", "", text)
+
+def math_errors() -> list[str]:
+    """Math must actually render: KaTeX loads only when `math: true`, and
+    kramdown only converts the `$$...$$` form."""
+    out: list[str] = []
+    for post in sorted(POSTS.glob("*.md")):
+        raw = post.read_text(encoding="utf-8")
+        head = raw.split("---", 2)[1] if raw.startswith("---") else ""
+        body = strip_code(raw)
+        for hit in LONE_DOLLAR.findall(body):
+            out.append(f"{post.name}: single-$ math renders as literal text, use $$...$$: {hit.strip()!r}")
+        declares = re.search(r"^math:\s*true\s*$", head, flags=re.M) is not None
+        slug = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", post.stem)
+        built = SITE / "blog" / slug / "index.html"
+        if not built.exists():
+            continue
+        html = built.read_text(encoding="utf-8", errors="replace")
+        start = html.find('<div class="post-body">')
+        has_math = start != -1 and MATH_DELIMS.search(html[start:]) is not None
+        if has_math and not declares:
+            out.append(f"{post.name}: renders math delimiters but front matter lacks `math: true`, so KaTeX never loads")
+        if declares and not has_math:
+            out.append(f"{post.name}: declares `math: true` but emits no math; drop the flag or fix the delimiters")
+    return out
+
 def validate() -> list[str]:
     errors: list[str] = []
     posts, audits = post_slugs(), audit_slugs()
@@ -80,6 +115,7 @@ def validate() -> list[str]:
         text = source.read_text(encoding="utf-8")
         for phrase in ("static analysis alone scores ~0% F1","static-pre-filtered LLM reaches ~40%","95% top-100 recall at a 20% labeling budget"):
             if phrase in text: errors.append(f"{source.name}: stale headline claim returned: {phrase}")
+    errors.extend(math_errors())
     revisions = (SITE / "revisions/index.html").read_text(encoding="utf-8", errors="replace")
     if "13/24" not in revisions or "−0.47" not in revisions: errors.append("revisions page is missing the two material research corrections")
     homepage = (SITE / "index.html").read_text(encoding="utf-8", errors="replace")

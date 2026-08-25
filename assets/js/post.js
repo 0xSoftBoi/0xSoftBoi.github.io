@@ -102,6 +102,19 @@
 
   spy(buildContents());
 
+  /* ---- 1b. anchor links, so a section can be linked to ---- */
+
+  [].forEach.call(body.querySelectorAll('h2, h3'), function (h) {
+    if (!h.id) h.id = slug(h.textContent);
+    if (h.querySelector('.h-anchor')) return;
+    var a = document.createElement('a');
+    a.className = 'h-anchor';
+    a.href = '#' + h.id;
+    a.textContent = '#';
+    a.setAttribute('aria-label', 'Link to this section');
+    h.appendChild(a);
+  });
+
   /* ---- 2. code blocks: language label + copy ---- */
 
   var LANG_NAMES = {

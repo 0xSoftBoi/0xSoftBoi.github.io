@@ -24,7 +24,7 @@ fn canonicalize_self_referential_type() {
 
 A `Node` has a value and some child `Node`s — a tree. On `main`, that test failed:
 
-```
+```text
 left:  Err(MissingType("primary component"))
 right: Ok("Node(uint256 value,Node[] children)")
 ```

@@ -59,7 +59,7 @@ So I built it, for real, with Zama's [`tfhe-rs`](https://github.com/zama-ai/tfhe
 
 The tests are the proof it's real: each predicate is computed on **encrypted** boards and asserted equal to a plaintext oracle on known positions — an open rook on the file is check; the same rook behind an enemy pawn is not; a knight on the right square is check; a quiet position isn't. It runs:
 
-```
+```text
 1. occupancy(e8)   = true   (captured piece = rook)   [35 ms]
 2. blocked(a1->a4) = true   (pawn on a3 blocks)        [135 ms]
 3. in_check(e1)    = true   (open enemy rook)          [7.6 s]

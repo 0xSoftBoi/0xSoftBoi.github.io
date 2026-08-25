@@ -60,7 +60,7 @@ the-other-side-of-the-wall:
 verifiable-isnt-trustless-onchain-randomness:
   status: explainer
   label: security explainer
-  reviewed: 2026-08-08
+  reviewed: 2026-08-25
 what-a-zk-proof-proves:
   status: explainer
   label: cryptography explainer

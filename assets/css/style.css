@@ -11,6 +11,8 @@
   --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
   --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
   --measure:680px;
+  --code-bg:#1c1d22;
+  --code-fg:#e6e6e6;
 }
 
 @media (prefers-color-scheme:dark){
@@ -141,13 +143,40 @@ p{margin:0 0 16px}
 .post-hero{margin:14px 0 14px}
 @media (prefers-color-scheme:dark){.hero{opacity:.92}}
 
-/* fenced code blocks (kramdown/rouge) */
-.post-body pre,.highlight pre,div.highlighter-rouge{
+/* fenced code blocks (kramdown/rouge) — the frame is the outer box, the
+   padding belongs to <pre>, so a wrapped and an unwrapped block look alike. */
+.post-body div.highlighter-rouge,
+.post-body .code-block,
+.post-body > pre,
+.post-body figure > pre{
+  background:var(--code-bg);border-radius:8px;margin:22px 0;overflow:hidden
+}
+.post-body div.highlighter-rouge > .highlight{background:none;margin:0}
+.post-body pre{
   font-family:var(--mono);font-size:.82rem;line-height:1.55;
-  background:#1c1d22;color:#e6e6e6;border-radius:8px;
-  padding:16px 18px;overflow-x:auto;margin:22px 0
+  background:none;color:var(--code-fg);
+  padding:16px 18px;margin:0;overflow-x:auto
 }
 .post-body pre code{background:none;padding:0;font-size:1em;color:inherit}
+
+/* wrapped by post.js: language label + copy button in a header strip */
+.post-body .code-block > div.highlighter-rouge,
+.post-body .code-block > pre{margin:0;border-radius:0;background:none}
+.post-body .code-block pre{padding-top:10px}
+.code-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:7px 12px 4px 18px;
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase
+}
+.code-lang{color:#7d8590}
+.code-copy{
+  font:inherit;letter-spacing:inherit;text-transform:inherit;
+  background:none;border:1px solid #33353d;border-radius:4px;
+  color:#7d8590;padding:2px 8px;cursor:pointer;transition:color .15s ease,border-color .15s ease
+}
+.code-copy:hover{color:#e6e6e6;border-color:#55575f}
+.code-copy.is-done{color:var(--accent);border-color:var(--accent)}
+.code-copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .highlight .c,.highlight .c1{color:#7d8590}
 .highlight .k,.highlight .kd,.highlight .kt{color:#ff7b72}
 .highlight .s,.highlight .s2,.highlight .sb{color:#a5d6ff}
@@ -182,17 +211,6 @@ p{margin:0 0 16px}
 #markdown-toc a{color:var(--accent);text-decoration:none}
 #markdown-toc a:hover{text-decoration:underline}
 
-/* ---- code-block language labels (pure CSS, from kramdown's .language-* wrapper) ---- */
-.language-solidity,.language-rust,.language-python{position:relative}
-.language-solidity::before,.language-rust::before,.language-python::before{
-  position:absolute;top:8px;right:14px;
-  font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
-  color:#7d8590;pointer-events:none;user-select:none
-}
-.language-solidity::before{content:"solidity"}
-.language-rust::before{content:"rust"}
-.language-python::before{content:"python"}
-
 /* ---- tags index (/tags/) ---- */
 .tags-cloud{display:flex;flex-wrap:wrap;gap:8px 10px;margin:8px 0 28px;padding:0;list-style:none}
 .tags-cloud a{font-family:var(--mono);font-size:.78rem;color:var(--accent);border:1px solid var(--rule);border-radius:4px;padding:3px 9px}
@@ -212,11 +230,14 @@ p{margin:0 0 16px}
   *{transition:none!important;animation:none!important}
 }
 @media print{
-  .site-header,.site-footer,.back,.post-nav,.related,#markdown-toc,.skip{display:none}
+  .site-header,.site-footer,.back,.post-nav,.related,#markdown-toc,.skip,
+  .toc-rail,.code-head,.zoom-overlay{display:none}
   body{background:#fff;color:#000;font-size:12pt}
   a{color:#000}
-  figure.chart,pre,blockquote{break-inside:avoid;page-break-inside:avoid}
-  .post-body pre,.highlight pre,div.highlighter-rouge{background:#f5f5f5;color:#111;border:1px solid #ccc}
+  figure.chart,pre,blockquote,.code-block,.katex-display{break-inside:avoid;page-break-inside:avoid}
+  .post-body div.highlighter-rouge,.post-body .code-block,.post-body pre{
+    background:#f5f5f5;color:#111;border:1px solid #ccc
+  }
 }
 
 /* ---- charts (inline themed SVG; re-themes via CSS vars) ---- */
@@ -244,3 +265,74 @@ figure.chart figcaption{
 .c-ink{fill:var(--text)}
 .c-arrow{stroke:var(--accent);stroke-width:1.5;fill:none;marker-end:url(#c-arrowhead)}
 .c-arrow-muted{stroke:var(--muted);stroke-width:1.5;fill:none;marker-end:url(#c-arrowhead-muted)}
+
+/* ---- contents: inline list on narrow screens, fixed rail on wide ---- */
+#markdown-toc .toc-sub{margin-left:18px;font-size:.9em}
+#markdown-toc a{color:var(--accent);text-decoration:none}
+
+.toc-rail{
+  display:none;position:fixed;top:96px;width:212px;
+  left:calc(50% + 372px);
+  max-height:calc(100vh - 160px);overflow-y:auto;overscroll-behavior:contain;
+  font-family:var(--sans);font-size:.8rem;line-height:1.45
+}
+.toc-rail ul{list-style:none;margin:0;padding:0;border-left:1px solid var(--rule)}
+.toc-rail li{margin:0}
+.toc-rail .toc-sub{padding-left:12px;font-size:.94em}
+.toc-rail a{
+  display:block;padding:4px 0 4px 12px;margin-left:-1px;
+  border-left:1px solid transparent;
+  color:var(--muted);text-decoration:none;transition:color .15s ease,border-color .15s ease
+}
+.toc-rail a:hover{color:var(--text);text-decoration:none}
+.toc-rail a[aria-current]{color:var(--accent);border-left-color:var(--accent)}
+.toc-rail a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* the rail needs (measure/2 + 32 gap + 212 rail + 16 margin) of half-viewport */
+@media (min-width:1240px){
+  .toc-rail{display:block}
+  .post #markdown-toc{display:none}
+}
+
+/* ---- figure zoom (post.js) ---- */
+.post-body img.zoomable{cursor:zoom-in}
+.post-body img.zoomable:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.zoom-overlay{
+  position:fixed;inset:0;z-index:50;cursor:zoom-out;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:32px 24px;background:rgba(12,12,14,.96);
+  animation:zoom-in .16s ease-out
+}
+.zoom-overlay.no-motion{animation:none}
+.zoom-overlay img{
+  max-width:min(1200px,94vw);max-height:86vh;width:auto;height:auto;
+  border-radius:8px;background:var(--bg)
+}
+.zoom-caption{
+  margin:0;max-width:min(680px,90vw);
+  font-family:var(--mono);font-size:.74rem;line-height:1.5;color:#c9c8c0;text-align:center
+}
+@keyframes zoom-in{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.zoom-overlay{animation:none}}
+
+/* ---- math (KaTeX; loaded only on posts with `math: true`) ---- */
+.post-body .katex{font-size:1.02em}
+/* table headers are uppercased mono — a rendered symbol must not be */
+.post-body th .katex{text-transform:none;font-size:1em}
+.post-body .katex-display{
+  margin:22px 0;padding:2px 0;
+  overflow-x:auto;overflow-y:hidden
+}
+.post-body .katex-display > .katex{font-size:1.06em}
+/* a derivation is a sequence, not a wall — let consecutive displays breathe less */
+.post-body .katex-display + .katex-display{margin-top:-8px}
+
+/* ---- footnotes (kramdown) ---- */
+.post-body .footnotes{
+  margin-top:40px;padding-top:18px;border-top:1px solid var(--rule);
+  font-family:var(--sans);font-size:.9rem;color:var(--muted)
+}
+.post-body .footnotes ol{padding-left:1.2em}
+.post-body .footnotes li{margin:6px 0}
+.post-body .footnotes p{margin:0}
+.post-body sup a{text-decoration:none;font-size:.8em;padding:0 1px}

@@ -12,7 +12,7 @@ An OP Stack rollup looks intimidating until you see that it's four long-running 
 
 ## The four processes and the handshake
 
-```
+```text
 op-reth     execution layer — runs the EVM, holds L2 state, serves eth_* RPC
 op-node     consensus layer — derives the L2 chain from L1, drives block production
 op-batcher  posts L2 transaction batches down to L1 (as blobs)

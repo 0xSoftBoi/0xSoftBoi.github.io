@@ -60,7 +60,7 @@ The slider path check is the fun part. The intermediate squares are a function o
 
 The point that matters: this isn't a mock. The repo compiles the circuit with circom, runs a Groth16 setup with snarkjs, and generates an actual proof for a concrete legal move — a rook sliding a1→a4 over empty squares (which exercises the path check). That proof, and a `MoveVerifier.sol` snarkjs emits from the circuit, go straight into a Foundry test:
 
-```
+```text
 [PASS] test_realProof_verifiesOnChain_andAdvancesCommitment
 [PASS] test_staleCommitment_reverts
 [PASS] test_tamperedPublicInput_rejected
